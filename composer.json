@@ -1,0 +1,26 @@
+{
+  "name": "sampoyigi/webhook",
+  "type": "igniter-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sam Poyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "spatie/laravel-webhook-server": "dev-php72",
+    "spatie/laravel-webhook-client": "dev-php72"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/sampoyigi/laravel-webhook-server"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/sampoyigi/laravel-webhook-client"
+    }
+  ]
+}
