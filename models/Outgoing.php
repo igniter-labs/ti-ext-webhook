@@ -6,6 +6,7 @@ use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 use Model;
 use Spatie\WebhookServer\WebhookCall;
 
@@ -29,9 +30,6 @@ class Outgoing extends Model
     protected $guarded = [];
 
     public $relation = [
-        'hasMany' => [
-            'deliveries' => 'IgniterLabs\Webhook\Models\WebhookLog',
-        ],
         'morphMany' => [
             'deliveries' => ['IgniterLabs\Webhook\Models\WebhookLog', 'name' => 'webhook', 'delete' => TRUE],
         ],
@@ -85,8 +83,11 @@ class Outgoing extends Model
         $contentType = array_get($options, 'content_type');
 
         $webhookJob = WebhookCall::create()->url($this->url);
+
         $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', TRUE));
+
         strlen($secretKey) ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
+
         $webhookJob->postAsJson($contentType !== 'application/x-www-form-urlencoded');
 
         $payload = ['action' => $actionCode] + $this->getEventObject()->getEventPayload();
@@ -94,7 +95,7 @@ class Outgoing extends Model
 
         Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);
 
-        WebhookLog::createLog($this, $webhookJob);
+        WebhookLog::addLog($this, app('request'));
 
         $webhookJob->dispatch();
     }
@@ -107,15 +108,10 @@ class Outgoing extends Model
     {
         $configData = $this->config_data ?? [];
         if (!array_get($configData, 'secret_key')) {
-            $configData['secret_key'] = $this->generateSignatureKey();
+            $configData['secret_key'] = Str::random(16);
         }
 
         $this->config_data = $configData;
-    }
-
-    protected function generateSignatureKey()
-    {
-        return md5(uniqid($this->url, microtime()));
     }
 
     //

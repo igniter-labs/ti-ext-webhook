@@ -56,9 +56,9 @@ Status: 201 Created
 }
 ```
 
-### Fetch a location
+### Retrieve a location
 
-Fetches a location.
+Retrieves a location.
 
 #### Parameters
 

@@ -30,14 +30,15 @@ class CreateAllTables extends Migration
 
         Schema::create('igniterlabs_webhook_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigIncrements('uuid');
+            $table->integer('webhook_id')->nullable()->unsigned()->index();
+            $table->string('webhook_type')->nullable()->index();
             $table->string('name');
             $table->boolean('is_success')->default(0);
             $table->text('payload')->nullable();
 //            $table->text('request')->nullable();
             $table->text('response')->nullable();
             $table->text('exception')->nullable();
-            $table->integer('webhook_id')->nullable()->unsigned()->index();
-            $table->string('webhook_type')->nullable()->index();
             $table->timestamps();
         });
     }

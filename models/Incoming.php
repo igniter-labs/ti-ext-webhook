@@ -7,6 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseAction;
 use IgniterLabs\Webhook\Classes\WebhookClientProcessor;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Model;
 use Spatie\WebhookClient\WebhookConfig;
 use System\Classes\ErrorHandler;
@@ -101,7 +102,7 @@ class Incoming extends Model
 
         $configData = $this->config_data ?? [];
         if (!array_get($configData, 'signing_secret')) {
-            $configData['signing_secret'] = $this->createHash();
+            $configData['signing_secret'] = Str::random(16);
         }
 
         $this->config_data = $configData;
@@ -145,12 +146,7 @@ class Incoming extends Model
     protected function generateHash()
     {
         do {
-            $this->hash = $this->createHash();
+            $this->hash = Str::random(12);
         } while ($this->newQuery()->where('hash', $this->hash)->count() > 0);
-    }
-
-    protected function createHash()
-    {
-        return md5(uniqid($this->url, microtime()));
     }
 }

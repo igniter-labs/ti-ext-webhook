@@ -4,14 +4,14 @@ return [
     'text_title' => 'Webhooks',
     'text_tab_general' => 'General',
     'text_tab_setup' => 'Setup Instructions',
-    'text_outgoing' => 'Outgoing webhooks',
+    'text_outgoing' => 'Webhooks',
     'text_incoming' => 'Incoming webhooks',
 
     'label_enable_authentication' => 'Enable Authentication',
-    'label_server_signature_header' => 'Outgoing Webhook Signature Header Name',
+    'label_server_signature_header' => 'Webhook Signature Header Name',
     'label_headers' => 'Additional HTTP Headers',
-    'label_timeout_in_seconds' => 'Outgoing Webhook Timeout',
-    'label_tries' => 'Outgoing Webhook Tries',
+    'label_timeout_in_seconds' => 'Webhook Timeout',
+    'label_tries' => 'Webhook Tries',
     'label_verify_ssl' => 'Verify SSL Certificate',
     'label_client_signature_header' => 'Incoming Webhook Signature Header Name',
 
@@ -24,10 +24,10 @@ return [
     'help_client_signature_header' => 'The HTTP header key name of where the signature will be added for incoming requests.',
 
     'outgoing' => [
-        'text_title' => 'Outgoing Webhooks',
-        'text_form_name' => 'Outgoing Webhook',
+        'text_title' => 'Webhooks',
+        'text_form_name' => 'Webhook',
         'text_tab_deliveries' => 'Recent Deliveries',
-        'text_empty' => 'There are no outgoing webhooks available.',
+        'text_empty' => 'There are no webhooks available.',
 
         'label_url' => 'Payload Url',
         'label_content_type' => 'Content Type',

@@ -119,7 +119,7 @@ return [
         ],
         'tabs' => [
             'fields' => [
-                '_calls' => [
+                'calls' => [
                     'tab' => 'lang:igniterlabs.webhook::default.incoming.text_tab_calls',
                     'type' => 'datatable',
                     'valueFrom' => 'calls',

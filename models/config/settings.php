@@ -69,8 +69,20 @@ return [
             'headers' => [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
                 'label' => 'igniterlabs.webhook::default.label_headers',
-                'type' => 'text',
-                'comment' => 'igniterlabs.webhook::default.help_headers',
+                'type' => 'repeater',
+                'commentAbove' => 'igniterlabs.webhook::default.help_headers',
+                'form' => [
+                    'fields' => [
+                        'key' => [
+                            'label' => 'Key',
+                            'type' => 'text',
+                        ],
+                        'value' => [
+                            'label' => 'Value',
+                            'type' => 'text',
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

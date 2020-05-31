@@ -7,6 +7,7 @@
         class="form-control"
         data-request="onLoadSetupInstructions"
         data-progress-indicator="<?= lang('admin::lang.text_loading') ?>"
+        autocomplete="off"
     >
         <option value=""><?= e(lang('admin::lang.text_please_select')) ?></option>
         <?php foreach ($formModel->getDropdownOptions() as $value => $option) { ?>

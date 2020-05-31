@@ -126,7 +126,7 @@ return [
                     'commentAbove' => 'lang:igniterlabs.webhook::default.outgoing.help_events',
                 ],
 
-                '_deliveries' => [
+                'deliveries' => [
                     'tab' => 'lang:igniterlabs.webhook::default.outgoing.text_tab_deliveries',
                     'type' => 'datatable',
                     'context' => ['edit'],
@@ -136,6 +136,12 @@ return [
                         ],
                         'is_success' => [
                             'title' => 'lang:admin::lang.label_status',
+                        ],
+                        'updated_at' => [
+                            'title' => 'lang:admin::lang.column_date_updated',
+                        ],
+                        'created_at' => [
+                            'title' => 'lang:admin::lang.column_date_added',
                         ],
                     ],
                 ],

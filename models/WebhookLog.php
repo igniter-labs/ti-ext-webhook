@@ -2,9 +2,9 @@
 
 namespace IgniterLabs\Webhook\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\Models\WebhookCall;
-use Spatie\WebhookClient\WebhookConfig;
 
 /**
  * Webhook Log Model
@@ -39,10 +39,6 @@ class WebhookLog extends WebhookCall
     //
     //
 
-    public static function updateLog($event)
-    {
-    }
-
     /**
      * @param \Igniter\Flame\Database\Query\Builder $query
      * @param \Igniter\Flame\Database\Model $webhook
@@ -59,22 +55,14 @@ class WebhookLog extends WebhookCall
     //
     //
 
-    public static function storeIncomingWebhook(Incoming $model, WebhookConfig $config, Request $request)
+    public static function addLog(Model $webhook, Request $request)
     {
         return self::create([
-            'webhook_id' => $model->getKey(),
-            'webhook_type' => $model->getMorphClass(),
-            'name' => $config->name,
+            'webhook_id' => $webhook->getKey(),
+            'webhook_type' => $webhook->getMorphClass(),
+            'name' => $webhook->name,
             'payload' => $request->input(),
         ]);
-    }
-
-    public static function storeWebhook(WebhookConfig $config, Request $request): WebhookCall
-    {
-//        return self::create([
-//            'name' => $config->name,
-//            'payload' => $request->input(),
-//        ]);
     }
 
     public function markAsSuccessful()

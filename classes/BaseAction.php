@@ -91,9 +91,8 @@ abstract class BaseAction
         $parts = explode('\\', $namespace);
         $class = array_pop($parts);
         $slice = array_slice($parts, 1, 2);
-        $code = strtolower(implode('-', $slice).'-'.$class);
 
-        return $code;
+        return strtolower(implode('-', $slice).'-'.$class);
     }
 
     /**

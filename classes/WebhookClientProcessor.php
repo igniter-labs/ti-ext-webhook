@@ -23,7 +23,7 @@ class WebhookClientProcessor extends WebhookProcessor
     {
         $this->ensureValidEntryPoint();
 
-//        $this->ensureValidSignature();
+        $this->ensureValidSignature();
 
         if (!$this->config->webhookProfile->shouldProcess($this->request)) {
             return $this->createResponse();
@@ -47,7 +47,7 @@ class WebhookClientProcessor extends WebhookProcessor
 
     protected function storeWebhook(): WebhookCall
     {
-        return $this->config->webhookModel::storeIncomingWebhook(
+        return $this->config->webhookModel::addLog(
             $this->webhook, $this->config, $this->request
         );
     }

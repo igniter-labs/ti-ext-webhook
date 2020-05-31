@@ -39,6 +39,7 @@ Status: 200 OK
 ]
 ```
 ### Create a customer
+
 Creates a new customer.
 
 #### Parameters
@@ -77,8 +78,8 @@ Status: 201 Created
   "addresses": []
 }
 ```
-### Fetch a customer
-Fetches a customer.
+### Retrieve a customer
+Retrieves a customer.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
