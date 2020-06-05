@@ -65,6 +65,10 @@ class WebhookLog extends WebhookCall
         ]);
     }
 
+    public static function addLogFromEvent($event)
+    {
+    }
+
     public function markAsSuccessful()
     {
         $this->is_success = TRUE;

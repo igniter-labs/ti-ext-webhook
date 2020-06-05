@@ -22,7 +22,7 @@ For example:
 
 - Receive data to a custom webhook action
 - Send data when certain events happen in your TastyIgniter platform.
-- Authenticate every webhook sent using Token or API Key.
+- Authenticate every webhook sent using a Token.
 - Advanced settings for each outgoing/incoming webhook
 - Supports JSON and form urlencode
 - Supports Zapier, automate.io and more.
@@ -31,7 +31,7 @@ For example:
 
 Here is an example of an extension registering a webhook event to trigger an outgoing webhook.
 
-```
+```php
 public function registerWebhookTypes()
 {
     return [
@@ -46,7 +46,7 @@ public function registerWebhookTypes()
 
 Here is an example of an extension registering a webhook action to be called when an incoming webhook is received.
 
-```
+```php
 public function registerWebhookTypes()
 {
     return [
@@ -61,7 +61,7 @@ public function registerWebhookTypes()
 
 A webhook event class is responsible for preparing the parameters passed to the outgoing webhook.
 
-```
+```php
 class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
 {
     /**
@@ -101,7 +101,7 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
 
 A webhook action class is responsible for processing the incoming webhook.
 
-```
+```php
 class Customer extends \IgniterLabs\Webhook\WebhookActions\BaseAction
 {
     /**

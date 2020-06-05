@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Spatie\WebhookClient\Exceptions\InvalidConfig;
 use Spatie\WebhookClient\WebhookConfig;
 use Spatie\WebhookClient\WebhookConfigRepository;
-use Spatie\WebhookServer\Events\FinalWebhookCallFailedEvent;
+use Spatie\WebhookServer\Events\WebhookCallFailedEvent;
 use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
 use System\Classes\BaseExtension;
 
@@ -93,17 +93,6 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerAutomationRules()
-    {
-        return [
-            'events' => [],
-            'actions' => [
-                \IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook::class,
-            ],
-            'conditions' => [],
-        ];
-    }
-
     public function registerWebhookTypes()
     {
         return [
@@ -122,6 +111,17 @@ class Extension extends BaseExtension
                 'reservation' => \IgniterLabs\Webhook\WebhookActions\Reservation::class,
             ],
         ];
+    }
+
+    protected function bootWebhookServer()
+    {
+        Event::listen(WebhookCallSucceededEvent::class, function ($event) {
+            WebhookLog::addLogFromEvent($event);
+        });
+
+        Event::listen(WebhookCallFailedEvent::class, function ($event) {
+            WebhookLog::addLogFromEvent($event);
+        });
     }
 
     protected function bootWebhookClient()
@@ -150,17 +150,6 @@ class Extension extends BaseExtension
             }
 
             return $webhookConfig;
-        });
-    }
-
-    protected function bootWebhookServer()
-    {
-        Event::listen(WebhookCallSucceededEvent::class, function ($event) {
-            WebhookLog::updateLog($event);
-        });
-
-        Event::listen(FinalWebhookCallFailedEvent::class, function ($event) {
-            WebhookLog::updateLog($event);
         });
     }
 }
