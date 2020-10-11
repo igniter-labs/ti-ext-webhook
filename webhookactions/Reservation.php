@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseAction;
 class Reservation extends BaseAction
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function actionDetails()
     {

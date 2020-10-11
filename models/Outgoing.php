@@ -121,7 +121,7 @@ class Outgoing extends Model
     /**
      * Extends this class with the event class
      * @param string $className Class name
-     * @return boolean
+     * @return bool
      */
     public function applyEventClass($className)
     {

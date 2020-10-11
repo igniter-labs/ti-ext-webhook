@@ -1,4 +1,6 @@
-<?php namespace IgniterLabs\Webhook;
+<?php
+
+namespace IgniterLabs\Webhook;
 
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;

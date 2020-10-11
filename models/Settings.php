@@ -1,4 +1,6 @@
-<?php namespace IgniterLabs\Webhook\Models;
+<?php
+
+namespace IgniterLabs\Webhook\Models;
 
 use Model;
 

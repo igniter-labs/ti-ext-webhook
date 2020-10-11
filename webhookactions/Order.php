@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseAction;
 class Order extends BaseAction
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function actionDetails()
     {

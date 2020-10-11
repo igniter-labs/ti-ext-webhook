@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseAction;
 class Location extends BaseAction
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function actionDetails()
     {

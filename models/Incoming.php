@@ -115,7 +115,7 @@ class Incoming extends Model
     /**
      * Extends this class with the action class
      * @param string $className Class name
-     * @return boolean
+     * @return bool
      */
     public function applyActionClass($className = null)
     {

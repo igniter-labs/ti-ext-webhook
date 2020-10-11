@@ -8,7 +8,7 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 class Customer extends BaseEvent
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eventDetails()
     {

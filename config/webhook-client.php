@@ -36,7 +36,7 @@ return [
              * The classname of the model to be used to store call. The class should be equal
              * or extend Spatie\WebhookClient\Models\WebhookCall.
              */
-//            'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
+            //            'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
             'webhook_model' => \IgniterLabs\Webhook\Models\WebhookLog::class,
 
             /*
