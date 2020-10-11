@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 class Menu extends BaseEvent
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eventDetails()
     {

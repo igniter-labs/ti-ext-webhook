@@ -25,7 +25,7 @@ class WebhookLog extends WebhookCall
         'webhook_id' => 'integer',
         'is_success' => 'boolean',
         'payload' => 'array',
-//        'request' => 'array',
+        //        'request' => 'array',
         'response' => 'array',
         'exception' => 'array',
     ];

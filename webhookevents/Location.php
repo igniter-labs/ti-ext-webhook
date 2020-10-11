@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 class Location extends BaseEvent
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eventDetails()
     {

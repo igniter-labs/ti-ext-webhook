@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 class Order extends BaseEvent
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eventDetails()
     {
