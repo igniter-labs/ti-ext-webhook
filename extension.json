@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "icon": {
     "image": "icon.svg",
-    "backgroundColor": "#FFF",
+    "backgroundColor": "#4FC3F7",
     "color": "#FFF"
   },
   "require": {

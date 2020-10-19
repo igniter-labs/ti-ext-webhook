@@ -47,7 +47,8 @@ class Extension extends BaseExtension
 
         $this->bootWebhookClient();
 
-        WebhookManager::bindWebhookEvents();
+        if ($this->app->hasDatabase())
+            WebhookManager::bindWebhookEvents();
     }
 
     public function registerSettings()
