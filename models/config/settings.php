@@ -85,5 +85,14 @@ return [
                 ],
             ],
         ],
+        'rules' => [
+            ['enable_authentication', 'igniterlabs.webhook::default.label_enable_authentication', 'required|integer'],
+            ['verify_ssl', 'igniterlabs.webhook::default.label_verify_ssl', 'required|integer'],
+            ['timeout_in_seconds', 'igniterlabs.webhook::default.label_timeout_in_seconds', 'required|integer'],
+            ['tries', 'igniterlabs.webhook::default.label_tries', 'required|integer'],
+            ['server_signature_header', 'igniterlabs.webhook::default.label_server_signature_header', 'required|string'],
+            ['client_signature_header', 'igniterlabs.webhook::default.label_client_signature_header', 'required|string'],
+            ['headers', 'igniterlabs.webhook::default.label_headers', 'required|array'],
+        ],
     ],
 ];
