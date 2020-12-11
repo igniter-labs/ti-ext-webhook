@@ -31,7 +31,7 @@ class Incoming extends Model
 
     protected $append = ['url'];
 
-    public $casts = [
+    protected $casts = [
         'is_active' => 'boolean',
         'config_data' => 'array',
     ];

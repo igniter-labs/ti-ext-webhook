@@ -35,7 +35,7 @@ class Outgoing extends Model
         ],
     ];
 
-    public $casts = [
+    protected $casts = [
         'is_active' => 'boolean',
         'events' => 'array',
         'config_data' => 'array',
