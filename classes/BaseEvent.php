@@ -114,13 +114,11 @@ abstract class BaseEvent
 
     public function renderSetupPartial()
     {
-        $content = 'No setup instructions provided';
-
         $setupPath = File::symbolizePath(sprintf('%s/%s', $this->path, 'setup.md'));
-        if ($setupPath = File::existsInsensitive($setupPath))
-            $content = (new Markdown)->parse(File::get($setupPath));
+        if (!$setupPath = File::existsInsensitive($setupPath))
+            return 'No setup instructions provided';
 
-        return $content;
+        return Markdown::parseFile($setupPath)->toHtml();
     }
 
     public static function extend(callable $callback)
