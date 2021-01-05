@@ -9,7 +9,6 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
     "spatie/laravel-webhook-server": "dev-php72",
     "spatie/laravel-webhook-client": "dev-php72"
   },
