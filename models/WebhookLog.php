@@ -2,14 +2,17 @@
 
 namespace IgniterLabs\Webhook\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use GuzzleHttp\Psr7\Response;
+use Igniter\Flame\Database\Model;
 use Illuminate\Http\Request;
-use Spatie\WebhookClient\Models\WebhookCall;
+use Spatie\WebhookClient\Models\WebhookCall as BaseWebhookCall;
+use Spatie\WebhookClient\WebhookConfig;
+use Spatie\WebhookServer\Events\WebhookCallEvent;
 
 /**
  * Webhook Log Model
  */
-class WebhookLog extends WebhookCall
+class WebhookLog extends BaseWebhookCall
 {
     /**
      * @var string The database table used by the model.
@@ -25,9 +28,11 @@ class WebhookLog extends WebhookCall
         'webhook_id' => 'integer',
         'is_success' => 'boolean',
         'payload' => 'array',
-        //        'request' => 'array',
         'response' => 'array',
-        'exception' => 'array',
+    ];
+
+    protected $appends = [
+        'status_name', 'created_since',
     ];
 
     public function webhook()
@@ -55,18 +60,29 @@ class WebhookLog extends WebhookCall
     //
     //
 
-    public static function addLog(Model $webhook, Request $request)
+    public static function createLog(WebhookCallEvent $webhookEvent, bool $isSuccess = FALSE)
+    {
+        $response = [];
+        if ($webhookEvent->response instanceof Response)
+            $response = $webhookEvent->response->getBody()->getContents();
+
+        return self::create(array_merge($webhookEvent->meta, [
+            'payload' => $webhookEvent->payload,
+            'is_success' => $isSuccess,
+            'message' => e($webhookEvent->errorMessage ?? 'Payload delivered successfully'),
+            'response' => $response,
+        ]));
+    }
+
+    public static function createIncomingLog(Model $webhook, WebhookConfig $config, Request $request)
     {
         return self::create([
             'webhook_id' => $webhook->getKey(),
             'webhook_type' => $webhook->getMorphClass(),
             'name' => $webhook->name,
-            'payload' => $request->input(),
+            'payload' => $request->all(),
+            'message' => 'Started',
         ]);
-    }
-
-    public static function addLogFromEvent($event)
-    {
     }
 
     public function markAsSuccessful()
@@ -85,5 +101,22 @@ class WebhookLog extends WebhookCall
         $this->save();
 
         return $this;
+    }
+
+    //
+    //
+    //
+
+    public function getStatusNameAttribute($value)
+    {
+        return lang($this->is_success
+            ? 'igniterlabs.webhook::default.text_success'
+            : 'igniterlabs.webhook::default.text_failed'
+        );
+    }
+
+    public function getCreatedSinceAttribute($value)
+    {
+        return $this->created_at ? day_elapsed($this->created_at) : null;
     }
 }

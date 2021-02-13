@@ -1,6 +1,6 @@
 {
   "name": "igniterlabs/webhook",
-  "type": "igniter-extension",
+  "type": "tastyigniter-extension",
   "license": "MIT",
   "authors": [
     {

@@ -130,18 +130,17 @@ return [
                     'tab' => 'lang:igniterlabs.webhook::default.outgoing.text_tab_deliveries',
                     'type' => 'datatable',
                     'context' => ['edit'],
+                    'useAjax' => TRUE,
+                    'defaultSort' => ['created_at', 'desc'],
                     'columns' => [
-                        'id' => [
-                            'title' => 'lang:admin::lang.column_id',
+                        'created_since' => [
+                            'title' => 'lang:admin::lang.column_date_added',
                         ],
-                        'is_success' => [
+                        'status_name' => [
                             'title' => 'lang:admin::lang.label_status',
                         ],
-                        'updated_at' => [
-                            'title' => 'lang:admin::lang.column_date_updated',
-                        ],
-                        'created_at' => [
-                            'title' => 'lang:admin::lang.column_date_added',
+                        'message' => [
+                            'title' => 'lang:igniterlabs.webhook::default.outgoing.label_message',
                         ],
                     ],
                 ],

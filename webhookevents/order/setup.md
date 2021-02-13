@@ -1,6 +1,6 @@
 ## Order Event
 
-This webhook event is triggered when a order is `created`, `updated`, `status_added`, `assigned` or `deleted`.
+This webhook event is triggered when an order is `created`, `updated`, `status_added`, `assigned` or `deleted`.
 
 **Webhook event name:** `order`
 

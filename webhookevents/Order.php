@@ -20,7 +20,7 @@ class Order extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Admin\Models\Orders_model',
+            'created' => 'admin.order.paymentProcessed',
             'updated' => 'eloquent.saved: Admin\Models\Orders_model',
             'status_added' => 'eloquent.created: Admin\Models\Status_history_model',
             'assigned' => 'admin.assignable.assigned',

@@ -93,9 +93,13 @@ class Outgoing extends Model
         $payload = ['action' => $actionCode] + $this->getEventObject()->getEventPayload();
         $webhookJob->payload($payload);
 
-        Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);
+        $webhookJob->meta([
+            'webhook_id' => $this->getKey(),
+            'webhook_type' => $this->getMorphClass(),
+            'name' => $this->name,
+        ]);
 
-        WebhookLog::addLog($this, app('request'));
+        Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);
 
         $webhookJob->dispatch();
     }

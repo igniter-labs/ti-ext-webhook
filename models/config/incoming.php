@@ -124,12 +124,17 @@ return [
                     'type' => 'datatable',
                     'valueFrom' => 'calls',
                     'context' => ['edit'],
+                    'useAjax' => TRUE,
+                    'defaultSort' => ['created_at', 'desc'],
                     'columns' => [
-                        'id' => [
-                            'title' => 'lang:admin::lang.column_id',
+                        'created_since' => [
+                            'title' => 'lang:admin::lang.column_date_added',
                         ],
-                        'is_success' => [
+                        'status_name' => [
                             'title' => 'lang:admin::lang.label_status',
+                        ],
+                        'message' => [
+                            'title' => 'lang:igniterlabs.webhook::default.outgoing.label_message',
                         ],
                     ],
                 ],

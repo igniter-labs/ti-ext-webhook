@@ -47,7 +47,7 @@ class WebhookClientProcessor extends WebhookProcessor
 
     protected function storeWebhook(): WebhookCall
     {
-        return $this->config->webhookModel::addLog(
+        return $this->config->webhookModel::createIncomingLog(
             $this->webhook, $this->config, $this->request
         );
     }

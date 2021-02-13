@@ -47,7 +47,7 @@ class Extension extends BaseExtension
 
         $this->bootWebhookClient();
 
-        if ($this->app->hasDatabase())
+        if (WebhookManager::isConfigured())
             WebhookManager::bindWebhookEvents();
     }
 
@@ -119,11 +119,11 @@ class Extension extends BaseExtension
     protected function bootWebhookServer()
     {
         Event::listen(WebhookCallSucceededEvent::class, function ($event) {
-            WebhookLog::addLogFromEvent($event);
+            WebhookLog::createLog($event, TRUE);
         });
 
         Event::listen(WebhookCallFailedEvent::class, function ($event) {
-            WebhookLog::addLogFromEvent($event);
+            WebhookLog::createLog($event);
         });
     }
 

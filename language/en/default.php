@@ -4,8 +4,10 @@ return [
     'text_title' => 'Webhooks',
     'text_tab_general' => 'General',
     'text_tab_setup' => 'Setup Instructions',
-    'text_outgoing' => 'Webhooks',
+    'text_outgoing' => 'Outgoing Webhooks',
     'text_incoming' => 'Incoming webhooks',
+    'text_success' => '<span class="text-success">Success</span>',
+    'text_failed' => '<span class="text-danger">Failed</span>',
 
     'label_enable_authentication' => 'Enable Authentication',
     'label_server_signature_header' => 'Webhook Signature Header Name',
@@ -35,6 +37,7 @@ return [
         'label_secret' => 'Secret Signature',
         'label_events' => 'Events',
         'label_events_setup' => 'Select an event to see the setup instructions',
+        'label_message' => 'Message',
 
         'column_url' => 'Payload Url',
 

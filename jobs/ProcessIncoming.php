@@ -20,4 +20,9 @@ class ProcessIncoming extends ProcessWebhookJob
 
         $this->webhookCall->markAsSuccessful();
     }
+
+    public function failed()
+    {
+        $this->webhookCall->markAsFailed();
+    }
 }

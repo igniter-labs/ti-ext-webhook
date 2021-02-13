@@ -10,6 +10,7 @@ use IgniterLabs\Webhook\Models\Settings;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Schema;
 use System\Classes\ExtensionManager;
 
 class WebhookManager
@@ -48,6 +49,12 @@ class WebhookManager
     //
     //
     //
+
+    public static function isConfigured()
+    {
+        return app()->hasDatabase()
+            AND Schema::hasTable('igniterlabs_webhook_outgoing');
+    }
 
     public static function bindWebhookEvents()
     {
