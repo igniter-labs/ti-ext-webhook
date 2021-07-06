@@ -1,15 +1,15 @@
-## Menu Item Action
+## Category Action
 
-This webhook action will `create`, `fetch` or `delete` a menu item when the webhook url is called.
+This webhook action will `create`, `fetch` or `delete` a category when the webhook url is called.
 
-**Webhook action name:** `menu`
+**Webhook action name:** `category`
 
 ### Usage
 
 1. You must always set the webhook `action` parameter.
 
-### List menu items
-List all menu items in the order that they were created.
+### List categories
+List all categories in the order that they were created.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
@@ -30,29 +30,27 @@ Status: 200 OK
 [
   {
   "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+  "name": {},
+  "description": {},
+  "locations": []
  }
 ]
 ```
-### Create a menu item
+### Create a category
 
-Creates a new menu item.
+Creates a new category.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
 | ---------- | -------- | ------------------------------------------------------------ |
 | `action`   | `string` | **Required**. The webhook action to run. |
-| `menu_name` | `string` | **Required**. The menu item name |
-| `menu_price` | `string` | **Required**. The menu item price |
+| `name` | `string` | **Required**. The category name |
 
 #### Payload example
 ```json
 {
   "action": "create",
-  "menu_name": "email@domain.tld",
-  "menu_price": "John"
+  "name": "Appetizer"
 }
 ```
 #### Response
@@ -62,24 +60,23 @@ Status: 201 Created
 ```json
 {
   "id": "94894", 
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+  "name": "Appetizer"
 }
 ```
-### Retrieve a menu item
-Retrieves a menu item.
+### Retrieve a category
+Retrieves a category.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
 | ---------- | -------- | ------------------------------------------------------------ |
 | `action`   | `string` | **Required**. The webhook action to run. |
-| `menu_id` | `string` | **Required**. The ID of the menu item to retrieve. |
+| `category_id` | `string` | **Required**. The ID of the category to retrieve. |
 
 #### Payload example
 ```json
 {
   "action": "fetch",
-  "menu_id": "1"
+  "category_id": "1"
 }
 ```
 #### Response
@@ -88,25 +85,24 @@ Status: 200 OK
 ```
 ```json
 {
-  "menu_id": "1",
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+  "category_id": "1",
+  "name": "Appetizer"
 }
 ```
-### Delete a menu item
-Deletes a menu item.
+### Delete a category
+Deletes a category.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
 | ---------- | -------- | ------------------------------------------------------------ |
 | `action`   | `string` | **Required**. The webhook action to run. |
-| `menu_id` | `string` | **Required**. The ID of the menu item to retrieve. |
+| `category_id` | `string` | **Required**. The ID of the category to retrieve. |
 
 #### Payload example
 ```json
 {
   "action": "delete",
-  "menu_id": "1"
+  "category_id": "1"
 }
 ```
 #### Response
@@ -115,8 +111,7 @@ Status: 200 OK
 ```
 ```json
 {
-  "menu_id": "1",
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+  "category_id": "1",
+  "name": "Appetizer"
 }
 ```

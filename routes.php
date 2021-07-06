@@ -12,3 +12,7 @@ Route::post('webhook/{action}/{hash}', [
         return \IgniterLabs\Webhook\Classes\WebhookManager::runEntryPoint($action, $hash);
     },
 ])->where('action', '[a-zA-Z-_]+')->where('hash', '[a-zA-Z0-9]+');
+
+Route::post('/test_webhook', function () {
+    return response()->json(['message' => 'Hello world!']);
+});

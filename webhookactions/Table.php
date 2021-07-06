@@ -4,7 +4,7 @@ namespace IgniterLabs\Webhook\WebhookActions;
 
 use IgniterLabs\Webhook\Classes\BaseAction;
 
-class Order extends BaseAction
+class Table extends BaseAction
 {
     /**
      * {@inheritdoc}
@@ -12,21 +12,17 @@ class Order extends BaseAction
     public function actionDetails()
     {
         return [
-            'name' => 'Orders',
-            'description' => 'Update status, assign or delete an order.',
+            'name' => 'Tables',
+            'description' => 'Create, update or delete a table.',
         ];
     }
 
     public function registerEntryPoints()
     {
         return [
+            'create' => 'processCreateAction',
             'update' => 'processUpdateAction',
-            'assign' => 'processAssignAction',
             'delete' => 'processDeleteAction',
         ];
-    }
-
-    public function processUpdateAction()
-    {
     }
 }

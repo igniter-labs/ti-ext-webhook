@@ -1,8 +1,8 @@
-## Menu Item Event
+## Category Event
 
-This webhook event is triggered when a menu item is `created`, `updated`, `stock_updated` or `deleted`. The `stock_updated` action will ONLY be triggered during the checkout process
+This webhook event is triggered when a category is `created`, `updated` or `deleted`.
 
-**Webhook event name:** `menu`
+**Webhook event name:** `category`
 
 ### Usage
 
@@ -16,19 +16,17 @@ This webhook event is triggered when a menu item is `created`, `updated`, `stock
 
 | Key              | Type     | Description                                                  |
 | ---------------- | -------- | ------------------------------------------------------------ |
-| `action`         | `string` | The event type performed. Can be one of: `created` - A new menu item was created, `updated` - The menu item information was updated, `stock_updated` - The menu item stock was updated, `deleted` - An existing menu item was deleted. |
-| `menu`       | `object` | The menu item itself                                          |
+| `action`         | `string` | The event type performed. Can be one of: `created` - A new category was created, `updated` - The category information was updated, `deleted` - An existing category was deleted. |
+| `category`       | `object` | The category itself                                          |
 
 ### Webhook payload example
 
 ```json
 {
   "action": "created",
-  "menu": {
-    "special": {},
-    "mealtime": {},
-    "categories": [],
-    "menu_options": [],
+  "category": {
+    "name": {},
+    "description": {},
     "locations": []  
   }
 }

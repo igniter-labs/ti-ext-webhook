@@ -4,7 +4,7 @@ namespace IgniterLabs\Webhook\WebhookActions;
 
 use IgniterLabs\Webhook\Classes\BaseAction;
 
-class Location extends BaseAction
+class Category extends BaseAction
 {
     /**
      * {@inheritdoc}
@@ -12,8 +12,8 @@ class Location extends BaseAction
     public function actionDetails()
     {
         return [
-            'name' => 'Locations',
-            'description' => 'Create, update or delete a location.',
+            'name' => 'Category',
+            'description' => 'Create, update or delete a category.',
         ];
     }
 
@@ -24,5 +24,13 @@ class Location extends BaseAction
             'update' => 'processUpdateAction',
             'delete' => 'processDeleteAction',
         ];
+    }
+
+    //
+    // Actions
+    //
+
+    public function processListAction()
+    {
     }
 }

@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Admin\Models\Orders_model;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Order extends BaseEvent
@@ -25,6 +26,17 @@ class Order extends BaseEvent
             'status_added' => 'eloquent.created: Admin\Models\Status_history_model',
             'assigned' => 'admin.assignable.assigned',
             'deleted' => 'eloquent.deleted: Admin\Models\Orders_model',
+        ];
+    }
+
+    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    {
+        $order = array_get($args, 0);
+        if (!$order instanceof Orders_model)
+            return;
+
+        return [
+            'order' => $order->toArray(),
         ];
     }
 }

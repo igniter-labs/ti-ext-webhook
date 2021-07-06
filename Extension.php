@@ -100,18 +100,34 @@ class Extension extends BaseExtension
     {
         return [
             'events' => [
+                'category' => \IgniterLabs\Webhook\WebhookEvents\Category::class,
                 'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
-                'location' => \IgniterLabs\Webhook\WebhookEvents\Location::class,
                 'menu' => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
                 'order' => \IgniterLabs\Webhook\WebhookEvents\Order::class,
                 'reservation' => \IgniterLabs\Webhook\WebhookEvents\Reservation::class,
+                'table' => \IgniterLabs\Webhook\WebhookEvents\Table::class,
             ],
             'actions' => [
+                'category' => \IgniterLabs\Webhook\WebhookActions\Category::class,
                 'customer' => \IgniterLabs\Webhook\WebhookActions\Customer::class,
-                'location' => \IgniterLabs\Webhook\WebhookActions\Location::class,
                 'menu' => \IgniterLabs\Webhook\WebhookActions\Menu::class,
                 'order' => \IgniterLabs\Webhook\WebhookActions\Order::class,
                 'reservation' => \IgniterLabs\Webhook\WebhookActions\Reservation::class,
+                'table' => \IgniterLabs\Webhook\WebhookActions\Table::class,
+            ],
+        ];
+    }
+
+    public function registerApiResources()
+    {
+        return [
+            'webhooks' => [
+                'controller' => \IgniterLabs\Webhook\ApiResources\Webhooks::class,
+                'name' => 'Webhooks',
+                'description' => 'An API resource for webhooks',
+                'actions' => [
+                    'store:admin', 'update:admin', 'destroy:admin',
+                ],
             ],
         ];
     }

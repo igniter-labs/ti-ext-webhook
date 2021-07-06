@@ -76,6 +76,9 @@ class WebhookManager
                 return;
 
             $payload = $eventClass::makePayloadFromEvent(func_get_args(), $actionCode);
+            if (is_null($payload))
+                return;
+
             self::instance()->runWebhookEvent($eventCode, $actionCode, $payload);
         });
     }

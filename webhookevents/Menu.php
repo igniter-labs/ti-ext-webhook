@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Admin\Models\Menus_model;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Menu extends BaseEvent
@@ -27,8 +28,14 @@ class Menu extends BaseEvent
         ];
     }
 
-    public function triggerAction($action)
+    public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
+        $menu = array_get($args, 0);
+        if (!$menu instanceof Menus_model)
+            return;
 
+        return [
+            'menu' => $menu->toArray(),
+        ];
     }
 }

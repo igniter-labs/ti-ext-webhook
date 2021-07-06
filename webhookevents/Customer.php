@@ -30,11 +30,12 @@ class Customer extends BaseEvent
 
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
-        $params = [];
         $customer = array_get($args, 0);
-        if ($customer instanceof Customers_model)
-            $params['customer'] = $customer->toArray();
+        if (!$customer instanceof Customers_model)
+            return;
 
-        return $params;
+        return [
+            'customer' => $customer->toArray(),
+        ];
     }
 }

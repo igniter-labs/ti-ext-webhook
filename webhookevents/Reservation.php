@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Admin\Models\Reservations_model;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Reservation extends BaseEvent
@@ -13,7 +14,7 @@ class Reservation extends BaseEvent
     {
         return [
             'name' => 'Reservations',
-            'description' => 'Reservation created, status added, assigned or deleted.',
+            'description' => 'Reservation created, updated or deleted.',
         ];
     }
 
@@ -25,6 +26,17 @@ class Reservation extends BaseEvent
             'status_added' => 'eloquent.created: Admin\Models\Status_history_model',
             'assigned' => 'admin.assignable.assigned',
             'deleted' => 'eloquent.deleted: Admin\Models\Reservations_model',
+        ];
+    }
+
+    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    {
+        $reservation = array_get($args, 0);
+        if (!$reservation instanceof Reservations_model)
+            return;
+
+        return [
+            'reservation' => $reservation->toArray(),
         ];
     }
 }
