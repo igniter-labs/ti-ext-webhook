@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook\Controllers;
 
-use AdminMenu;
+use Admin\Facades\AdminMenu;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 

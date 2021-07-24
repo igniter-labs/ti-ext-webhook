@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook\Models;
 
-use Model;
+use Igniter\Flame\Database\Model;
 
 class Settings extends Model
 {

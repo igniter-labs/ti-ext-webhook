@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook\Controllers;
 
-use AdminMenu;
+use Admin\Facades\AdminMenu;
 
 /**
  * Incoming Webhooks Admin Controller

@@ -3,12 +3,12 @@
 namespace IgniterLabs\Webhook\Models;
 
 use Exception;
+use Igniter\Flame\Database\Model;
 use IgniterLabs\Webhook\Classes\BaseAction;
 use IgniterLabs\Webhook\Classes\WebhookClientProcessor;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use Model;
 use Spatie\WebhookClient\WebhookConfig;
 use System\Classes\ErrorHandler;
 
