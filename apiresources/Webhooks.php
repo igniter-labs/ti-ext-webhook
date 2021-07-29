@@ -1,4 +1,6 @@
-<?php namespace IgniterLabs\Webhook\ApiResources;
+<?php
+
+namespace IgniterLabs\Webhook\ApiResources;
 
 use Igniter\Api\Classes\ApiController;
 
