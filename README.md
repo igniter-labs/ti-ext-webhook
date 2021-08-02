@@ -1,5 +1,3 @@
-# This extension is still under active development :smile:
-
 Webhooks extension allows you to perform certain action on your TastyIgniter from somewhere else. 
 
 It turns your site into a powerful optimized webhook system so that your site can communicate with 
@@ -16,7 +14,7 @@ In the admin user interface:
 
 For example:
 - Create a TastyIgniter customer account as soon as a new signup happens on OpenTable.
-- Create a TastyIgniter menu item or order from a POS system.
+- Create a TastyIgniter menu item from a POS system.
 - Send data to your POS when a new order is placed on your TastyIgniter website.
 
 ### Features
@@ -27,6 +25,8 @@ For example:
 - Advanced settings for each outgoing/incoming webhook
 - Supports JSON and form urlencode
 - Supports Zapier, automate.io and more.
+
+### Advanced
 
 **Example of Registering Webhook Events**
 

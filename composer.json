@@ -1,6 +1,7 @@
 {
   "name": "igniterlabs/webhook",
   "type": "tastyigniter-extension",
+  "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
   "license": "MIT",
   "authors": [
     {
@@ -21,5 +22,23 @@
       "type": "vcs",
       "url": "https://github.com/sampoyigi/laravel-webhook-client"
     }
-  ]
+  ],
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniterlabs.webhook",
+      "name": "Webhooks",
+      "icon": {
+        "image": "icon.svg",
+        "backgroundColor": "#4FC3F7",
+        "color": "#FFF"
+      },
+      "require": {
+        "igniter.cart": "*",
+        "igniter.local": "*",
+        "igniter.user": "*",
+        "igniter.reservation": "*"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-webhook"
+    }
+  }
 }
