@@ -22,7 +22,7 @@ class Table extends BaseEvent
     {
         return [
             'created' => 'eloquent.created: Admin\Models\Tables_model',
-            'updated' => 'eloquent.saved: Admin\Models\Tables_model',
+            'updated' => 'eloquent.updated: Admin\Models\Tables_model',
             'deleted' => 'eloquent.deleted: Admin\Models\Tables_model',
         ];
     }

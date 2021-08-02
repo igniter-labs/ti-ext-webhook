@@ -1,6 +1,6 @@
 ## Customer Action
 
-This webhook action will `create`, `fetch` or `delete` a customer when the webhook url is called.
+This webhook action will `create`, `update` or `delete` a customer when the webhook url is called.
 
 **Webhook action name:** `customer`
 
@@ -10,34 +10,6 @@ This webhook action will `create`, `fetch` or `delete` a customer when the webho
 2. The customer_id or email parameter is always required.
 3. All the other parameters are optional.
 
-### List customers
-List all customers in the order that they were created.
-
-#### Parameters
-| Key        | Type     | Description                                                  |
-| ---------- | -------- | ------------------------------------------------------------ |
-| `action`   | `string` | **Required**. The webhook action to run. |
-
-#### Payload example
-```json
-{
-  "action": "list"
-}
-```
-#### Response
-```html
-Status: 200 OK
-```
-```json
-[
-  {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
- }
-]
-```
 ### Create a customer
 
 Creates a new customer.
@@ -68,18 +40,15 @@ Creates a new customer.
 ```
 #### Response
 ```html
-Status: 201 Created
+Status: 200 OK
 ```
 ```json
 {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+    "message": "ok"
 }
 ```
-### Retrieve a customer
-Retrieves a customer.
+### Update a customer
+Updates a customer.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
@@ -91,7 +60,7 @@ Retrieves a customer.
 #### Payload example
 ```json
 {
-  "action": "fetch",
+  "action": "update",
   "email": "example@domain.tld"
 }
 ```
@@ -101,10 +70,7 @@ Status: 200 OK
 ```
 ```json
 {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+    "message": "ok"
 }
 ```
 ### Delete a customer
@@ -130,9 +96,6 @@ Status: 200 OK
 ```
 ```json
 {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+    "message": "ok"
 }
 ```

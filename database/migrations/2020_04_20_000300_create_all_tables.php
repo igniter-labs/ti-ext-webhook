@@ -38,7 +38,6 @@ class CreateAllTables extends Migration
             $table->string('name');
             $table->boolean('is_success')->default(0);
             $table->text('payload')->nullable();
-//            $table->text('request')->nullable();
             $table->text('response')->nullable();
             $table->text('exception')->nullable();
             $table->timestamps();

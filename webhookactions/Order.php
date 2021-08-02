@@ -3,9 +3,16 @@
 namespace IgniterLabs\Webhook\WebhookActions;
 
 use IgniterLabs\Webhook\Classes\BaseAction;
+use IgniterLabs\Webhook\Traits\ProcessWebhookActions;
 
 class Order extends BaseAction
 {
+    use ProcessWebhookActions;
+
+    protected $modelClass = \Admin\Models\Orders_model::class;
+
+    protected $requestClass = \Igniter\Api\ApiResources\Requests\OrderRequest::class;
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +33,7 @@ class Order extends BaseAction
         ];
     }
 
-    public function processUpdateAction()
+    public function processAssignAction()
     {
     }
 }

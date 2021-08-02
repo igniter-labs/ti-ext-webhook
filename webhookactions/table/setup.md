@@ -1,79 +1,32 @@
-## Location Action
+## Table Action
 
-This webhook action will `create`, `fetch` or `delete` a location when the webhook url is called.
+This webhook action will `create`, `update` or `delete` a table when the webhook url is called.
 
 **Webhook action name:** `location`
 
 ### Usage
 
 1. You must always set the webhook `action` parameter.
-2. The location_id parameter is always required.
+2. The table_id parameter is always required.
 3. All the other parameters are optional.
 
-### Create a location
+### Create a table
 
-Creates a new location.
+Creates a new table.
 
 #### Parameters
 
 | Key                  | Type      | Description                                                  |
 | -------------------- | --------- | ------------------------------------------------------------ |
 | `action`             | `string`  | **Required**. The webhook action to run.                     |
-|                      |           |                                                              |
-| `password`           | `string`  | The location password, leave blank generate password         |
-| `first_name`         | `string`  | The first name of the location                               |
-| `last_name`          | `string`  | The last name of the location                                |
-| `telephone`          | `string`  | The telephone of the location                                |
-| `group_id`           | `integer` | The ID of the group that this location will belong to.       |
-| `is_activated`       | `boolean` | Either `true` to activate the location or `false` to deactivate it. Default: `false`. |
-| `send_welcome_email` | `boolean` | Either `true` to send a welcome email when creating a new location. Default: `false`. |
+| `table_name`         | `string`  | The name of the table                               |
 
 #### Payload example
 
 ```json
 {
   "action": "create",
-  "email": "email@domain.tld",
-  "first_name": "John",
-  "last_name": "Doe",
-  "telephone": "123456789",
-  "is_activated": true
-}
-```
-
-#### Response
-
-```html
-Status: 201 Created
-```
-
-```json
-{
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
-}
-```
-
-### Retrieve a location
-
-Retrieves a location.
-
-#### Parameters
-
-| Key           | Type     | Description                                                 |
-| ------------- | -------- | ----------------------------------------------------------- |
-| `action`      | `string` | **Required**. The webhook action to run.                    |
-| `email`       | `string` | The location email, **optional** when `location_id` is used |
-| `location_id` | `string` | The location ID, **optional** when `email` is used          |
-
-#### Payload example
-
-```json
-{
-  "action": "fetch",
-  "email": "example@domain.tld"
+  "table_name": "Table 1"
 }
 ```
 
@@ -85,31 +38,61 @@ Status: 200 OK
 
 ```json
 {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+    "message": "ok"
 }
 ```
 
-### Delete a location
+### Update a table
 
-Deletes a location.
+Updates a table.
 
 #### Parameters
 
 | Key           | Type     | Description                                                 |
 | ------------- | -------- | ----------------------------------------------------------- |
 | `action`      | `string` | **Required**. The webhook action to run.                    |
-| `email`       | `string` | The location email, **optional** when `location_id` is used |
-| `location_id` | `string` | The location ID, **optional** when `email` is used          |
+| `table_id`      | `string` | **Required**. The table ID.                    |
+| `table_name`         | `string`  | The name of the table                               |
+
+#### Payload example
+
+```json
+{
+  "action": "update",
+  "table_id": "1",
+  "table_name": "Table One"
+}
+```
+
+#### Response
+
+```html
+Status: 200 OK
+```
+
+```json
+{
+    "message": "ok"
+}
+```
+
+### Delete a table
+
+Deletes a table.
+
+#### Parameters
+
+| Key           | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| `action`      | `string` | **Required**. The webhook action to run.                    |
+| `table_id`      | `string` | **Required**. The table ID.                    |
 
 #### Payload example
 
 ```json
 {
   "action": "delete",
-  "email": "example@domain.tld"
+    "table_id": "1"
 }
 ```
 
@@ -121,9 +104,6 @@ Status: 200 OK
 
 ```json
 {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
+    "message": "ok"
 }
 ```

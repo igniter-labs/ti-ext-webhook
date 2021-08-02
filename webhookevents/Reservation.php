@@ -22,7 +22,7 @@ class Reservation extends BaseEvent
     {
         return [
             'created' => 'eloquent.created: Admin\Models\Reservations_model',
-            'updated' => 'eloquent.saved: Admin\Models\Reservations_model',
+            'updated' => 'eloquent.updated: Admin\Models\Reservations_model',
             'status_added' => 'eloquent.created: Admin\Models\Status_history_model',
             'assigned' => 'admin.assignable.assigned',
             'deleted' => 'eloquent.deleted: Admin\Models\Reservations_model',

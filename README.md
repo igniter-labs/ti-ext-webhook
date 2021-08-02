@@ -7,8 +7,6 @@ your third party apps like Zapier. Under the hood, this extension uses
 [spatie/laravel-webhook-server](https://github.com/spatie/laravel-webhook-server) 
 and [spatie/laravel-webhook-client](https://github.com/spatie/laravel-webhook-client) 
 
-![screenshot](/screenshot.png)
-
 ### Usage
 
 In the admin user interface:
@@ -83,7 +81,7 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
     {
         return [
             'created' => 'eloquent.created: Admin\Models\Customers_model',
-            'updated' => 'eloquent.saved: Admin\Models\Customers_model',
+            'updated' => 'eloquent.updated: Admin\Models\Customers_model',
             'deleted' => 'eloquent.deleted: Admin\Models\Customers_model',
         ];
     }

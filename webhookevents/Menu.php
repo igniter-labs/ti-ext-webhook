@@ -22,7 +22,7 @@ class Menu extends BaseEvent
     {
         return [
             'created' => 'eloquent.created: Admin\Models\Menus_model',
-            'updated' => 'eloquent.saved: Admin\Models\Menus_model',
+            'updated' => 'eloquent.updated: Admin\Models\Menus_model',
             'stock_updated' => 'admin.menu.stockUpdated',
             'deleted' => 'eloquent.deleted: Admin\Models\Menus_model',
         ];

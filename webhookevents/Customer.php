@@ -23,7 +23,7 @@ class Customer extends BaseEvent
     {
         return [
             'created' => 'eloquent.created: Admin\Models\Customers_model',
-            'updated' => 'eloquent.saved: Admin\Models\Customers_model',
+            'updated' => 'eloquent.updated: Admin\Models\Customers_model',
             'deleted' => 'eloquent.deleted: Admin\Models\Customers_model',
         ];
     }

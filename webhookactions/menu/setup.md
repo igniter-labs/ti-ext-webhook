@@ -1,6 +1,6 @@
 ## Menu Item Action
 
-This webhook action will `create`, `fetch` or `delete` a menu item when the webhook url is called.
+This webhook action will `create`, `update` or `delete` a menu item when the webhook url is called.
 
 **Webhook action name:** `menu`
 
@@ -8,34 +8,6 @@ This webhook action will `create`, `fetch` or `delete` a menu item when the webh
 
 1. You must always set the webhook `action` parameter.
 
-### List menu items
-List all menu items in the order that they were created.
-
-#### Parameters
-| Key        | Type     | Description                                                  |
-| ---------- | -------- | ------------------------------------------------------------ |
-| `action`   | `string` | **Required**. The webhook action to run. |
-
-#### Payload example
-```json
-{
-  "action": "list"
-}
-```
-#### Response
-```html
-Status: 200 OK
-```
-```json
-[
-  {
-  "id": "94894",
-  "group": {},
-  "address": {},
-  "addresses": []
- }
-]
-```
 ### Create a menu item
 
 Creates a new menu item.
@@ -57,17 +29,15 @@ Creates a new menu item.
 ```
 #### Response
 ```html
-Status: 201 Created
+Status: 200 OK
 ```
 ```json
 {
-  "id": "94894", 
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+    "message": "ok"
 }
 ```
-### Retrieve a menu item
-Retrieves a menu item.
+### Update a menu item
+Updates a menu item.
 
 #### Parameters
 | Key        | Type     | Description                                                  |
@@ -78,7 +48,7 @@ Retrieves a menu item.
 #### Payload example
 ```json
 {
-  "action": "fetch",
+  "action": "update",
   "menu_id": "1"
 }
 ```
@@ -88,9 +58,7 @@ Status: 200 OK
 ```
 ```json
 {
-  "menu_id": "1",
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+    "message": "ok"
 }
 ```
 ### Delete a menu item
@@ -115,8 +83,6 @@ Status: 200 OK
 ```
 ```json
 {
-  "menu_id": "1",
-  "menu_name": "Puff Puff",
-  "menu_price": "2.00"
+    "message": "ok"
 }
 ```
