@@ -62,14 +62,6 @@ return [
                 'span' => 'left',
                 'comment' => 'igniterlabs.webhook::default.help_server_signature_header',
             ],
-            'client_signature_header' => [
-                'tab' => 'igniterlabs.webhook::default.text_tab_server',
-                'label' => 'igniterlabs.webhook::default.label_client_signature_header',
-                'type' => 'text',
-                'default' => 'Signature',
-                'span' => 'right',
-                'comment' => 'igniterlabs.webhook::default.help_client_signature_header',
-            ],
             'headers' => [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
                 'label' => 'igniterlabs.webhook::default.label_headers',
@@ -95,7 +87,6 @@ return [
             ['timeout_in_seconds', 'igniterlabs.webhook::default.label_timeout_in_seconds', 'required|integer'],
             ['tries', 'igniterlabs.webhook::default.label_tries', 'required|integer'],
             ['server_signature_header', 'igniterlabs.webhook::default.label_server_signature_header', 'required|string'],
-            ['client_signature_header', 'igniterlabs.webhook::default.label_client_signature_header', 'required|string'],
             ['headers', 'igniterlabs.webhook::default.label_headers', 'required|array'],
         ],
     ],

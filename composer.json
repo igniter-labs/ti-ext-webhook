@@ -10,17 +10,12 @@
     }
   ],
   "require": {
-    "spatie/laravel-webhook-server": "dev-php72",
-    "spatie/laravel-webhook-client": "dev-php72"
+    "spatie/laravel-webhook-server": "dev-php72"
   },
   "repositories": [
     {
       "type": "vcs",
       "url": "https://github.com/sampoyigi/laravel-webhook-server"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/sampoyigi/laravel-webhook-client"
     }
   ],
   "extra": {

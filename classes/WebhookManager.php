@@ -4,12 +4,10 @@ namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Traits\Singleton;
-use IgniterLabs\Webhook\Models\Incoming;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Schema;
 use System\Classes\ExtensionManager;
 
@@ -17,17 +15,17 @@ class WebhookManager
 {
     use Singleton;
 
-    protected $webhookTypes;
+    protected $webhookEvents;
 
     /**
-     * @var array A cache of webhook events & actions.
+     * @var array A cache of webhook events.
      */
-    protected $webhookTypesCache = [];
+    protected $webhookEventsCache = [];
 
     /**
      * @var array Cache of registration callbacks.
      */
-    protected $webhookTypesCallbacks = [];
+    protected $webhookEventsCallbacks = [];
 
     protected function initialize()
     {
@@ -41,9 +39,6 @@ class WebhookManager
         Config::set('webhook-server.tries', (int)Settings::get('tries', Config::get('webhook-server.tries')));
         Config::set('webhook-server.signature_header_name', Settings::get('server_signature_header', Config::get('webhook-server.signature_header_name')));
 //        Config::set('webhook-server.headers', Settings::get('headers', Config::get('webhook-server.headers')));
-
-        Config::set('webhook-client.configs.0.signing_secret', Settings::get('client_signing_secret', Config::get('webhook-client.configs.0.signing_secret')));
-        Config::set('webhook-client.configs.0.signature_header_name', Settings::get('client_signature_header', Config::get('webhook-client.configs.0.signature_header_name')));
     }
 
     //
@@ -100,27 +95,6 @@ class WebhookManager
     }
 
     //
-    //
-    //
-
-    /**
-     * Executes an entry point for incoming webhook, defined in routes.php file.
-     *
-     * @param string $actionCode Incoming webhook action
-     * @param string $actionHash Incoming webhook hash
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public static function runEntryPoint($actionCode, $actionHash)
-    {
-        if ($webhookAction = Incoming::findByCodeHash($actionCode, $actionHash)) {
-            return $webhookAction->processWebHook();
-        }
-
-        return Response::json(['message' => 'access_forbidden'], '403');
-    }
-
-    //
     // Registration
     //
 
@@ -136,35 +110,6 @@ class WebhookManager
     }
 
     /**
-     * Returns a single action class name
-     *
-     * @param $actionCode
-     * @return string
-     */
-    public function getActionClass($actionCode)
-    {
-        return array_get($this->listActions(), $actionCode, null);
-    }
-
-    /**
-     * Returns a list of registered webhooks events.
-     * @return array Array keys are class names.
-     */
-    public function listEvents()
-    {
-        return array_get($this->listWebhookTypes(), 'events', []);
-    }
-
-    /**
-     * Returns a list of registered webhooks actions.
-     * @return array Array keys are class names.
-     */
-    public function listActions()
-    {
-        return array_get($this->listWebhookTypes(), 'actions', []);
-    }
-
-    /**
      * Returns a single event object
      *
      * @param $eventCode
@@ -173,17 +118,6 @@ class WebhookManager
     public function getEventObject($eventCode)
     {
         return array_get($this->listEventObjects(), $eventCode, null);
-    }
-
-    /**
-     * Returns a single action object
-     *
-     * @param $actionCode
-     * @return \IgniterLabs\Webhook\Classes\BaseAction
-     */
-    public function getActionObject($actionCode)
-    {
-        return array_get($this->listActionObjects(), $actionCode, null);
     }
 
     /**
@@ -202,56 +136,43 @@ class WebhookManager
     }
 
     /**
-     * Returns a list of registered webhooks actions.
+     * Returns a list of registered webhooks events.
      * @return array Array keys are class names.
      */
-    public function listActionObjects()
+    public function listEvents()
     {
-        $results = [];
-        foreach ($this->listActions() as $code => $className) {
-            if (!class_exists($className)) continue;
-            $results[$code] = new $className;
+        if ($this->webhookEventsCache) {
+            return $this->webhookEventsCache;
         }
 
-        return $results;
-    }
-
-    public function listWebhookTypes()
-    {
-        if ($this->webhookTypesCache) {
-            return $this->webhookTypesCache;
-        }
-
-        foreach ($this->webhookTypesCallbacks as $callback) {
+        foreach ($this->webhookEventsCallbacks as $callback) {
             $callback($this);
         }
 
-        $webhookTypesBundles = ExtensionManager::instance()->getRegistrationMethodValues('registerWebhookTypes');
-        foreach ($webhookTypesBundles as $owner => $definitions) {
+        $webhookEventsBundles = ExtensionManager::instance()->getRegistrationMethodValues('registerWebhookEvents');
+        foreach ($webhookEventsBundles as $definitions) {
             if (!is_array($definitions))
                 continue;
 
-            $this->registerWebhookType($definitions);
+            $this->registerWebhookEvent($definitions);
         }
 
-        return $this->webhookTypesCache = $this->webhookTypes;
+        return $this->webhookEventsCache = $this->webhookEvents;
     }
 
-    public function registerWebhookType($definitions)
+    public function registerWebhookEvent($definitions)
     {
-        if (!$this->webhookTypes) {
-            $this->webhookTypes = [];
+        if (!$this->webhookEvents) {
+            $this->webhookEvents = [];
         }
 
-        foreach ($definitions as $index => $definition) {
-            if (!is_string($index)) continue;
-            if (!is_array($definition)) continue;
-            $this->webhookTypes[$index] = array_merge($this->webhookTypes[$index] ?? [], $definition);
+        foreach ($definitions as $eventCode => $eventClass) {
+            $this->webhookEvents[$eventCode] = $eventClass;
         }
     }
 
     /**
-     * Manually registers webhooks events & actions for consideration.
+     * Manually registers webhooks events for consideration.
      * Usage:
      * <pre>
      *   ProviderManager::registerCallback(function($manager){
@@ -264,6 +185,6 @@ class WebhookManager
      */
     public function registerCallback(callable $definitions)
     {
-        $this->webhookTypesCallbacks[] = $definitions;
+        $this->webhookEventsCallbacks[] = $definitions;
     }
 }

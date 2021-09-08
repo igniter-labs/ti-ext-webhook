@@ -20,11 +20,6 @@ return [
                     'data-request-form' => '#list-form',
                     'data-request-confirm' => 'lang:admin::lang.alert_warning_confirm',
                 ],
-                'incoming' => [
-                    'label' => 'lang:igniterlabs.webhook::default.text_incoming',
-                    'class' => 'btn btn-default',
-                    'href' => 'igniterlabs/webhook/incoming',
-                ],
             ],
         ],
         'columns' => [

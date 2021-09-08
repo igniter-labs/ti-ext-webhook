@@ -20,16 +20,6 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_webhook_incoming', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('hash');
-            $table->string('action');
-            $table->text('config_data')->nullable();
-            $table->boolean('is_active')->default(0);
-            $table->timestamps();
-        });
-
         Schema::create('igniterlabs_webhook_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('uuid')->unsigned();
@@ -47,7 +37,6 @@ class CreateAllTables extends Migration
     public function down()
     {
         Schema::dropIfExists('igniterlabs_webhook_outgoing');
-        Schema::dropIfExists('igniterlabs_webhook_incoming');
         Schema::dropIfExists('igniterlabs_webhook_logs');
     }
 }

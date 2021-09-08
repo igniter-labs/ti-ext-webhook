@@ -4,20 +4,19 @@ namespace IgniterLabs\Webhook\Models;
 
 use GuzzleHttp\Psr7\Response;
 use Igniter\Flame\Database\Model;
-use Illuminate\Http\Request;
-use Spatie\WebhookClient\Models\WebhookCall as BaseWebhookCall;
-use Spatie\WebhookClient\WebhookConfig;
 use Spatie\WebhookServer\Events\WebhookCallEvent;
 
 /**
  * Webhook Log Model
  */
-class WebhookLog extends BaseWebhookCall
+class WebhookLog extends Model
 {
     /**
      * @var string The database table used by the model.
      */
     public $table = 'igniterlabs_webhook_logs';
+
+    public $timestamps = TRUE;
 
     /**
      * @var array Guarded fields
@@ -72,17 +71,6 @@ class WebhookLog extends BaseWebhookCall
             'message' => e($webhookEvent->errorMessage ?? 'Payload delivered successfully'),
             'response' => $response,
         ]));
-    }
-
-    public static function createIncomingLog(Model $webhook, WebhookConfig $config, Request $request)
-    {
-        return self::create([
-            'webhook_id' => $webhook->getKey(),
-            'webhook_type' => $webhook->getMorphClass(),
-            'name' => $webhook->name,
-            'payload' => $request->all(),
-            'message' => 'Started',
-        ]);
     }
 
     public function markAsSuccessful()

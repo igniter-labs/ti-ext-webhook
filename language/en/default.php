@@ -5,7 +5,6 @@ return [
     'text_tab_general' => 'General',
     'text_tab_setup' => 'Setup Instructions',
     'text_outgoing' => 'Outgoing Webhooks',
-    'text_incoming' => 'Incoming webhooks',
     'text_success' => '<span class="text-success">Success</span>',
     'text_failed' => '<span class="text-danger">Failed</span>',
 
@@ -15,7 +14,6 @@ return [
     'label_timeout_in_seconds' => 'Webhook Timeout',
     'label_tries' => 'Webhook Tries',
     'label_verify_ssl' => 'Verify SSL Certificate',
-    'label_client_signature_header' => 'Incoming Webhook Signature Header Name',
 
     'help_enable_authentication' => 'Authenticate outgoing webhook requests that requires authentication.',
     'help_server_signature_header' => 'The HTTP header key name of where the signature will be added for outgoing requests.',
@@ -23,7 +21,6 @@ return [
     'help_timeout_in_seconds' => 'The number of seconds it will take to send a webhook before giving up.',
     'help_tries' => 'The number of times to try sending a webhook before giving up.',
     'help_verify_ssl' => 'Verify whether the SSL certificate of the webhook destination is valid.',
-    'help_client_signature_header' => 'The HTTP header key name of where the signature will be added for incoming requests.',
 
     'outgoing' => [
         'text_title' => 'Webhooks',
@@ -46,23 +43,6 @@ return [
         'help_secret' => 'Set a webhook secret to secure your webhook POST requests. When creating, leave blank to generate one automatically.',
         'help_verify_ssl' => 'Whether to verify SSL certificates when delivering payloads',
         'help_events' => 'Which events would you like to trigger this webhook?',
-    ],
-
-    'incoming' => [
-        'text_title' => 'Incoming Webhooks',
-        'text_form_name' => 'Incoming Webhook',
-        'text_tab_calls' => 'Recent Calls',
-        'text_empty' => 'There are no incoming webhooks available.',
-
-        'label_url' => 'Webhook Url',
-        'label_action' => 'Action',
-        'label_secret' => 'Signing Secret',
-
-        'column_url' => 'Webhook Url',
-
-        'help_url' => 'Send the webhook action\'s JSON payloads to this URL.',
-        'help_action' => 'Specify the action to perform when the webhook is triggered',
-        'help_secret' => 'Setting this expects that every incoming webhook will be signed using this secret. It helps ensure payload has not been tampered with.',
     ],
 
     'automation' => [

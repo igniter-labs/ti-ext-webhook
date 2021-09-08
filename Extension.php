@@ -6,11 +6,6 @@ use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
-use Spatie\WebhookClient\Exceptions\InvalidConfig;
-use Spatie\WebhookClient\WebhookConfig;
-use Spatie\WebhookClient\WebhookConfigRepository;
 use Spatie\WebhookServer\Events\WebhookCallFailedEvent;
 use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
 use System\Classes\BaseExtension;
@@ -28,7 +23,6 @@ class Extension extends BaseExtension
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/config/webhook-server.php', 'webhook-server');
-        $this->mergeConfigFrom(__DIR__.'/config/webhook-client.php', 'webhook-client');
     }
 
     /**
@@ -40,12 +34,9 @@ class Extension extends BaseExtension
     {
         Relation::morphMap([
             'outgoing_webhook' => 'IgniterLabs\Webhook\Models\Outgoing',
-            'incoming_webhook' => 'IgniterLabs\Webhook\Models\Incoming',
         ]);
 
         $this->bootWebhookServer();
-
-        $this->bootWebhookClient();
 
         if (WebhookManager::isConfigured())
             WebhookManager::bindWebhookEvents();
@@ -96,25 +87,15 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerWebhookTypes()
+    public function registerWebhookEvents()
     {
         return [
-            'events' => [
-                'category' => \IgniterLabs\Webhook\WebhookEvents\Category::class,
-                'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
-                'menu' => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
-                'order' => \IgniterLabs\Webhook\WebhookEvents\Order::class,
-                'reservation' => \IgniterLabs\Webhook\WebhookEvents\Reservation::class,
-                'table' => \IgniterLabs\Webhook\WebhookEvents\Table::class,
-            ],
-            'actions' => [
-                'category' => \IgniterLabs\Webhook\WebhookActions\Category::class,
-                'customer' => \IgniterLabs\Webhook\WebhookActions\Customer::class,
-                'menu' => \IgniterLabs\Webhook\WebhookActions\Menu::class,
-                'order' => \IgniterLabs\Webhook\WebhookActions\Order::class,
-                'reservation' => \IgniterLabs\Webhook\WebhookActions\Reservation::class,
-                'table' => \IgniterLabs\Webhook\WebhookActions\Table::class,
-            ],
+            'category' => \IgniterLabs\Webhook\WebhookEvents\Category::class,
+            'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
+            'menu' => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
+            'order' => \IgniterLabs\Webhook\WebhookEvents\Order::class,
+            'reservation' => \IgniterLabs\Webhook\WebhookEvents\Reservation::class,
+            'table' => \IgniterLabs\Webhook\WebhookEvents\Table::class,
         ];
     }
 
@@ -140,35 +121,6 @@ class Extension extends BaseExtension
 
         Event::listen(WebhookCallFailedEvent::class, function ($event) {
             WebhookLog::createLog($event);
-        });
-    }
-
-    protected function bootWebhookClient()
-    {
-        $this->app->singleton(WebhookConfigRepository::class, function () {
-            $configRepository = new WebhookConfigRepository();
-
-            collect(config('webhook-client.configs'))
-                ->map(function (array $config) {
-                    return new WebhookConfig($config);
-                })
-                ->each(function (WebhookConfig $webhookConfig) use ($configRepository) {
-                    $configRepository->addConfig($webhookConfig);
-                });
-
-            return $configRepository;
-        });
-
-        $this->app->bind(WebhookConfig::class, function () {
-            $configName = Str::after(Route::currentRouteName(), 'webhook-client-');
-
-            $webhookConfig = app(WebhookConfigRepository::class)->getConfig($configName);
-
-            if (is_null($webhookConfig)) {
-                throw InvalidConfig::couldNotFindConfig($configName);
-            }
-
-            return $webhookConfig;
         });
     }
 }
