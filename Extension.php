@@ -115,11 +115,10 @@ class Extension extends BaseExtension
 
     protected function bootWebhookServer()
     {
-        Event::listen(WebhookCallSucceededEvent::class, function ($event) {
-            WebhookLog::createLog($event, TRUE);
-        });
-
-        Event::listen(WebhookCallFailedEvent::class, function ($event) {
+        Event::listen([
+            WebhookCallSucceededEvent::class,
+            WebhookCallFailedEvent::class,
+        ], function ($event) {
             WebhookLog::createLog($event);
         });
     }

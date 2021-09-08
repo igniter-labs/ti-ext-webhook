@@ -129,14 +129,17 @@ return [
                     'useAjax' => TRUE,
                     'defaultSort' => ['created_at', 'desc'],
                     'columns' => [
-                        'created_since' => [
-                            'title' => 'lang:admin::lang.column_date_added',
-                        ],
                         'status_name' => [
                             'title' => 'lang:admin::lang.label_status',
                         ],
+                        'event_code' => [
+                            'title' => 'lang:igniterlabs.webhook::default.outgoing.label_event_code',
+                        ],
                         'message' => [
                             'title' => 'lang:igniterlabs.webhook::default.outgoing.label_message',
+                        ],
+                        'created_since' => [
+                            'title' => 'lang:admin::lang.column_date_added',
                         ],
                     ],
                 ],

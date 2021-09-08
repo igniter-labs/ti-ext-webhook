@@ -35,6 +35,7 @@ return [
         'label_events' => 'Events',
         'label_events_setup' => 'Select an event to see the setup instructions',
         'label_message' => 'Message',
+        'label_event_code' => 'Event Code',
 
         'column_url' => 'Payload Url',
 

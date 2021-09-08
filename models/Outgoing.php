@@ -72,8 +72,9 @@ class Outgoing extends Model
     /**
      * Kicks off this outgoing webhook.
      * @param string $actionCode
+     * @param string $eventCode
      */
-    public function dispatchWebhook($actionCode)
+    public function dispatchWebhook($actionCode, $eventCode)
     {
         if (!strlen($this->url))
             throw new ApplicationException('Missing a webhook payload URL.');
@@ -97,6 +98,7 @@ class Outgoing extends Model
             'webhook_id' => $this->getKey(),
             'webhook_type' => $this->getMorphClass(),
             'name' => $this->name,
+            'event_code' => $eventCode,
         ]);
 
         Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);

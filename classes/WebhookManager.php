@@ -86,10 +86,10 @@ class WebhookManager
 
         $models = Outgoing::listWebhooksForEvent($eventCode);
 
-        $models->each(function (Outgoing $model) use ($eventClass, $actionCode, $payload) {
+        $models->each(function (Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload) {
             if ($model->applyEventClass($eventClass)) {
                 $model->setEventPayload($payload);
-                $model->dispatchWebhook($actionCode);
+                $model->dispatchWebhook($actionCode, $eventCode);
             }
         });
     }
