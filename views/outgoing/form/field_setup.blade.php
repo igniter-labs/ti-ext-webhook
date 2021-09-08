@@ -22,6 +22,7 @@
     </select>
 </div>
 <div
-    class="card card-body bg-white markdown"
+    class="card card-body bg-white markdown mt-3"
     data-partial="setup-instructions-content"
-></div>
+>To view the documentation, select an event
+</div>
