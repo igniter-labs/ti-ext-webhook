@@ -23,7 +23,7 @@
       "code": "igniterlabs.webhook",
       "name": "Webhooks",
       "icon": {
-        "class": "fa fa-paperclip",
+        "image": "icon.svg",
         "backgroundColor": "#147EFB",
         "color": "#FFF"
       },
