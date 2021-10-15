@@ -113,6 +113,17 @@ class Extension extends BaseExtension
         ];
     }
 
+    public function registerAutomationRules()
+    {
+        return [
+            'events' => [],
+            'actions' => [
+                \IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook::class,
+            ],
+            'conditions' => [],
+        ];
+    }
+
     protected function bootWebhookServer()
     {
         Event::listen([
