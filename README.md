@@ -1,26 +1,28 @@
-Webhooks extension allows you to perform certain action on your TastyIgniter from somewhere else. 
+Webhooks extension allows you to integrate your TastyIgniter site with external systems
 
-It turns your site into a powerful optimized webhook system so that your site can communicate with 
-your third party apps like Zapier. Under the hood, this extension uses 
+It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps
+like Zapier. Under the hood, this extension uses
 [spatie/laravel-webhook-server](https://github.com/spatie/laravel-webhook-server)
+
+For example:
+
+- Send data to OpenTable when a new reservation is made on your TastyIgniter website.
+- Send data to your POS when a new order is placed on your TastyIgniter website.
 
 ### Usage
 
 In the admin user interface:
+
 - Go to **System > Settings > Webhooks Settings** to configure the extension settings
 - Go to **Tools > Webhooks** to manage outgoing webhooks.
-- Go to **Tools > Automations** to automate outgoing webhooks when certain events happen. 
-
-For example:
-- Send data to OpenTable when a new reservation is made on your TastyIgniter website.
-- Send data to your POS when a new order is placed on your TastyIgniter website.
+- Go to **Tools > Automations** to automate outgoing webhooks when certain events happen.
 
 ### Features
 
 - Send data when certain events happen in your TastyIgniter platform.
 - Advanced settings for each outgoing webhook
 - Supports JSON and form urlencode
-- Supports Zapier, automate.io and more.
+- Tested with Zapier, automate.io and more.
 
 ### Advanced
 
