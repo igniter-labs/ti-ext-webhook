@@ -48,7 +48,7 @@ class WebhookManager
     public static function isConfigured()
     {
         return app()->hasDatabase()
-            AND Schema::hasTable('igniterlabs_webhook_outgoing');
+            && Schema::hasTable('igniterlabs_webhook_outgoing');
     }
 
     public static function bindWebhookEvents()
