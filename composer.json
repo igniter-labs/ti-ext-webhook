@@ -1,5 +1,5 @@
 {
-  "name": "igniterlabs/webhook",
+  "name": "igniterlabs/ti-ext-webhook",
   "type": "tastyigniter-extension",
   "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
   "license": "MIT",
