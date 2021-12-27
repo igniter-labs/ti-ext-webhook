@@ -22,13 +22,13 @@ class Outgoing extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|between:2,128',
-            'is_active' => 'required|boolean',
-            'url' => 'required|url',
-            'config_data.secret_key' => 'nullable|string',
-            'config_data.content_type' => 'required|string',
-            'config_data.verify_ssl' => 'required|boolean',
-            'events.*' => 'required|string',
+            'name' => ['required', 'between:2,128'],
+            'is_active' => ['required', 'boolean'],
+            'url' => ['required', 'url'],
+            'config_data.secret_key' => ['nullable', 'string'],
+            'config_data.content_type' => ['required', 'string'],
+            'config_data.verify_ssl' => ['required', 'boolean'],
+            'events.*' => ['required', 'string'],
         ];
     }
 }
