@@ -6,8 +6,6 @@ use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
-use Spatie\WebhookServer\Events\WebhookCallFailedEvent;
-use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
 use System\Classes\BaseExtension;
 
 /**
@@ -126,11 +124,12 @@ class Extension extends BaseExtension
 
     protected function bootWebhookServer()
     {
-        Event::listen([
-            WebhookCallSucceededEvent::class,
-            WebhookCallFailedEvent::class,
-        ], function ($event) {
-            WebhookLog::createLog($event);
+        Event::listen('igniterlabs.webhook.succeeded', function ($eventPayload) {
+            WebhookLog::createLog($eventPayload, TRUE);
+        });
+
+        Event::listen('igniterlabs.webhook.failed', function ($eventPayload) {
+            WebhookLog::createLog($eventPayload);
         });
     }
 }

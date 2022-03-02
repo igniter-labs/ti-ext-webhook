@@ -4,8 +4,8 @@ namespace IgniterLabs\Webhook\AutomationRules\Actions;
 
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
+use IgniterLabs\Webhook\Classes\WebhookCall;
 use IgniterLabs\Webhook\Classes\WebhookManager;
-use Spatie\WebhookServer\WebhookCall;
 
 class SendWebhook extends BaseAction
 {
@@ -48,7 +48,9 @@ class SendWebhook extends BaseAction
         WebhookManager::instance();
 
         $webhookJob = WebhookCall::create()->url($webhookUrl);
-        $webhookJob->payload($params);
+
+        $payload = array_except($params, ['order', 'reservation']);
+        $webhookJob->payload(['action' => $this->model->automation_rule->code] + $payload);
 
         if (strlen($webhookSecret = $this->model->secret)) {
             $webhookJob->useSecret($webhookSecret);

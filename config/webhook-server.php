@@ -13,13 +13,6 @@ return [
     'http_verb' => 'post',
 
     /*
-     * This class is responsible for calculating the signature that will be added to
-     * the headers of the webhook request. A webhook client can use the signature
-     * to verify the request hasn't been tampered with.
-     */
-    'signer' => \Spatie\WebhookServer\Signer\DefaultSigner::class,
-
-    /*
      * This is the name of the header where the signature will be added.
      */
     'signature_header_name' => 'Signature',
@@ -39,11 +32,6 @@ return [
      * The amount of times the webhook should be called before we give up.
      */
     'tries' => 3,
-
-    /*
-     * This class determines how many seconds there should be between attempts.
-     */
-    'backoff_strategy' => \Spatie\WebhookServer\BackoffStrategy\ExponentialBackoffStrategy::class,
 
     /*
      * By default we will verify that the ssl certificate of the destination

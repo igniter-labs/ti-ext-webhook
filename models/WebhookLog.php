@@ -4,8 +4,7 @@ namespace IgniterLabs\Webhook\Models;
 
 use GuzzleHttp\Psr7\Response;
 use Igniter\Flame\Database\Model;
-use Spatie\WebhookServer\Events\WebhookCallEvent;
-use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
+use IgniterLabs\Webhook\Classes\EventPayload;
 
 /**
  * Webhook Log Model
@@ -60,20 +59,18 @@ class WebhookLog extends Model
     //
     //
 
-    public static function createLog(WebhookCallEvent $webhookEvent)
+    public static function createLog(EventPayload $eventPayload, $isSuccess = FALSE)
     {
         $response = [];
-        if ($webhookEvent->response instanceof Response)
-            $response = $webhookEvent->response->getBody()->getContents();
-
-        $isSuccess = $webhookEvent instanceof WebhookCallSucceededEvent;
+        if ($eventPayload->response instanceof Response)
+            $response = $eventPayload->response->getBody()->getContents();
 
         $message = $isSuccess
             ? 'Payload delivered successfully'
-            : e($webhookEvent->errorMessage ?? 'No error message available.');
+            : e($eventPayload->errorMessage ?? 'No error message available.');
 
-        return self::create(array_merge($webhookEvent->meta, [
-            'payload' => $webhookEvent->payload,
+        return self::create(array_merge($eventPayload->meta, [
+            'payload' => $eventPayload->payload,
             'is_success' => $isSuccess,
             'message' => $message,
             'response' => $response,

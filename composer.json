@@ -9,15 +9,6 @@
       "email": "hello@igniterlabs.co.uk"
     }
   ],
-  "require": {
-    "spatie/laravel-webhook-server": "dev-php72"
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/sampoyigi/laravel-webhook-server"
-    }
-  ],
   "extra": {
     "tastyigniter-extension": {
       "code": "igniterlabs.webhook",

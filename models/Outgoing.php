@@ -5,10 +5,10 @@ namespace IgniterLabs\Webhook\Models;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use IgniterLabs\Webhook\Classes\WebhookCall;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Spatie\WebhookServer\WebhookCall;
 
 /**
  * Outgoing Webhook Model
