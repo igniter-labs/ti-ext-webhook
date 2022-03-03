@@ -3,6 +3,7 @@
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Admin\Models\Reservations_model;
+use Admin\Models\Status_history_model;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Reservation extends BaseEvent
@@ -32,6 +33,9 @@ class Reservation extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $reservation = array_get($args, 0);
+        if ($reservation instanceof Status_history_model)
+            $reservation = $reservation->object;
+
         if (!$reservation instanceof Reservations_model)
             return;
 
