@@ -3,6 +3,7 @@
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Admin\Models\Orders_model;
+use Admin\Models\Status_history_model;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Order extends BaseEvent
@@ -23,6 +24,7 @@ class Order extends BaseEvent
         return [
             'created' => 'eloquent.created: Admin\Models\Orders_model',
             'updated' => 'eloquent.updated: Admin\Models\Orders_model',
+            'placed' => 'admin.order.paymentProcessed',
             'status_added' => 'eloquent.created: Admin\Models\Status_history_model',
             'assigned' => 'admin.assignable.assigned',
             'deleted' => 'eloquent.deleted: Admin\Models\Orders_model',
