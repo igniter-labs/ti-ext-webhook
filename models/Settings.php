@@ -6,7 +6,7 @@ use Igniter\Flame\Database\Model;
 
 class Settings extends Model
 {
-    public $implement = ['System\Actions\SettingsModel'];
+    public $implement = [\System\Actions\SettingsModel::class];
 
     // A unique code
     public $settingsCode = 'igniterlabs_webhook_settings';
