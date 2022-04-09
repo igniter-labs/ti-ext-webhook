@@ -31,7 +31,7 @@ class Extension extends BaseExtension
     public function boot()
     {
         Relation::morphMap([
-            'outgoing_webhook' => 'IgniterLabs\Webhook\Models\Outgoing',
+            'outgoing_webhook' => \IgniterLabs\Webhook\Models\Outgoing::class,
         ]);
 
         $this->bootWebhookServer();
@@ -47,7 +47,7 @@ class Extension extends BaseExtension
                 'label' => 'Webhooks Settings',
                 'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
                 'icon' => 'fa fa-cog',
-                'model' => 'Igniterlabs\Webhook\Models\Settings',
+                'model' => \Igniterlabs\Webhook\Models\Settings::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
             ],
         ];

@@ -18,7 +18,7 @@ class Outgoing extends \Admin\Classes\AdminController
 
     public $listConfig = [
         'list' => [
-            'model' => 'IgniterLabs\Webhook\Models\Outgoing',
+            'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
             'title' => 'lang:igniterlabs.webhook::default.outgoing.text_title',
             'emptyMessage' => 'lang:igniterlabs.webhook::default.outgoing.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -28,8 +28,8 @@ class Outgoing extends \Admin\Classes\AdminController
 
     public $formConfig = [
         'name' => 'lang:igniterlabs.webhook::default.outgoing.text_form_name',
-        'model' => 'IgniterLabs\Webhook\Models\Outgoing',
-        'request' => 'IgniterLabs\Webhook\Requests\Outgoing',
+        'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
+        'request' => \IgniterLabs\Webhook\Requests\Outgoing::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniterlabs/webhook/outgoing/edit/{id}',

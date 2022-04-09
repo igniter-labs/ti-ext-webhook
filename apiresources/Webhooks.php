@@ -20,8 +20,8 @@ class Webhooks extends ApiController
             'destroy' => [],
         ],
         'request' => \IgniterLabs\Webhook\Requests\Outgoing::class,
-        'repository' => 'IgniterLabs\Webhook\Models\Webhook',
-        'transformer' => 'IgniterLabs\Webhook\ApiResources\Transformers\WebhookTransformer',
+        'repository' => \IgniterLabs\Webhook\Models\Webhook::class,
+        'transformer' => \IgniterLabs\Webhook\ApiResources\Transformers\WebhookTransformer::class,
     ];
 
     protected $requiredAbilities = ['webhooks:*'];

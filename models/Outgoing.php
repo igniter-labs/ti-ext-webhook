@@ -31,7 +31,7 @@ class Outgoing extends Model
 
     public $relation = [
         'morphMany' => [
-            'deliveries' => ['IgniterLabs\Webhook\Models\WebhookLog', 'name' => 'webhook', 'delete' => TRUE],
+            'deliveries' => [\IgniterLabs\Webhook\Models\WebhookLog::class, 'name' => 'webhook', 'delete' => TRUE],
         ],
     ];
 
