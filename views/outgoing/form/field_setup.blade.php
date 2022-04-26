@@ -4,7 +4,7 @@
     <select
         id="{{ $field->getId('select') }}"
         name="setup_event_code"
-        class="form-select"
+        class="form-control"
         data-request="onLoadSetupInstructions"
         data-progress-indicator="@lang('admin::lang.text_loading')"
         autocomplete="off"
