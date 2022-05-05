@@ -16,7 +16,7 @@ class WebhookLog extends Model
      */
     public $table = 'igniterlabs_webhook_logs';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * @var array Guarded fields
@@ -59,7 +59,7 @@ class WebhookLog extends Model
     //
     //
 
-    public static function createLog(EventPayload $eventPayload, $isSuccess = FALSE)
+    public static function createLog(EventPayload $eventPayload, $isSuccess = false)
     {
         $response = [];
         if ($eventPayload->response instanceof Response)
@@ -79,7 +79,7 @@ class WebhookLog extends Model
 
     public function markAsSuccessful()
     {
-        $this->is_success = TRUE;
+        $this->is_success = true;
 
         $this->save();
 
@@ -88,7 +88,7 @@ class WebhookLog extends Model
 
     public function markAsFailed()
     {
-        $this->is_success = FALSE;
+        $this->is_success = false;
 
         $this->save();
 

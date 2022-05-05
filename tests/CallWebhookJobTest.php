@@ -142,7 +142,7 @@ class CallWebhookJobTest extends ExtensionTestCase
         $this->baseWebhook()->doNotVerifySsl()->dispatch();
 
         $baseRequest = $this->baseRequest();
-        $baseRequest['options']['verify'] = FALSE;
+        $baseRequest['options']['verify'] = false;
 
         $this->artisan('queue:work --once');
 
@@ -201,7 +201,7 @@ class CallWebhookJobTest extends ExtensionTestCase
         Event::assertDispatched(WebhookCallFailedEvent::class, function (WebhookCallFailedEvent $event) {
             $this->assertNotNull($event->response);
 
-            return TRUE;
+            return true;
         });
     }
 
@@ -218,7 +218,7 @@ class CallWebhookJobTest extends ExtensionTestCase
             $this->assertNotNull($event->errorType);
             $this->assertNotNull($event->errorMessage);
 
-            return TRUE;
+            return true;
         });
     }
 
@@ -238,7 +238,7 @@ class CallWebhookJobTest extends ExtensionTestCase
             'options' => [
                 'timeout' => 3,
                 'body' => json_encode(['a' => 1]),
-                'verify' => TRUE,
+                'verify' => true,
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Signature' => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',
@@ -259,7 +259,7 @@ class CallWebhookJobTest extends ExtensionTestCase
             'options' => [
                 'timeout' => 3,
                 'query' => ['a' => 1],
-                'verify' => TRUE,
+                'verify' => true,
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Signature' => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',

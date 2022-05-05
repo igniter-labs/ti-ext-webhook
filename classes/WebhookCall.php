@@ -19,7 +19,7 @@ class WebhookCall
 
     private $payload = [];
 
-    private $signWebhook = TRUE;
+    private $signWebhook = true;
 
     public static function create(): self
     {
@@ -123,7 +123,7 @@ class WebhookCall
 
     public function doNotSign(): self
     {
-        $this->signWebhook = FALSE;
+        $this->signWebhook = false;
 
         return $this;
     }
@@ -135,7 +135,7 @@ class WebhookCall
         return $this;
     }
 
-    public function verifySsl(bool $verifySsl = TRUE): self
+    public function verifySsl(bool $verifySsl = true): self
     {
         $this->callWebhookJob->verifySsl = $verifySsl;
 
@@ -144,7 +144,7 @@ class WebhookCall
 
     public function doNotVerifySsl(): self
     {
-        $this->verifySsl(FALSE);
+        $this->verifySsl(false);
 
         return $this;
     }

@@ -31,7 +31,7 @@ it('can_dispatch_a_job_that_calls_a_webhook', function () {
         $this->assertEquals($config['verify_ssl'], $job->verifySsl);
         $this->assertEquals($config['tags'], $job->tags);
 
-        return TRUE;
+        return true;
     });
 });
 
@@ -49,7 +49,7 @@ test('can_keep_default_config_headers_and_set_new_ones', function () {
         $this->assertArrayHasKey('Content-Type', $job->headers);
         $this->assertArrayHasKey('User-Agent', $job->headers);
 
-        return TRUE;
+        return true;
     });
 });
 
@@ -67,7 +67,7 @@ it('can_override_default_config_headers', function () {
         $this->assertArrayHasKey('Content-Type', $job->headers);
         $this->assertEquals('text/plain', $job->headers['Content-Type']);
 
-        return TRUE;
+        return true;
     });
 });
 
@@ -82,7 +82,7 @@ it('can_override_default_queue_connection', function () {
     Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) use ($url) {
         $this->assertEquals('foo', $job->connection);
 
-        return TRUE;
+        return true;
     });
 });
 
@@ -101,7 +101,7 @@ it('will_throw_an_exception_when_no_secret_has_been_set', function () {
 it('will_not_throw_an_exception_if_there_is_not_secret_and_the_request_should_not_be_signed', function () {
     WebhookCall::create()->doNotSign()->url('https://localhost')->dispatch();
 
-    $this->assertTrue(TRUE);
+    $this->assertTrue(true);
 });
 
 it('can_get_the_uuid_property', function () {

@@ -37,7 +37,7 @@ return [
      * By default we will verify that the ssl certificate of the destination
      * of the webhook is valid.
      */
-    'verify_ssl' => TRUE,
+    'verify_ssl' => true,
 
     'tags' => [],
 ];

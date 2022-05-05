@@ -22,7 +22,7 @@ class Outgoing extends Model
      */
     public $table = 'igniterlabs_webhook_outgoing';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * @var array Guarded fields
@@ -31,7 +31,7 @@ class Outgoing extends Model
 
     public $relation = [
         'morphMany' => [
-            'deliveries' => [\IgniterLabs\Webhook\Models\WebhookLog::class, 'name' => 'webhook', 'delete' => TRUE],
+            'deliveries' => [\IgniterLabs\Webhook\Models\WebhookLog::class, 'name' => 'webhook', 'delete' => true],
         ],
     ];
 
@@ -49,7 +49,7 @@ class Outgoing extends Model
      */
     public static function listWebhooksForEvent($eventCode)
     {
-        return self::where('is_active', TRUE)->get()->filter(function ($model) use ($eventCode) {
+        return self::where('is_active', true)->get()->filter(function ($model) use ($eventCode) {
             return in_array($eventCode, $model->events ?? []);
         });
     }
@@ -85,7 +85,7 @@ class Outgoing extends Model
 
         $webhookJob = WebhookCall::create()->url($this->url);
 
-        $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', TRUE));
+        $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', true));
 
         strlen($secretKey) ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
 
@@ -132,7 +132,7 @@ class Outgoing extends Model
     public function applyEventClass($className)
     {
         if (!$className)
-            return FALSE;
+            return false;
 
         if (!$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);
@@ -140,7 +140,7 @@ class Outgoing extends Model
 
         $this->eventClassName = $className;
 
-        return TRUE;
+        return true;
     }
 
     /**

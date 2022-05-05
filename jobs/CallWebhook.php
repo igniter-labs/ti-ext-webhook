@@ -25,7 +25,7 @@ class CallWebhook implements ShouldQueue
 
     public $httpVerb;
 
-    public $postAsJson = TRUE;
+    public $postAsJson = true;
 
     public $tries;
 
