@@ -63,7 +63,7 @@ return [
             ],
             'id' => [
                 'label' => 'lang:admin::lang.column_id',
-                'invisible' => TRUE,
+                'invisible' => true,
             ],
         ],
     ],
@@ -72,7 +72,7 @@ return [
             'buttons' => [
                 'back' => [
                     'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-outline-secondary',
                     'href' => 'igniterlabs/webhook/outgoing',
                 ],
                 'save' => [
@@ -105,7 +105,7 @@ return [
                 'is_active' => [
                     'label' => 'lang:admin::lang.label_status',
                     'type' => 'switch',
-                    'default' => TRUE,
+                    'default' => true,
                     'span' => 'right',
                 ],
                 'url' => [
@@ -131,7 +131,7 @@ return [
                     'label' => 'lang:igniterlabs.webhook::default.outgoing.label_verify_ssl',
                     'type' => 'switch',
                     'span' => 'right',
-                    'default' => TRUE,
+                    'default' => true,
                     'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_verify_ssl',
                 ],
                 'events' => [
@@ -144,7 +144,7 @@ return [
                     'tab' => 'lang:igniterlabs.webhook::default.outgoing.text_tab_deliveries',
                     'type' => 'datatable',
                     'context' => ['edit'],
-                    'useAjax' => TRUE,
+                    'useAjax' => true,
                     'defaultSort' => ['created_at', 'desc'],
                     'columns' => [
                         'status_name' => [

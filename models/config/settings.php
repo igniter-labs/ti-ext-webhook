@@ -10,7 +10,7 @@ return [
             'buttons' => [
                 'back' => [
                     'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-outline-secondary',
                     'href' => 'settings',
                 ],
                 'save' => [
@@ -26,7 +26,7 @@ return [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
                 'label' => 'igniterlabs.webhook::default.label_enable_authentication',
                 'type' => 'switch',
-                'default' => TRUE,
+                'default' => true,
                 'span' => 'left',
                 'comment' => 'igniterlabs.webhook::default.help_enable_authentication',
             ],
@@ -34,7 +34,7 @@ return [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
                 'label' => 'igniterlabs.webhook::default.label_verify_ssl',
                 'type' => 'switch',
-                'default' => TRUE,
+                'default' => true,
                 'span' => 'right',
                 'comment' => 'igniterlabs.webhook::default.help_verify_ssl',
             ],
