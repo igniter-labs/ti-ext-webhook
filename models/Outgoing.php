@@ -1,154 +1,173 @@
 <?php
 
-namespace IgniterLabs\Webhook\Models;
-
-use Igniter\Flame\Database\Model;
-use Igniter\Flame\Exception\ApplicationException;
-use IgniterLabs\Webhook\Classes\BaseEvent;
-use IgniterLabs\Webhook\Classes\WebhookCall;
-use IgniterLabs\Webhook\Classes\WebhookManager;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
-
 /**
- * Outgoing Webhook Model
- *
- * @method setEventPayload(array $payload)
+ * Model configuration options for settings model.
  */
-class Outgoing extends Model
-{
-    /**
-     * @var string The database table used by the model.
-     */
-    public $table = 'igniterlabs_webhook_outgoing';
 
-    public $timestamps = true;
-
-    /**
-     * @var array Guarded fields
-     */
-    protected $guarded = [];
-
-    public $relation = [
-        'morphMany' => [
-            'deliveries' => [\IgniterLabs\Webhook\Models\WebhookLog::class, 'name' => 'webhook', 'delete' => true],
+return [
+    'list' => [
+        'toolbar' => [
+            'buttons' => [
+                'create' => [
+                    'label' => 'lang:admin::lang.button_new',
+                    'class' => 'btn btn-primary',
+                    'href' => 'igniterlabs/webhook/outgoing/create',
+                ],
+            ],
         ],
-    ];
+        'bulkActions' => [
+            'status' => [
+                'label' => 'lang:admin::lang.list.actions.label_status',
+                'type' => 'dropdown',
+                'class' => 'btn btn-light',
+                'statusColumn' => 'is_active',
+                'menuItems' => [
+                    'enable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_enable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item',
+                    ],
+                    'disable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_disable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item text-danger',
+                    ],
+                ],
+            ],
+            'delete' => [
+                'label' => 'lang:admin::lang.button_delete',
+                'class' => 'btn btn-light text-danger',
+                'data-request-confirm' => 'lang:admin::lang.alert_warning_confirm',
+            ],
+        ],
+        'columns' => [
+            'edit' => [
+                'type' => 'button',
+                'iconCssClass' => 'fa fa-pencil',
+                'attributes' => [
+                    'class' => 'btn btn-edit',
+                    'href' => 'igniterlabs/webhook/outgoing/edit/{id}',
+                ],
+            ],
+            'name' => [
+                'label' => 'lang:admin::lang.label_name',
+                'type' => 'text',
+            ],
+            'url' => [
+                'label' => 'lang:igniterlabs.webhook::default.outgoing.column_url',
+                'type' => 'text',
+            ],
+            'is_active' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+            ],
+            'id' => [
+                'label' => 'lang:admin::lang.column_id',
+                'invisible' => true,
+            ],
+        ],
+    ],
+    'form' => [
+        'toolbar' => [
+            'buttons' => [
+                'back' => [
+                    'label' => 'lang:admin::lang.button_icon_back',
+                    'class' => 'btn btn-outline-secondary',
+                    'href' => 'igniterlabs/webhook/outgoing',
+                ],
+                'save' => [
+                    'label' => 'lang:admin::lang.button_save',
+                    'context' => ['create', 'edit'],
+                    'partial' => 'form/toolbar_save_button',
+                    'class' => 'btn btn-primary',
+                    'data-request' => 'onSave',
+                    'data-progress-indicator' => 'admin::lang.text_saving',
+                ],
+                'delete' => [
+                    'label' => 'lang:admin::lang.button_icon_delete',
+                    'class' => 'btn btn-danger',
+                    'data-request' => 'onDelete',
+                    'data-request-data' => "_method:'DELETE'",
+                    'data-request-confirm' => 'lang:admin::lang.alert_warning_confirm',
+                    'data-progress-indicator' => 'admin::lang.text_deleting',
+                    'context' => ['edit'],
+                ],
+            ],
+        ],
+        'tabs' => [
+            'defaultTab' => 'lang:igniterlabs.webhook::default.text_tab_general',
+            'fields' => [
+                'name' => [
+                    'label' => 'lang:admin::lang.label_name',
+                    'type' => 'text',
+                    'span' => 'left',
+                ],
+                'is_active' => [
+                    'label' => 'lang:admin::lang.label_status',
+                    'type' => 'switch',
+                    'default' => true,
+                    'span' => 'right',
+                ],
+                'url' => [
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_url',
+                    'type' => 'text',
+                    'span' => 'left',
+                    'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_url',
+                ],
+                'config_data[secret_key]' => [
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_secret',
+                    'type' => 'text',
+                    'span' => 'right',
+                    'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_secret',
+                ],
+                'config_data[content_type]' => [
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_content_type',
+                    'type' => 'select',
+                    'options' => 'getContentTypeOptions',
+                    'span' => 'left',
+                    'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_content_type',
+                ],
+                'config_data[verify_ssl]' => [
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_verify_ssl',
+                    'type' => 'switch',
+                    'span' => 'right',
+                    'default' => true,
+                    'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_verify_ssl',
+                ],
+                'events' => [
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_events',
+                    'type' => 'checkboxlist',
+                    'commentAbove' => 'lang:igniterlabs.webhook::default.outgoing.help_events',
+                ],
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'events' => 'array',
-        'config_data' => 'array',
-    ];
+                'deliveries' => [
+                    'tab' => 'lang:igniterlabs.webhook::default.outgoing.text_tab_deliveries',
+                    'type' => 'datatable',
+                    'context' => ['edit'],
+                    'useAjax' => true,
+                    'defaultSort' => ['created_at', 'desc'],
+                    'columns' => [
+                        'status_name' => [
+                            'title' => 'lang:admin::lang.label_status',
+                        ],
+                        'event_code' => [
+                            'title' => 'lang:igniterlabs.webhook::default.outgoing.label_event_code',
+                        ],
+                        'message' => [
+                            'title' => 'lang:igniterlabs.webhook::default.outgoing.label_message',
+                        ],
+                        'created_since' => [
+                            'title' => 'lang:admin::lang.column_date_added',
+                        ],
+                    ],
+                ],
 
-    protected $eventClassName;
-
-    /**
-     * @param string $eventCode
-     * @return \Illuminate\Support\Collection
-     */
-    public static function listWebhooksForEvent($eventCode)
-    {
-        return self::where('is_active', true)->get()->filter(function ($model) use ($eventCode) {
-            return in_array($eventCode, $model->events ?? []);
-        });
-    }
-
-    public function getDropdownOptions()
-    {
-        return array_map(function (BaseEvent $event) {
-            return [$event->eventName(), $event->eventDescription()];
-        }, WebhookManager::instance()->listEventObjects());
-    }
-
-    public function getContentTypeOptions()
-    {
-        return [
-            'application/json' => 'application/json',
-            'application/x-www-form-urlencoded' => 'application/x-www-form-urlencoded',
-        ];
-    }
-
-    /**
-     * Kicks off this outgoing webhook.
-     * @param string $actionCode
-     * @param string $eventCode
-     */
-    public function dispatchWebhook($actionCode, $eventCode)
-    {
-        if (!strlen($this->url))
-            throw new ApplicationException('Missing a webhook payload URL.');
-
-        $options = $this->config_data ?? [];
-        $secretKey = array_get($options, 'secret_key');
-        $contentType = array_get($options, 'content_type');
-
-        $webhookJob = WebhookCall::create()->url($this->url);
-
-        $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', true));
-
-        strlen($secretKey) ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
-
-        $webhookJob->postAsJson($contentType !== 'application/x-www-form-urlencoded');
-
-        $payload = ['action' => $actionCode] + $this->getEventObject()->getEventPayload();
-        $webhookJob->payload($payload);
-
-        $webhookJob->meta([
-            'webhook_id' => $this->getKey(),
-            'webhook_type' => $this->getMorphClass(),
-            'name' => $this->name,
-            'event_code' => $eventCode,
-        ]);
-
-        Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);
-
-        $webhookJob->dispatch();
-    }
-
-    //
-    // Events
-    //
-
-    protected function beforeCreate()
-    {
-        $configData = $this->config_data ?? [];
-        if (!array_get($configData, 'secret_key')) {
-            $configData['secret_key'] = Str::random(16);
-        }
-
-        $this->config_data = $configData;
-    }
-
-    //
-    // Manager
-    //
-
-    /**
-     * Extends this class with the event class
-     * @param string $className Class name
-     * @return bool
-     */
-    public function applyEventClass($className)
-    {
-        if (!$className)
-            return false;
-
-        if (!$this->isClassExtendedWith($className)) {
-            $this->extendClassWith($className);
-        }
-
-        $this->eventClassName = $className;
-
-        return true;
-    }
-
-    /**
-     * Returns the event class extension object.
-     * @return \IgniterLabs\Webhook\Classes\BaseEvent
-     */
-    public function getEventObject()
-    {
-        return $this->asExtension($this->eventClassName);
-    }
-}
+                'setup' => [
+                    'tab' => 'lang:igniterlabs.webhook::default.text_tab_setup',
+                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_events_setup',
+                    'type' => 'setup',
+                ],
+            ],
+        ],
+    ],
+];

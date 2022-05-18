@@ -63,9 +63,9 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Admin\Models\Customers_model',
-            'updated' => 'eloquent.updated: Admin\Models\Customers_model',
-            'deleted' => 'eloquent.deleted: Admin\Models\Customers_model',
+            'created' => 'eloquent.created: Igniter\Admin\Models\Customer',
+            'updated' => 'eloquent.updated: Igniter\Admin\Models\Customer',
+            'deleted' => 'eloquent.deleted: Igniter\Admin\Models\Customer',
         ];
     }
 
@@ -73,7 +73,7 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
     {
         $params = [];
         $customer = array_get($args, 0);
-        if ($customer instanceof Customers_model)
+        if ($customer instanceof Customer)
             $params['customer'] = $customer->toArray();
 
         return $params;

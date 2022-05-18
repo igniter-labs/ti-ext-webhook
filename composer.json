@@ -9,6 +9,11 @@
       "email": "hello@igniterlabs.co.uk"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "IgniterLabs\\Webhook\\": "src/"
+    }
+  },
   "extra": {
     "tastyigniter-extension": {
       "code": "igniterlabs.webhook",
