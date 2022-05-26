@@ -10,7 +10,7 @@ use Igniter\Api\Classes\ApiController;
 class Webhooks extends ApiController
 {
     public $implement = [
-        'Igniter.Api.Actions.RestController',
+        \Igniter\Api\Http\Actions\RestController::class,
     ];
 
     public $restConfig = [

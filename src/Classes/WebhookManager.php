@@ -4,6 +4,7 @@ namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Traits\Singleton;
+use Igniter\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
@@ -47,7 +48,7 @@ class WebhookManager
 
     public static function isConfigured()
     {
-        return app()->hasDatabase()
+        return Igniter::hasDatabase()
             && Schema::hasTable('igniterlabs_webhook_outgoing');
     }
 
