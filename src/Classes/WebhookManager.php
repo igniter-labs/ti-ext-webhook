@@ -3,8 +3,8 @@
 namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Igniter;
 use Igniter\Flame\Traits\Singleton;
-use Igniter\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
@@ -150,7 +150,7 @@ class WebhookManager
             $callback($this);
         }
 
-        $webhookEventsBundles = ExtensionManager::instance()->getRegistrationMethodValues('registerWebhookEvents');
+        $webhookEventsBundles = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerWebhookEvents');
         foreach ($webhookEventsBundles as $definitions) {
             if (!is_array($definitions))
                 continue;
