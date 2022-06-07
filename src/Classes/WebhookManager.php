@@ -4,7 +4,6 @@ namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Igniter;
-use Igniter\Flame\Traits\Singleton;
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
@@ -14,8 +13,6 @@ use Illuminate\Support\Facades\Schema;
 
 class WebhookManager
 {
-    use Singleton;
-
     protected $webhookEvents;
 
     /**
@@ -28,12 +25,7 @@ class WebhookManager
      */
     protected $webhookEventsCallbacks = [];
 
-    protected function initialize()
-    {
-        $this->applyWebhookConfigValues();
-    }
-
-    public function applyWebhookConfigValues()
+    public static function applyWebhookConfigValues()
     {
         Config::set('webhook-server.verify_ssl', (bool)Settings::get('verify_ssl', Config::get('webhook-server.verify_ssl')));
         Config::set('webhook-server.timeout_in_seconds', (int)Settings::get('timeout_in_seconds', Config::get('webhook-server.timeout_in_seconds')));
@@ -54,7 +46,7 @@ class WebhookManager
 
     public static function bindWebhookEvents()
     {
-        collect(self::instance()->listEvents())->each(function ($eventClass, $eventCode) {
+        collect((new static)->listEvents())->each(function ($eventClass, $eventCode) {
             if (!method_exists($eventClass, 'registerEventListeners'))
                 return;
 
@@ -75,7 +67,7 @@ class WebhookManager
             if (is_null($payload))
                 return;
 
-            self::instance()->runWebhookEvent($eventCode, $actionCode, $payload);
+            (new static)->runWebhookEvent($eventCode, $actionCode, $payload);
         });
     }
 

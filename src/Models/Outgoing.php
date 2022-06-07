@@ -58,7 +58,7 @@ class Outgoing extends Model
     {
         return array_map(function (BaseEvent $event) {
             return [$event->eventName(), $event->eventDescription()];
-        }, WebhookManager::instance()->listEventObjects());
+        }, resolve(WebhookManager::class)->listEventObjects());
     }
 
     public function getContentTypeOptions()

@@ -64,7 +64,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
         if (!$eventCode = post('setup_event_code'))
             throw new ApplicationException('Please choose an event.');
 
-        if (!$eventObj = WebhookManager::instance()->getEventObject($eventCode))
+        if (!$eventObj = resolve(WebhookManager::class)->getEventObject($eventCode))
             throw new ApplicationException('Event not found');
 
         return [

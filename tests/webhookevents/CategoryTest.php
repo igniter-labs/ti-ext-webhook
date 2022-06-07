@@ -12,7 +12,7 @@ class CategoryTest extends ExtensionTestCase
     {
         $actionCode = 'created';
         $payload = Order::makePayloadFromEvent([], $actionCode);
-        WebhookManager::instance()->runWebhookEvent(
+        resolve(WebhookManager::class)->runWebhookEvent(
             'order', $actionCode, $payload
         );
     }

@@ -21,6 +21,8 @@ class Extension extends BaseExtension
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/config/webhook-server.php', 'webhook-server');
+
+        $this->app->singleton(WebhookManager::class);
     }
 
     /**
@@ -36,8 +38,10 @@ class Extension extends BaseExtension
 
         $this->bootWebhookServer();
 
-        if (WebhookManager::isConfigured())
+        if (WebhookManager::isConfigured()) {
+            WebhookManager::applyWebhookConfigValues();
             WebhookManager::bindWebhookEvents();
+        }
     }
 
     public function registerSettings()
