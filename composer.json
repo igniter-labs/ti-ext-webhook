@@ -9,6 +9,9 @@
       "email": "hello@igniterlabs.co.uk"
     }
   ],
+  "require": {
+    "tastyigniter/flame": "v4.x-dev"
+  },
   "autoload": {
     "psr-4": {
       "IgniterLabs\\Webhook\\": "src/"
