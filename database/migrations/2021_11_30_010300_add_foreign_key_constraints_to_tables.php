@@ -3,7 +3,6 @@
 namespace IgniterLabs\Webhook\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class AddForeignKeyConstraintsToTables extends Migration
@@ -12,9 +11,11 @@ class AddForeignKeyConstraintsToTables extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::table('igniterlabs_webhook_logs', function (Blueprint $table) {
-            $table->foreignId('webhook_id')->nullable()->change();
-        });
+        // Commented out so foreign keys are not added on new installations.
+        // For existing installations, another migration has been added to drop all foreign keys.
+//        Schema::table('igniterlabs_webhook_logs', function (Blueprint $table) {
+//            $table->foreignId('webhook_id')->nullable()->change();
+//        });
 
         Schema::enableForeignKeyConstraints();
     }
