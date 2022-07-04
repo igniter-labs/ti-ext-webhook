@@ -1,6 +1,6 @@
 <?php
 
-namespace Igniter\Webhook\Database\Migrations;
+namespace IgniterLabs\Webhook\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
