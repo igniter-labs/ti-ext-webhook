@@ -47,7 +47,7 @@ class Extension extends BaseExtension
                 'label' => 'Webhooks Settings',
                 'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
                 'icon' => 'fa fa-cog',
-                'model' => \Igniterlabs\Webhook\Models\Settings::class,
+                'model' => \IgniterLabs\Webhook\Models\Settings::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
             ],
         ];
@@ -83,6 +83,11 @@ class Extension extends BaseExtension
                 ],
             ],
         ];
+    }
+
+    public function registerSchedule($schedule)
+    {
+        $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
     }
 
     public function registerWebhookEvents()
