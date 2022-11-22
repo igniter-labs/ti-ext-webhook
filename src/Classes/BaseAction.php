@@ -3,7 +3,7 @@
 namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Mail\Markdown;
-use Igniter\Flame\Support\Facades\File;
+use Illuminate\Support\Facades\File;
 
 abstract class BaseAction
 {
