@@ -101,7 +101,7 @@ class Outgoing extends Model
             'event_code' => $eventCode,
         ]);
 
-        Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob]);
+        Event::fire('igniterlabs.webhook.beforeDispatch', [$webhookJob, $this]);
 
         $webhookJob->dispatch();
     }
