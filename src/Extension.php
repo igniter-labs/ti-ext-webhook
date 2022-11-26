@@ -20,7 +20,7 @@ class Extension extends BaseExtension
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/webhook-server.php', 'webhook-server');
+        $this->mergeConfigFrom(__DIR__.'/../config/webhook-server.php', 'webhook-server');
 
         $this->app->singleton(WebhookManager::class);
     }
