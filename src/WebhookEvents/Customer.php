@@ -6,6 +6,8 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Customer extends BaseEvent
 {
+    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.customer';
+
     /**
      * {@inheritdoc}
      */

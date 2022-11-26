@@ -7,6 +7,8 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Order extends BaseEvent
 {
+    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.order';
+
     /**
      * {@inheritdoc}
      */

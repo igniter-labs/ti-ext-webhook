@@ -6,6 +6,8 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Menu extends BaseEvent
 {
+    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.menu';
+
     /**
      * {@inheritdoc}
      */

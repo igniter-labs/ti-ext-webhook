@@ -2,8 +2,9 @@
 
 namespace IgniterLabs\Webhook\Classes;
 
-use Igniter\Flame\Mail\Markdown;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 abstract class BaseEvent
 {
@@ -14,7 +15,7 @@ abstract class BaseEvent
      */
     protected $model;
 
-    protected $path;
+    protected $setupPartial;
 
     /**
      * @var array Contains the event payload.
@@ -24,7 +25,6 @@ abstract class BaseEvent
     public function __construct($model = null)
     {
         $this->model = $model;
-        $this->path = '$/'.strtolower(str_replace('\\', '/', get_called_class()));
     }
 
     /**
@@ -114,11 +114,10 @@ abstract class BaseEvent
 
     public function renderSetupPartial()
     {
-        $setupPath = File::symbolizePath(sprintf('%s/%s', $this->path, 'setup.md'));
-        if (!$setupPath = File::existsInsensitive($setupPath))
-            return 'No setup instructions provided';
+        if (view()->exists($this->setupPartial))
+            return Markdown::parse(File::get(View::make($this->setupPartial)->getPath()))->toHtml();
 
-        return Markdown::parseFile($setupPath)->toHtml();
+        return 'No setup instructions provided';
     }
 
     public static function extend(callable $callback)

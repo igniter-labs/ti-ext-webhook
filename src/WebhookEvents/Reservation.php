@@ -7,6 +7,8 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Reservation extends BaseEvent
 {
+    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.reservation';
+
     /**
      * {@inheritdoc}
      */

@@ -6,6 +6,8 @@ use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Table extends BaseEvent
 {
+    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.table';
+
     /**
      * {@inheritdoc}
      */
