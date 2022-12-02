@@ -1,8 +1,6 @@
 Webhooks extension allows you to integrate your TastyIgniter site with external systems
 
-It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps
-like Zapier. Under the hood, this extension uses
-[spatie/laravel-webhook-server](https://github.com/spatie/laravel-webhook-server)
+It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps like Zapier.
 
 For example:
 
