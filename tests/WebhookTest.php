@@ -43,7 +43,7 @@ test('can_keep_default_config_headers_and_set_new_ones', function () {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) use ($url) {
+    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('Content-Type', $job->headers);
@@ -61,7 +61,7 @@ it('can_override_default_config_headers', function () {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) use ($url) {
+    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('Content-Type', $job->headers);
@@ -79,7 +79,7 @@ it('can_override_default_queue_connection', function () {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) use ($url) {
+    Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) {
         $this->assertEquals('foo', $job->connection);
 
         return true;
