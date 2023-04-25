@@ -58,6 +58,20 @@ class WebhookCall
         return $this;
     }
 
+    public function mergePayload(array $payload): self
+    {
+        $this->payload = array_merge($this->payload, $payload);
+
+        $this->callWebhookJob->payload = $this->payload;
+
+        return $this;
+    }
+
+    public function getPayload(string $key)
+    {
+        return array_get($this->payload, $key);
+    }
+
     public function uuid(string $uuid): self
     {
         $this->uuid = $uuid;

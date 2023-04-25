@@ -89,6 +89,11 @@ class Extension extends BaseExtension
         ];
     }
 
+    public function registerSchedule($schedule)
+    {
+        $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
+    }
+
     public function registerWebhookEvents()
     {
         return [
