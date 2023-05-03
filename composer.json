@@ -1,48 +1,54 @@
 {
-  "name": "igniterlabs/ti-ext-webhook",
-  "type": "tastyigniter-package",
-  "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Igniter Labs Team",
-      "email": "hello@igniterlabs.co.uk"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "IgniterLabs\\Webhook\\": "src/"
-    }
-  },
-  "extra": {
-    "tastyigniter-extension": {
-      "code": "igniterlabs.webhook",
-      "name": "Webhooks",
-      "icon": {
-        "image": "icon.svg",
-        "backgroundColor": "#147EFB",
-        "color": "#FFF"
-      },
-      "require": {
-        "igniter.cart": "*",
-        "igniter.local": "*",
-        "igniter.user": "*",
-        "igniter.reservation": "*"
-      },
-      "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-webhook"
-    }
-  },
-  "require-dev": {
-    "laravel/pint": "^1.2",
-    "nunomaduro/larastan": "^2.4.0",
-    "orchestra/testbench": "^8.5",
-    "pestphp/pest-plugin-laravel": "^2.0",
-    "pestphp/pest": "^2.5"
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
+    "name": "igniterlabs/ti-ext-webhook",
+    "type": "tastyigniter-package",
+    "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igniter Labs Team",
+            "email": "hello@igniterlabs.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "IgniterLabs\\Webhook\\": "src/"
+        }
     },
-    "sort-packages": true
-  }
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "igniterlabs.webhook",
+            "name": "Webhooks",
+            "icon": {
+                "image": "icon.svg",
+                "backgroundColor": "#147EFB",
+                "color": "#FFF"
+            },
+            "require": {
+                "igniter.cart": "*",
+                "igniter.local": "*",
+                "igniter.user": "*",
+                "igniter.reservation": "*"
+            },
+            "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-webhook"
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "pestphp/pest": "^2.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+    }
 }
