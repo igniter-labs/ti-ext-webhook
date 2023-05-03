@@ -63,8 +63,7 @@ class CallWebhook implements ShouldQueue
         try {
             if (strtoupper($this->httpVerb) === 'GET') {
                 $body = ['query' => $this->payload];
-            }
-            else {
+            } else {
                 $body = !$this->postAsJson
                     ? ['form_params' => $this->payload]
                     : ['body' => json_encode($this->payload)];
@@ -86,8 +85,7 @@ class CallWebhook implements ShouldQueue
             $this->dispatchEvent('igniterlabs.webhook.succeeded');
 
             return;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             if ($exception instanceof RequestException) {
                 $this->response = $exception->getResponse();
                 $this->errorType = get_class($exception);
@@ -99,8 +97,9 @@ class CallWebhook implements ShouldQueue
                 $this->errorMessage = $exception->getMessage();
             }
 
-            if (!$lastAttempt)
+            if (!$lastAttempt) {
                 $this->release($this->waitInSecondsAfterAttempt($this->attempts()));
+            }
 
             $this->dispatchEvent('igniterlabs.webhook.failed');
         }

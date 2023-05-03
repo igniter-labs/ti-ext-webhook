@@ -32,8 +32,9 @@ class Customer extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $customer = array_get($args, 0);
-        if (!$customer instanceof Customer)
+        if (!$customer instanceof Customer) {
             return;
+        }
 
         return [
             'customer' => $customer->toArray(),

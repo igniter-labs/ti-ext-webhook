@@ -32,8 +32,9 @@ trait ProcessWebhookActions
 
     protected function findModel($recordId)
     {
-        if (!$model = $this->createModel()->find($recordId))
+        if (!$model = $this->createModel()->find($recordId)) {
             throw new ApplicationException('Record not found');
+        }
 
         return $model;
     }

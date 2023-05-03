@@ -31,8 +31,9 @@ class Table extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $table = array_get($args, 0);
-        if (!$table instanceof Table)
+        if (!$table instanceof Table) {
             return;
+        }
 
         return [
             'table' => $table->toArray(),

@@ -106,8 +106,9 @@ abstract class BaseAction
     public function renderSetupPartial()
     {
         $setupPath = File::symbolizePath(sprintf('%s/%s', $this->path, 'setup.md'));
-        if (!$setupPath = File::existsInsensitive($setupPath))
+        if (!$setupPath = File::existsInsensitive($setupPath)) {
             return 'No setup instructions provided';
+        }
 
         return Markdown::parseFile($setupPath)->toHtml();
     }

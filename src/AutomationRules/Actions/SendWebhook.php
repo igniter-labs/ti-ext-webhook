@@ -42,8 +42,9 @@ class SendWebhook extends BaseAction
 
     public function triggerAction($params)
     {
-        if (!strlen($webhookUrl = $this->model->url))
+        if (!strlen($webhookUrl = $this->model->url)) {
             throw new ApplicationException('Send Webhook event rule is missing a valid webhook url');
+        }
 
         WebhookManager::instance();
 
@@ -54,8 +55,7 @@ class SendWebhook extends BaseAction
 
         if (strlen($webhookSecret = $this->model->secret)) {
             $webhookJob->useSecret($webhookSecret);
-        }
-        else {
+        } else {
             $webhookJob->doNotSign();
         }
 

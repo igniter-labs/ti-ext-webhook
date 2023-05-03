@@ -32,8 +32,9 @@ class Menu extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $menu = array_get($args, 0);
-        if (!$menu instanceof Menu)
+        if (!$menu instanceof Menu) {
             return;
+        }
 
         return [
             'menu' => $menu->toArray(),

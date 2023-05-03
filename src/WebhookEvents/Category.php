@@ -31,8 +31,9 @@ class Category extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $category = array_get($args, 0);
-        if (!$category instanceof Category)
+        if (!$category instanceof Category) {
             return;
+        }
 
         return [
             'category' => $category->toArray(),

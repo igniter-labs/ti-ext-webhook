@@ -62,8 +62,9 @@ class WebhookLog extends Model
     public static function createLog(EventPayload $eventPayload, $isSuccess = false)
     {
         $response = [];
-        if ($eventPayload->response instanceof Response)
+        if ($eventPayload->response instanceof Response) {
             $response = $eventPayload->response->getBody()->getContents();
+        }
 
         $message = $isSuccess
             ? 'Payload delivered successfully'

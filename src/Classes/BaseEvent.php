@@ -46,7 +46,6 @@ abstract class BaseEvent
 
     /**
      * Generates event payload based on arguments from the triggering system event.
-     * @param array $args
      * @param string $actionCode
      * @return array
      */
@@ -114,8 +113,9 @@ abstract class BaseEvent
 
     public function renderSetupPartial()
     {
-        if (view()->exists($this->setupPartial))
+        if (view()->exists($this->setupPartial)) {
             return Markdown::parse(File::get(View::make($this->setupPartial)->getPath()))->toHtml();
+        }
 
         return 'No setup instructions provided';
     }

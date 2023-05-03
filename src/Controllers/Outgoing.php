@@ -61,11 +61,13 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
 
     public function onLoadSetupInstructions()
     {
-        if (!$eventCode = post('setup_event_code'))
+        if (!$eventCode = post('setup_event_code')) {
             throw new ApplicationException('Please choose an event.');
+        }
 
-        if (!$eventObj = resolve(WebhookManager::class)->getEventObject($eventCode))
+        if (!$eventObj = resolve(WebhookManager::class)->getEventObject($eventCode)) {
             throw new ApplicationException('Event not found');
+        }
 
         return [
             '[data-partial="setup-instructions-content"]' => $eventObj->renderSetupPartial(),

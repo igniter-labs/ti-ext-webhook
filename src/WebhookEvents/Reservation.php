@@ -34,11 +34,13 @@ class Reservation extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $reservation = array_get($args, 0);
-        if ($reservation instanceof StatusHistory)
+        if ($reservation instanceof StatusHistory) {
             $reservation = $reservation->object;
+        }
 
-        if (!$reservation instanceof Reservation)
+        if (!$reservation instanceof Reservation) {
             return;
+        }
 
         return [
             'reservation' => $reservation->toArray(),

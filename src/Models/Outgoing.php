@@ -76,8 +76,9 @@ class Outgoing extends Model
      */
     public function dispatchWebhook($actionCode, $eventCode)
     {
-        if (!strlen($this->url))
+        if (!strlen($this->url)) {
             throw new ApplicationException('Missing a webhook payload URL.');
+        }
 
         $options = $this->config_data ?? [];
         $secretKey = array_get($options, 'secret_key');
@@ -131,8 +132,9 @@ class Outgoing extends Model
      */
     public function applyEventClass($className)
     {
-        if (!$className)
+        if (!$className) {
             return false;
+        }
 
         if (!$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);

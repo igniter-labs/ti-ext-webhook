@@ -35,11 +35,13 @@ class Order extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $order = array_get($args, 0);
-        if ($order instanceof StatusHistory)
+        if ($order instanceof StatusHistory) {
             $order = $order->object;
+        }
 
-        if (!$order instanceof Order)
+        if (!$order instanceof Order) {
             return;
+        }
 
         return [
             'order' => $order->toArray(),
