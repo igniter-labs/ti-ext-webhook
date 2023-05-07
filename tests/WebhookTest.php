@@ -7,7 +7,7 @@ use IgniterLabs\Webhook\Exceptions\CouldNotCallWebhook;
 use IgniterLabs\Webhook\Jobs\CallWebhook;
 use Illuminate\Support\Facades\Queue;
 
-uses(\Tests\ExtensionTestCase::class);
+uses(TestCase::class);
 
 beforeEach(function () {
     Queue::fake();

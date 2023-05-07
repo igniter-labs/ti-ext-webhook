@@ -3,10 +3,10 @@
 namespace IgniterLabs\Webhook\Tests\WebhookEvents;
 
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Tests\TestCase;
 use IgniterLabs\Webhook\WebhookEvents\Order;
-use Tests\ExtensionTestCase;
 
-class CategoryTest extends ExtensionTestCase
+class CategoryTest extends TestCase
 {
     public function testCategoryCreatedEvent()
     {

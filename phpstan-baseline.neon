@@ -16,39 +16,24 @@ parameters:
 			path: src/ApiResources/Webhooks.php
 
 		-
-			message: "#^Class Igniter\\\\Api\\\\Http\\\\Actions\\\\RestController not found\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$automation_rule\\.$#"
 			count: 1
-			path: src/ApiResources/Webhooks.php
+			path: src/AutomationRules/Actions/SendWebhook.php
 
 		-
-			message: "#^Access to an undefined property IgniterLabs\\\\Webhook\\\\AutomationRules\\\\Actions\\\\SendWebhook\\:\\:\\$model\\.$#"
-			count: 3
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$secret\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendWebhook.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$url\\.$#"
+			count: 1
 			path: src/AutomationRules/Actions/SendWebhook.php
 
 		-
 			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Classes\\\\WebhookManager\\:\\:instance\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: "#^Function array_except not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: "#^Function str_random not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 1
-			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Classes\\\\BaseAction\\:\\:extensionExtendCallback\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/BaseAction.php
 
 		-
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\File\\:\\:existsInsensitive\\(\\)\\.$#"
@@ -61,27 +46,7 @@ parameters:
 			path: src/Classes/BaseAction.php
 
 		-
-			message: "#^Call to static method parseFile\\(\\) on an unknown class Igniter\\\\Flame\\\\Mail\\\\Markdown\\.$#"
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Function normalize_class_name not found\\.$#"
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 99$#"
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
-			message: "#^Property IgniterLabs\\\\Webhook\\\\Classes\\\\BaseAction\\:\\:\\$model has unknown class Igniter\\\\Flame\\\\Database\\\\Model as its type\\.$#"
 			count: 1
 			path: src/Classes/BaseAction.php
 
@@ -91,34 +56,9 @@ parameters:
 			path: src/Classes/BaseEvent.php
 
 		-
-			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Classes\\\\BaseEvent\\:\\:extensionExtendCallback\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Function normalize_class_name not found\\.$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(mixed Class name or object\\)\\: Unexpected token \"Class\", expected variable at offset 98$#"
 			count: 1
 			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Property IgniterLabs\\\\Webhook\\\\Classes\\\\BaseEvent\\:\\:\\$model has unknown class Igniter\\\\Flame\\\\Database\\\\Model as its type\\.$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/Classes/WebhookCall.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
@@ -128,26 +68,6 @@ parameters:
 		-
 			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
 			count: 4
-			path: src/Classes/WebhookManager.php
-
-		-
-			message: "#^Call to static method hasDatabase\\(\\) on an unknown class Igniter\\\\Flame\\\\Igniter\\.$#"
-			count: 1
-			path: src/Classes/WebhookManager.php
-
-		-
-			message: "#^Class Igniter\\\\System\\\\Classes\\\\ExtensionManager not found\\.$#"
-			count: 1
-			path: src/Classes/WebhookManager.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 2
-			path: src/Classes/WebhookManager.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 1
 			path: src/Classes/WebhookManager.php
 
 		-
@@ -166,33 +86,8 @@ parameters:
 			path: src/Classes/WebhookManager.php
 
 		-
-			message: "#^Call to static method setContext\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
 			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\FormController not found\\.$#"
-			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
-			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\ListController not found\\.$#"
-			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
-			message: "#^Function post not found\\.$#"
-			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
-			message: "#^IgniterLabs\\\\Webhook\\\\Controllers\\\\Outgoing\\:\\:__construct\\(\\) calls parent\\:\\:__construct\\(\\) but IgniterLabs\\\\Webhook\\\\Controllers\\\\Outgoing does not extend any class\\.$#"
-			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 2
 			path: src/Controllers/Outgoing.php
 
 		-
@@ -201,77 +96,12 @@ parameters:
 			path: src/Exceptions/CouldNotCallWebhook.php
 
 		-
-			message: "#^Access to an undefined property IgniterLabs\\\\Webhook\\\\Extension\\:\\:\\$app\\.$#"
+			message: "#^Cannot call method command\\(\\) on string\\.$#"
 			count: 1
 			path: src/Extension.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Extension\\:\\:mergeConfigFrom\\(\\)\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Function admin_url not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Function lang not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Call to method getMessage\\(\\) on an unknown class GuzzleHttp\\\\Exception\\\\ConnectException\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Call to method getMessage\\(\\) on an unknown class GuzzleHttp\\\\Exception\\\\RequestException\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Call to method getResponse\\(\\) on an unknown class GuzzleHttp\\\\Exception\\\\RequestException\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Call to method request\\(\\) on an unknown class GuzzleHttp\\\\Client\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Class GuzzleHttp\\\\Client not found\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Class GuzzleHttp\\\\Exception\\\\ConnectException not found\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Class GuzzleHttp\\\\Exception\\\\RequestException not found\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
 
 		-
 			message: "#^Class IgniterLabs\\\\Webhook\\\\Classes\\\\EventPayload constructor invoked with 12 parameters, 11 required\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$client contains unknown class GuzzleHttp\\\\Client\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Parameter \\$stats of anonymous function has invalid type GuzzleHttp\\\\TransferStats\\.$#"
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: "#^Property IgniterLabs\\\\Webhook\\\\Jobs\\\\CallWebhook\\:\\:\\$transferStats has unknown class GuzzleHttp\\\\TransferStats as its type\\.$#"
 			count: 1
 			path: src/Jobs/CallWebhook.php
 
@@ -291,31 +121,6 @@ parameters:
 			path: src/Models/Outgoing.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:asExtension\\(\\)\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:extendClassWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:getKey\\(\\)\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:getMorphClass\\(\\)\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:isClassExtendedWith\\(\\)\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
 			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Models\\\\Outgoing\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: src/Models/Outgoing.php
@@ -324,21 +129,6 @@ parameters:
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\Event\\:\\:fire\\(\\)\\.$#"
 			count: 1
 			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 4
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: "#^Class Igniter\\\\System\\\\Actions\\\\SettingsModel not found\\.$#"
-			count: 1
-			path: src/Models/Settings.php
 
 		-
 			message: "#^Access to an undefined property IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:\\$created_at\\.$#"
@@ -351,67 +141,7 @@ parameters:
 			path: src/Models/WebhookLog.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:morphTo\\(\\)\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:save\\(\\)\\.$#"
-			count: 2
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:create\\(\\)\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Call to method getKey\\(\\) on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Call to method getMorphClass\\(\\) on an unknown class Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Call to method where\\(\\) on an unknown class Igniter\\\\Flame\\\\Database\\\\Query\\\\Builder\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Function day_elapsed not found\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Function lang not found\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Parameter \\$query of method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:scopeApplyWebhook\\(\\) has invalid type Igniter\\\\Flame\\\\Database\\\\Query\\\\Builder\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Parameter \\$webhook of method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:scopeApplyWebhook\\(\\) has invalid type Igniter\\\\Flame\\\\Database\\\\Model\\.$#"
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: "#^Function lang not found\\.$#"
-			count: 7
-			path: src/Requests/Outgoing.php
-
-		-
 			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Category\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Category.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
 			count: 1
 			path: src/WebhookEvents/Category.php
 
@@ -421,22 +151,12 @@ parameters:
 			path: src/WebhookEvents/Customer.php
 
 		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Customer.php
-
-		-
 			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Menu\\:\\:toArray\\(\\)\\.$#"
 			count: 1
 			path: src/WebhookEvents/Menu.php
 
 		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Menu.php
-
-		-
-			message: "#^Access to property \\$object on an unknown class Igniter\\\\Admin\\\\Models\\\\StatusHistory\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Admin\\\\Models\\\\StatusHistory\\:\\:\\$object\\.$#"
 			count: 1
 			path: src/WebhookEvents/Order.php
 
@@ -446,17 +166,7 @@ parameters:
 			path: src/WebhookEvents/Order.php
 
 		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\StatusHistory not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Order.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Order.php
-
-		-
-			message: "#^Access to property \\$object on an unknown class Igniter\\\\Admin\\\\Models\\\\StatusHistory\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Admin\\\\Models\\\\StatusHistory\\:\\:\\$object\\.$#"
 			count: 1
 			path: src/WebhookEvents/Reservation.php
 
@@ -466,21 +176,6 @@ parameters:
 			path: src/WebhookEvents/Reservation.php
 
 		-
-			message: "#^Class Igniter\\\\Admin\\\\Models\\\\StatusHistory not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Reservation.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
-			count: 1
-			path: src/WebhookEvents/Reservation.php
-
-		-
 			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Table\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Table.php
-
-		-
-			message: "#^Function array_get not found\\.$#"
 			count: 1
 			path: src/WebhookEvents/Table.php
