@@ -7,7 +7,7 @@ use Igniter\Flame\Database\Model;
 use IgniterLabs\Webhook\Classes\EventPayload;
 
 /**
- * Webhook Log Model
+ * Webhook Log Model.
  */
 class WebhookLog extends Model
 {
@@ -26,8 +26,8 @@ class WebhookLog extends Model
     protected $casts = [
         'webhook_id' => 'integer',
         'is_success' => 'boolean',
-        'payload' => 'array',
-        'response' => 'array',
+        'payload'    => 'array',
+        'response'   => 'array',
     ];
 
     protected $appends = [
@@ -45,7 +45,8 @@ class WebhookLog extends Model
 
     /**
      * @param \Igniter\Flame\Database\Query\Builder $query
-     * @param \Igniter\Flame\Database\Model $webhook
+     * @param \Igniter\Flame\Database\Model         $webhook
+     *
      * @return mixed
      */
     public function scopeApplyWebhook($query, $webhook)
@@ -62,18 +63,19 @@ class WebhookLog extends Model
     public static function createLog(EventPayload $eventPayload, $isSuccess = false)
     {
         $response = [];
-        if ($eventPayload->response instanceof Response)
+        if ($eventPayload->response instanceof Response) {
             $response = $eventPayload->response->getBody()->getContents();
+        }
 
         $message = $isSuccess
             ? 'Payload delivered successfully'
             : e($eventPayload->errorMessage ?? 'No error message available.');
 
         return self::create(array_merge($eventPayload->meta, [
-            'payload' => $eventPayload->payload,
+            'payload'    => $eventPayload->payload,
             'is_success' => $isSuccess,
-            'message' => $message,
-            'response' => $response,
+            'message'    => $message,
+            'response'   => $response,
         ]));
     }
 
@@ -101,7 +103,8 @@ class WebhookLog extends Model
 
     public function getStatusNameAttribute($value)
     {
-        return lang($this->is_success
+        return lang(
+            $this->is_success
             ? 'igniterlabs.webhook::default.text_success'
             : 'igniterlabs.webhook::default.text_failed'
         );

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Event;
 use System\Classes\BaseExtension;
 
 /**
- * Webhook Extension Information File
+ * Webhook Extension Information File.
  */
 class Extension extends BaseExtension
 {
@@ -36,18 +36,19 @@ class Extension extends BaseExtension
 
         $this->bootWebhookServer();
 
-        if (WebhookManager::isConfigured())
+        if (WebhookManager::isConfigured()) {
             WebhookManager::bindWebhookEvents();
+        }
     }
 
     public function registerSettings()
     {
         return [
             'settings' => [
-                'label' => 'Webhooks Settings',
+                'label'       => 'Webhooks Settings',
                 'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
-                'icon' => 'fa fa-cog',
-                'model' => \IgniterLabs\Webhook\Models\Settings::class,
+                'icon'        => 'fa fa-cog',
+                'model'       => \IgniterLabs\Webhook\Models\Settings::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
             ],
         ];
@@ -63,7 +64,7 @@ class Extension extends BaseExtension
         return [
             'IgniterLabs.Webhook.ManageSetting' => [
                 'description' => 'Manage Webhook settings',
-                'group' => 'module',
+                'group'       => 'module',
             ],
         ];
     }
@@ -74,10 +75,10 @@ class Extension extends BaseExtension
             'tools' => [
                 'child' => [
                     'webhooks' => [
-                        'priority' => 50,
-                        'class' => 'webhooks',
-                        'href' => admin_url('igniterlabs/webhook/outgoing'),
-                        'title' => lang('igniterlabs.webhook::default.text_title'),
+                        'priority'   => 50,
+                        'class'      => 'webhooks',
+                        'href'       => admin_url('igniterlabs/webhook/outgoing'),
+                        'title'      => lang('igniterlabs.webhook::default.text_title'),
                         'permission' => 'IgniterLabs.Webhooks.*',
                     ],
                 ],
@@ -93,12 +94,12 @@ class Extension extends BaseExtension
     public function registerWebhookEvents()
     {
         return [
-            'category' => \IgniterLabs\Webhook\WebhookEvents\Category::class,
-            'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
-            'menu' => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
-            'order' => \IgniterLabs\Webhook\WebhookEvents\Order::class,
+            'category'    => \IgniterLabs\Webhook\WebhookEvents\Category::class,
+            'customer'    => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
+            'menu'        => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
+            'order'       => \IgniterLabs\Webhook\WebhookEvents\Order::class,
             'reservation' => \IgniterLabs\Webhook\WebhookEvents\Reservation::class,
-            'table' => \IgniterLabs\Webhook\WebhookEvents\Table::class,
+            'table'       => \IgniterLabs\Webhook\WebhookEvents\Table::class,
         ];
     }
 
@@ -106,10 +107,10 @@ class Extension extends BaseExtension
     {
         return [
             'webhooks' => [
-                'controller' => \IgniterLabs\Webhook\ApiResources\Webhooks::class,
-                'name' => 'Webhooks',
+                'controller'  => \IgniterLabs\Webhook\ApiResources\Webhooks::class,
+                'name'        => 'Webhooks',
                 'description' => 'An API resource for webhooks',
-                'actions' => [
+                'actions'     => [
                     'store:admin', 'update:admin', 'destroy:admin',
                 ],
             ],
@@ -119,7 +120,7 @@ class Extension extends BaseExtension
     public function registerAutomationRules()
     {
         return [
-            'events' => [],
+            'events'  => [],
             'actions' => [
                 \IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook::class,
             ],

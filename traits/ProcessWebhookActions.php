@@ -27,13 +27,14 @@ trait ProcessWebhookActions
 
     protected function createModel()
     {
-        return new $this->modelClass;
+        return new $this->modelClass();
     }
 
     protected function findModel($recordId)
     {
-        if (!$model = $this->createModel()->find($recordId))
+        if (!$model = $this->createModel()->find($recordId)) {
             throw new ApplicationException('Record not found');
+        }
 
         return $model;
     }

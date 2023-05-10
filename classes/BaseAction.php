@@ -29,18 +29,20 @@ abstract class BaseAction
 
     /**
      * Returns information about this action, including name and description.
+     *
      * @return array
      */
     public function actionDetails()
     {
         return [
-            'name' => 'Webhook action',
+            'name'        => 'Webhook action',
             'description' => 'Webhook action description',
         ];
     }
 
     /**
      * Returns the action name.
+     *
      * @return array
      */
     public function actionName()
@@ -50,6 +52,7 @@ abstract class BaseAction
 
     /**
      * Returns the action description.
+     *
      * @return string
      */
     public function actionDescription()
@@ -59,7 +62,9 @@ abstract class BaseAction
 
     /**
      * Sets multiple params.
+     *
      * @param array $params
+     *
      * @return void
      */
     public function setActionParams($params)
@@ -69,6 +74,7 @@ abstract class BaseAction
 
     /**
      * Returns all params.
+     *
      * @return array
      */
     public function getActionParams()
@@ -78,7 +84,9 @@ abstract class BaseAction
 
     /**
      * Resolves an action identifier from the called class name or object.
+     *
      * @param mixed Class name or object
+     *
      * @return string Identifier in format of vendor-extension-class
      */
     public function getActionIdentifier()
@@ -106,8 +114,9 @@ abstract class BaseAction
     public function renderSetupPartial()
     {
         $setupPath = File::symbolizePath(sprintf('%s/%s', $this->path, 'setup.md'));
-        if (!$setupPath = File::existsInsensitive($setupPath))
+        if (!$setupPath = File::existsInsensitive($setupPath)) {
             return 'No setup instructions provided';
+        }
 
         return Markdown::parseFile($setupPath)->toHtml();
     }

@@ -29,12 +29,13 @@ abstract class BaseEvent
 
     /**
      * Returns information about this event, including name and description.
+     *
      * @return array
      */
     public function eventDetails()
     {
         return [
-            'name' => 'Webhook event',
+            'name'        => 'Webhook event',
             'description' => 'Webhook event description',
         ];
     }
@@ -46,8 +47,10 @@ abstract class BaseEvent
 
     /**
      * Generates event payload based on arguments from the triggering system event.
-     * @param array $args
+     *
+     * @param array  $args
      * @param string $actionCode
+     *
      * @return array
      */
     public static function makePayloadFromEvent(array $args, $actionCode = null)
@@ -57,6 +60,7 @@ abstract class BaseEvent
 
     /**
      * Returns the event name.
+     *
      * @return array
      */
     public function eventName()
@@ -66,6 +70,7 @@ abstract class BaseEvent
 
     /**
      * Returns the event description.
+     *
      * @return string
      */
     public function eventDescription()
@@ -75,7 +80,9 @@ abstract class BaseEvent
 
     /**
      * Sets multiple payload.
+     *
      * @param array $payload
+     *
      * @return void
      */
     public function setEventPayload($payload)
@@ -85,6 +92,7 @@ abstract class BaseEvent
 
     /**
      * Returns all payload.
+     *
      * @return array
      */
     public function getEventPayload()
@@ -94,7 +102,9 @@ abstract class BaseEvent
 
     /**
      * Resolves an event identifier from the called class name or object.
+     *
      * @param mixed Class name or object
+     *
      * @return string Identifier in format of vendor-extension-class
      */
     public function getEventIdentifier()
@@ -115,8 +125,9 @@ abstract class BaseEvent
     public function renderSetupPartial()
     {
         $setupPath = File::symbolizePath(sprintf('%s/%s', $this->path, 'setup.md'));
-        if (!$setupPath = File::existsInsensitive($setupPath))
+        if (!$setupPath = File::existsInsensitive($setupPath)) {
             return 'No setup instructions provided';
+        }
 
         return Markdown::parseFile($setupPath)->toHtml();
     }
