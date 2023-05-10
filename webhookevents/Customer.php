@@ -13,9 +13,9 @@ class Customer extends BaseEvent
     public function eventDetails()
     {
         return [
-            'name' => 'Customers',
+            'name'        => 'Customers',
             'description' => 'Customer created, updated or deleted.',
-            'setup' => '$/igniterlabs/webhook/webhookevents/customer/setup.md',
+            'setup'       => '$/igniterlabs/webhook/webhookevents/customer/setup.md',
         ];
     }
 
@@ -31,8 +31,9 @@ class Customer extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $customer = array_get($args, 0);
-        if (!$customer instanceof Customers_model)
+        if (!$customer instanceof Customers_model) {
             return;
+        }
 
         return [
             'customer' => $customer->toArray(),

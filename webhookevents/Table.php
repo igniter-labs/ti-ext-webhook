@@ -13,7 +13,7 @@ class Table extends BaseEvent
     public function eventDetails()
     {
         return [
-            'name' => 'Tables',
+            'name'        => 'Tables',
             'description' => 'Table created, updated or deleted.',
         ];
     }
@@ -30,8 +30,9 @@ class Table extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $table = array_get($args, 0);
-        if (!$table instanceof Tables_model)
+        if (!$table instanceof Tables_model) {
             return;
+        }
 
         return [
             'table' => $table->toArray(),

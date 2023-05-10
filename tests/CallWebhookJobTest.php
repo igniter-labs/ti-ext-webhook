@@ -96,8 +96,8 @@ class CallWebhookJobTest extends ExtensionTestCase
     {
         $extraHeaders = [
             'Content-Type' => 'application/json',
-            'header1' => 'value1',
-            'headers2' => 'value2',
+            'header1'      => 'value1',
+            'headers2'     => 'value2',
         ];
 
         $this->baseWebhook()
@@ -233,15 +233,15 @@ class CallWebhookJobTest extends ExtensionTestCase
     protected function baseRequest(array $overrides = []): array
     {
         $defaultProperties = [
-            'method' => 'post',
-            'url' => 'https://example.com/webhooks',
+            'method'  => 'post',
+            'url'     => 'https://example.com/webhooks',
             'options' => [
                 'timeout' => 3,
-                'body' => json_encode(['a' => 1]),
-                'verify' => true,
+                'body'    => json_encode(['a' => 1]),
+                'verify'  => true,
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Signature' => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',
+                    'Signature'    => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',
                 ],
                 'on_stats' => function (TransferStats $stats) {
                 },
@@ -254,15 +254,15 @@ class CallWebhookJobTest extends ExtensionTestCase
     protected function baseGetRequest(array $overrides = []): array
     {
         $defaultProperties = [
-            'method' => 'get',
-            'url' => 'https://example.com/webhooks',
+            'method'  => 'get',
+            'url'     => 'https://example.com/webhooks',
             'options' => [
                 'timeout' => 3,
-                'query' => ['a' => 1],
-                'verify' => true,
+                'query'   => ['a' => 1],
+                'verify'  => true,
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Signature' => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',
+                    'Signature'    => '1f14a62b15ba5095326d6c75c3e2e6b462dd71e1c4b7fbdac0f32309adb7be5f',
                 ],
                 'on_stats' => function (TransferStats $stats) {
                 },

@@ -11,7 +11,7 @@ class MakePrimaryKeyBigintAllTables extends Migration
     public function up()
     {
         foreach ([
-            'igniterlabs_webhook_logs' => 'id',
+            'igniterlabs_webhook_logs'     => 'id',
             'igniterlabs_webhook_outgoing' => 'id',
         ] as $table => $key) {
             Schema::table($table, function (Blueprint $table) use ($key) {

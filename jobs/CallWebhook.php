@@ -19,7 +19,10 @@ use Illuminate\Support\Str;
 
 class CallWebhook implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $webhookUrl;
 
@@ -63,17 +66,16 @@ class CallWebhook implements ShouldQueue
         try {
             if (strtoupper($this->httpVerb) === 'GET') {
                 $body = ['query' => $this->payload];
-            }
-            else {
+            } else {
                 $body = !$this->postAsJson
                     ? ['form_params' => $this->payload]
                     : ['body' => json_encode($this->payload)];
             }
 
             $this->response = $client->request($this->httpVerb, $this->webhookUrl, array_merge([
-                'timeout' => $this->requestTimeout,
-                'verify' => $this->verifySsl,
-                'headers' => $this->headers,
+                'timeout'  => $this->requestTimeout,
+                'verify'   => $this->verifySsl,
+                'headers'  => $this->headers,
                 'on_stats' => function (TransferStats $stats) {
                     $this->transferStats = $stats;
                 },
@@ -86,8 +88,7 @@ class CallWebhook implements ShouldQueue
             $this->dispatchEvent('igniterlabs.webhook.succeeded');
 
             return;
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             if ($exception instanceof RequestException) {
                 $this->response = $exception->getResponse();
                 $this->errorType = get_class($exception);
@@ -99,8 +100,9 @@ class CallWebhook implements ShouldQueue
                 $this->errorMessage = $exception->getMessage();
             }
 
-            if (!$lastAttempt)
+            if (!$lastAttempt) {
                 $this->release($this->waitInSecondsAfterAttempt($this->attempts()));
+            }
 
             $this->dispatchEvent('igniterlabs.webhook.failed');
         }

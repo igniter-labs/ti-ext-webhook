@@ -13,7 +13,7 @@ class Category extends BaseEvent
     public function eventDetails()
     {
         return [
-            'name' => 'Categories',
+            'name'        => 'Categories',
             'description' => 'Category created, updated or deleted.',
         ];
     }
@@ -30,8 +30,9 @@ class Category extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $category = array_get($args, 0);
-        if (!$category instanceof Categories_model)
+        if (!$category instanceof Categories_model) {
             return;
+        }
 
         return [
             'category' => $category->toArray(),
