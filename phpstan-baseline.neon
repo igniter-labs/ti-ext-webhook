@@ -61,6 +61,11 @@ parameters:
 			path: src/Classes/BaseEvent.php
 
 		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: src/Classes/BaseEvent.php
+
+		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/WebhookCall.php
@@ -86,11 +91,6 @@ parameters:
 			path: src/Classes/WebhookManager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
-			count: 1
-			path: src/Controllers/Outgoing.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 3
 			path: src/Exceptions/CouldNotCallWebhook.php
@@ -99,6 +99,11 @@ parameters:
 			message: "#^Cannot call method command\\(\\) on string\\.$#"
 			count: 1
 			path: src/Extension.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Outgoing.php
 
 		-
 			message: "#^Class IgniterLabs\\\\Webhook\\\\Classes\\\\EventPayload constructor invoked with 12 parameters, 11 required\\.$#"
@@ -138,6 +143,11 @@ parameters:
 		-
 			message: "#^Access to an undefined property IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:\\$is_success\\.$#"
 			count: 3
+			path: src/Models/WebhookLog.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\Webhook\\\\Models\\\\WebhookLog\\:\\:create\\(\\)\\.$#"
+			count: 1
 			path: src/Models/WebhookLog.php
 
 		-
