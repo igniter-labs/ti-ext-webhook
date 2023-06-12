@@ -1,6 +1,7 @@
 Webhooks extension allows you to integrate your TastyIgniter site with external systems
 
-It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps like Zapier.
+It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps
+like Zapier.
 
 For example:
 
@@ -61,9 +62,9 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Main\Models\Customer',
-            'updated' => 'eloquent.updated: Igniter\Main\Models\Customer',
-            'deleted' => 'eloquent.deleted: Igniter\Main\Models\Customer',
+            'created' => 'eloquent.created: Igniter\User\Models\Customer',
+            'updated' => 'eloquent.updated: Igniter\User\Models\Customer',
+            'deleted' => 'eloquent.deleted: Igniter\User\Models\Customer',
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\Webhook\Controllers;
+namespace IgniterLabs\Webhook\Http\Controllers;
 
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Flame\Exception\ApplicationException;

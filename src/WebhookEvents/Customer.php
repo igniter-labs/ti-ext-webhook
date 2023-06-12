@@ -23,9 +23,9 @@ class Customer extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Main\Models\Customer',
-            'updated' => 'eloquent.updated: Igniter\Main\Models\Customer',
-            'deleted' => 'eloquent.deleted: Igniter\Main\Models\Customer',
+            'created' => 'eloquent.created: Igniter\User\Models\Customer',
+            'updated' => 'eloquent.updated: Igniter\User\Models\Customer',
+            'deleted' => 'eloquent.deleted: Igniter\User\Models\Customer',
         ];
     }
 

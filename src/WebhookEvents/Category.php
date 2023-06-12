@@ -22,9 +22,9 @@ class Category extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Admin\Models\Category',
-            'updated' => 'eloquent.updated: Igniter\Admin\Models\Category',
-            'deleted' => 'eloquent.deleted: Igniter\Admin\Models\Category',
+            'created' => 'eloquent.created: Igniter\Cart\Models\Category',
+            'updated' => 'eloquent.updated: Igniter\Cart\Models\Category',
+            'deleted' => 'eloquent.deleted: Igniter\Cart\Models\Category',
         ];
     }
 

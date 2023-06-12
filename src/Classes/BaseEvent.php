@@ -58,7 +58,7 @@ abstract class BaseEvent
      * Returns the event name.
      * @return array
      */
-    public function eventName()
+    public static function eventName()
     {
         return array_get($this->eventDetails(), 'name', 'Event');
     }
