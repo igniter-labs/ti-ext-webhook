@@ -67,7 +67,7 @@ class Extension extends BaseExtension
         return [
             'IgniterLabs.Webhook.ManageSetting' => [
                 'description' => 'Manage Webhook settings',
-                'group' => 'module',
+                'group' => 'advanced',
             ],
         ];
     }
