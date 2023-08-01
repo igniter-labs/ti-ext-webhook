@@ -8,11 +8,6 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
-                'back' => [
-                    'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-outline-secondary',
-                    'href' => 'settings',
-                ],
                 'save' => [
                     'label' => 'lang:admin::lang.button_save',
                     'class' => 'btn btn-primary',

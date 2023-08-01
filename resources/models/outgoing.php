@@ -70,11 +70,6 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
-                'back' => [
-                    'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-outline-secondary',
-                    'href' => 'igniterlabs/webhook/outgoing',
-                ],
                 'save' => [
                     'label' => 'lang:admin::lang.button_save',
                     'context' => ['create', 'edit'],

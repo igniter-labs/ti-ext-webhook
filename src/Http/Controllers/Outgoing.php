@@ -42,7 +42,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
         ],
         'preview' => [
             'title' => 'lang:admin::lang.form.preview_title',
-            'redirect' => 'igniterlabs/webhook/outgoing',
+            'back' => 'igniterlabs/webhook/outgoing',
         ],
         'delete' => [
             'redirect' => 'igniterlabs/webhook/outgoing',
