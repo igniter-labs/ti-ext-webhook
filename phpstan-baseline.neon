@@ -61,11 +61,6 @@ parameters:
 			path: src/Classes/BaseEvent.php
 
 		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: src/Classes/BaseEvent.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/WebhookCall.php
