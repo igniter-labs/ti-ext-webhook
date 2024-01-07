@@ -3,7 +3,7 @@
 namespace IgniterLabs\Webhook\Http\Controllers;
 
 use Igniter\Admin\Facades\AdminMenu;
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\FlashException;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 
 /**
@@ -61,13 +61,13 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
 
     public function onLoadSetupInstructions()
     {
-        if (!$eventCode = post('setup_event_code')) {
-            throw new ApplicationException('Please choose an event.');
-        }
+        throw_unless($eventCode = post('setup_event_code'),
+            FlashException::error('Please choose an event.')
+        );
 
-        if (!$eventObj = resolve(WebhookManager::class)->getEventObject($eventCode)) {
-            throw new ApplicationException('Event not found');
-        }
+        throw_unless($eventObj = resolve(WebhookManager::class)->getEventObject($eventCode),
+            FlashException::error('Event not found')
+        );
 
         return [
             '[data-partial="setup-instructions-content"]' => $eventObj->renderSetupPartial(),

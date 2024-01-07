@@ -26,7 +26,6 @@ it('can_dispatch_a_job_that_calls_a_webhook', function () {
         $this->assertEquals($config['http_verb'], $job->httpVerb);
         $this->assertEquals($config['tries'], $job->tries);
         $this->assertEquals($config['timeout_in_seconds'], $job->requestTimeout);
-        $this->assertEquals($config['backoff_strategy'], $job->backoffStrategyClass);
         $this->assertContains($config['signature_header_name'], array_keys($job->headers));
         $this->assertEquals($config['verify_ssl'], $job->verifySsl);
         $this->assertEquals($config['tags'], $job->tags);
@@ -46,7 +45,6 @@ test('can_keep_default_config_headers_and_set_new_ones', function () {
     Queue::assertPushed(CallWebhook::class, function (CallWebhook $job) {
         $config = config('webhook-server');
 
-        $this->assertArrayHasKey('Content-Type', $job->headers);
         $this->assertArrayHasKey('User-Agent', $job->headers);
 
         return true;

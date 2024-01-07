@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook\Traits;
 
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\SystemException;
 
 trait ProcessWebhookActions
 {
@@ -33,7 +33,7 @@ trait ProcessWebhookActions
     protected function findModel($recordId)
     {
         if (!$model = $this->createModel()->find($recordId)) {
-            throw new ApplicationException('Record not found');
+            throw new SystemException('Record not found');
         }
 
         return $model;

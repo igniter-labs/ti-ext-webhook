@@ -3,7 +3,7 @@
 namespace IgniterLabs\Webhook\Models;
 
 use Igniter\Flame\Database\Model;
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 use IgniterLabs\Webhook\Classes\WebhookCall;
 use IgniterLabs\Webhook\Classes\WebhookManager;
@@ -77,7 +77,7 @@ class Outgoing extends Model
     public function dispatchWebhook($actionCode, $eventCode)
     {
         if (!strlen($this->url)) {
-            throw new ApplicationException('Missing a webhook payload URL.');
+            throw new SystemException('Missing a webhook payload URL.');
         }
 
         $options = $this->config_data ?? [];

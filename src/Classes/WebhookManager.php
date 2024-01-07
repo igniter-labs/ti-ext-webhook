@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\Webhook\Classes;
 
-use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Models\Outgoing;
@@ -78,7 +77,7 @@ class WebhookManager
     {
         $eventClass = $this->getEventClass($eventCode);
         if (!class_exists($eventClass)) {
-            throw new ApplicationException('Webhook event class ['.$eventClass.'] not found');
+            throw new \InvalidArgumentException('Webhook event class ['.$eventClass.'] not found');
         }
 
         $models = Outgoing::listWebhooksForEvent($eventCode);
