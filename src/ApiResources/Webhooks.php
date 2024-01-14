@@ -9,7 +9,7 @@ use Igniter\Api\Classes\ApiController;
  */
 class Webhooks extends ApiController
 {
-    public $implement = [
+    public array $implement = [
         \Igniter\Api\Http\Actions\RestController::class,
     ];
 

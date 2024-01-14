@@ -11,12 +11,12 @@ use IgniterLabs\Webhook\Classes\WebhookManager;
  */
 class Outgoing extends \Igniter\Admin\Classes\AdminController
 {
-    public $implement = [
+    public array $implement = [
         \Igniter\Admin\Http\Actions\FormController::class,
         \Igniter\Admin\Http\Actions\ListController::class,
     ];
 
-    public $listConfig = [
+    public array $listConfig = [
         'list' => [
             'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
             'title' => 'lang:igniterlabs.webhook::default.outgoing.text_title',
@@ -26,7 +26,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
         ],
     ];
 
-    public $formConfig = [
+    public array $formConfig = [
         'name' => 'lang:igniterlabs.webhook::default.outgoing.text_form_name',
         'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
         'request' => \IgniterLabs\Webhook\Requests\Outgoing::class,
@@ -50,7 +50,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
         'configFile' => 'outgoing',
     ];
 
-    protected $requiredPermissions = 'IgniterLabs.Webhook.*';
+    protected null|string|array $requiredPermissions = 'IgniterLabs.Webhook.*';
 
     public function __construct()
     {

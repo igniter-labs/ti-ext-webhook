@@ -44,7 +44,7 @@ class Extension extends BaseExtension
         }
     }
 
-    public function registerSettings()
+    public function registerSettings(): array
     {
         return [
             'settings' => [
@@ -62,7 +62,7 @@ class Extension extends BaseExtension
      *
      * @return array
      */
-    public function registerPermissions()
+    public function registerPermissions(): array
     {
         return [
             'IgniterLabs.Webhook.ManageSetting' => [
@@ -72,7 +72,7 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerNavigation()
+    public function registerNavigation(): array
     {
         return [
             'tools' => [
@@ -89,7 +89,7 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSchedule($schedule)
+    public function registerSchedule(string $schedule)
     {
         $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
     }
