@@ -59,8 +59,6 @@ class Extension extends BaseExtension
 
     /**
      * Registers any admin permissions used by this extension.
-     *
-     * @return array
      */
     public function registerPermissions(): array
     {
