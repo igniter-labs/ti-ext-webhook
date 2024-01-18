@@ -62,11 +62,11 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
     public function onLoadSetupInstructions()
     {
         throw_unless($eventCode = post('setup_event_code'),
-            FlashException::error('Please choose an event.')
+            new FlashException('Please choose an event.')
         );
 
         throw_unless($eventObj = resolve(WebhookManager::class)->getEventObject($eventCode),
-            FlashException::error('Event not found')
+            new FlashException('Event not found')
         );
 
         return [
