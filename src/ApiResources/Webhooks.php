@@ -24,5 +24,5 @@ class Webhooks extends ApiController
         'transformer' => \IgniterLabs\Webhook\ApiResources\Transformers\WebhookTransformer::class,
     ];
 
-    protected $requiredAbilities = ['webhooks:*'];
+    protected string|array $requiredAbilities = ['webhooks:*'];
 }

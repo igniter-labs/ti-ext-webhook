@@ -5,6 +5,7 @@ namespace IgniterLabs\Webhook;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
 
@@ -87,7 +88,7 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSchedule(string $schedule)
+    public function registerSchedule(Schedule $schedule)
     {
         $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
     }
