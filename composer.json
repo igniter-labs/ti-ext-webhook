@@ -1,64 +1,70 @@
 {
-    "name": "igniterlabs/ti-ext-webhook",
-    "type": "tastyigniter-package",
-    "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Igniter Labs Team",
-            "email": "hello@igniterlabs.co.uk"
-        }
-    ],
-    "require-dev": {
-        "laravel/pint": "^1.2",
-        "nunomaduro/larastan": "^2.4.0",
-        "orchestra/testbench": "^8.5",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "tastyigniter/core": "dev-master",
-        "tastyigniter/ti-ext-api": "v4.x-dev as 4.0",
-        "tastyigniter/ti-ext-automation": "v4.x-dev as 4.0"
+  "name": "igniterlabs/ti-ext-webhook",
+  "type": "tastyigniter-package",
+  "description": "Connect your third party apps via Zapier or other third-party services to your TastyIgniter website.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Igniter Labs Team",
+      "email": "hello@igniterlabs.co.uk"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../../core/"
+    }
+  ],
+  "require-dev": {
+    "laravel/pint": "^1.2",
+    "nunomaduro/larastan": "^2.4.0",
+    "sampoyigi/testbench": "dev-main as 1.0",
+    "pestphp/pest-plugin-laravel": "^2.0",
+    "tastyigniter/core": "*@dev",
+    "tastyigniter/ti-ext-api": "v4.x-dev as 4.0",
+    "tastyigniter/ti-ext-automation": "v4.x-dev as 4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "IgniterLabs\\Webhook\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "IgniterLabs\\Webhook\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniterlabs.webhook",
+      "name": "Webhooks",
+      "icon": {
+        "image": "icon.svg",
+        "backgroundColor": "#147EFB",
+        "color": "#FFF"
+      },
+      "require": {
+        "igniter.cart": "*",
+        "igniter.local": "*",
+        "igniter.user": "*",
+        "igniter.reservation": "*"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-webhook"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint",
+    "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true,
+      "composer/installers": true
     },
-    "autoload": {
-        "psr-4": {
-            "IgniterLabs\\Webhook\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "IgniterLabs\\Webhook\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "tastyigniter-extension": {
-            "code": "igniterlabs.webhook",
-            "name": "Webhooks",
-            "icon": {
-                "image": "icon.svg",
-                "backgroundColor": "#147EFB",
-                "color": "#FFF"
-            },
-            "require": {
-                "igniter.cart": "*",
-                "igniter.local": "*",
-                "igniter.user": "*",
-                "igniter.reservation": "*"
-            },
-            "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-webhook"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
-        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true,
-            "composer/installers": true
-        },
-        "sort-packages": true
-    },
-    "minimum-stability": "dev"
+    "sort-packages": true
+  },
+  "minimum-stability": "dev"
 }
