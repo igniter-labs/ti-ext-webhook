@@ -27,5 +27,5 @@ it('runs category webhook event', function ($action) {
 
     Event::assertDispatched('igniterlabs.webhook.beforeDispatch');
 })->with([
-    'created'
+    'created',
 ]);
