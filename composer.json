@@ -9,18 +9,12 @@
       "email": "hello@igniterlabs.co.uk"
     }
   ],
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../../../core/"
-    }
-  ],
   "require-dev": {
     "laravel/pint": "^1.2",
     "nunomaduro/larastan": "^2.4.0",
     "sampoyigi/testbench": "dev-main as 1.0",
     "pestphp/pest-plugin-laravel": "^2.0",
-    "tastyigniter/core": "*@dev",
+    "tastyigniter/core": "dev-master",
     "tastyigniter/ti-ext-api": "v4.x-dev as 4.0",
     "tastyigniter/ti-ext-automation": "v4.x-dev as 4.0"
   },
