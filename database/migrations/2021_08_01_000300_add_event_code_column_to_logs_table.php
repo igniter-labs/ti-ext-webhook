@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('igniterlabs_webhook_logs', function (Blueprint $table) {
+        Schema::table('igniterlabs_webhook_logs', function(Blueprint $table) {
             $table->text('event_code')->nullable();
         });
     }

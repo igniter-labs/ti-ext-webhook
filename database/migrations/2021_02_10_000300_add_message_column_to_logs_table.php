@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('igniterlabs_webhook_logs', function (Blueprint $table) {
+        Schema::table('igniterlabs_webhook_logs', function(Blueprint $table) {
             $table->string('message', 255)->after('name');
             $table->dropColumn('uuid');
             $table->dropColumn('exception');

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('igniterlabs_webhook_outgoing', function (Blueprint $table) {
+        Schema::create('igniterlabs_webhook_outgoing', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('url');
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_webhook_logs', function (Blueprint $table) {
+        Schema::create('igniterlabs_webhook_logs', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('uuid')->unsigned();
             $table->integer('webhook_id')->nullable()->unsigned()->index();

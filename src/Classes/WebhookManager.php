@@ -45,7 +45,7 @@ class WebhookManager
 
     public static function bindWebhookEvents()
     {
-        collect((new static)->listEvents())->each(function ($eventClass, $eventCode) {
+        collect((new static)->listEvents())->each(function($eventClass, $eventCode) {
             if (!method_exists($eventClass, 'registerEventListeners')) {
                 return;
             }
@@ -59,7 +59,7 @@ class WebhookManager
 
     public static function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass)
     {
-        Event::listen($systemEvent, function () use ($eventCode, $actionCode, $eventClass) {
+        Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass) {
             if (!method_exists($eventClass, 'makePayloadFromEvent')) {
                 return;
             }
@@ -82,7 +82,7 @@ class WebhookManager
 
         $models = Outgoing::listWebhooksForEvent($eventCode);
 
-        $models->each(function (Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload) {
+        $models->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload) {
             if ($model->applyEventClass($eventClass)) {
                 $model->setEventPayload($payload);
                 $model->dispatchWebhook($actionCode, $eventCode);

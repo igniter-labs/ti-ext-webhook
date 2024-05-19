@@ -12,7 +12,7 @@ return new class extends Migration
             'igniterlabs_webhook_logs' => 'id',
             'igniterlabs_webhook_outgoing' => 'id',
         ] as $table => $key) {
-            Schema::table($table, function (Blueprint $table) use ($key) {
+            Schema::table($table, function(Blueprint $table) use ($key) {
                 $table->unsignedBigInteger($key, true)->change();
             });
         }

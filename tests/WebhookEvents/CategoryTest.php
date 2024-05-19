@@ -8,7 +8,7 @@ use IgniterLabs\Webhook\WebhookEvents\Category;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 
-it('runs category webhook event', function ($action) {
+it('runs category webhook event', function($action) {
     Queue::fake();
     Event::fake();
 

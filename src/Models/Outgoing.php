@@ -49,14 +49,14 @@ class Outgoing extends Model
      */
     public static function listWebhooksForEvent($eventCode)
     {
-        return self::where('is_active', true)->get()->filter(function ($model) use ($eventCode) {
+        return self::where('is_active', true)->get()->filter(function($model) use ($eventCode) {
             return in_array($eventCode, $model->events ?? []);
         });
     }
 
     public function getDropdownOptions()
     {
-        return array_map(function (BaseEvent $event) {
+        return array_map(function(BaseEvent $event) {
             return [$event->eventName(), $event->eventDescription()];
         }, resolve(WebhookManager::class)->listEventObjects());
     }

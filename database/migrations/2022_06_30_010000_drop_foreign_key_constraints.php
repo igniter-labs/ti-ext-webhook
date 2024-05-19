@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::table('igniterlabs_webhook_logs', function (Blueprint $table) {
+        Schema::table('igniterlabs_webhook_logs', function(Blueprint $table) {
             $table->dropForeignKeyIfExists('webhook_id');
             $table->dropIndexIfExists(sprintf('%s%s_%s_foreign', DB::getTablePrefix(), 'igniterlabs_webhook_logs', 'webhook_id'));
         });

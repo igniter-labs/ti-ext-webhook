@@ -73,7 +73,7 @@ class CallWebhook implements ShouldQueue
                 'timeout' => $this->requestTimeout,
                 'verify' => $this->verifySsl,
                 'headers' => $this->headers,
-                'on_stats' => function (TransferStats $stats) {
+                'on_stats' => function(TransferStats $stats) {
                     $this->transferStats = $stats;
                 },
             ], $body));

@@ -132,11 +132,11 @@ class Extension extends BaseExtension
 
     protected function bootWebhookServer()
     {
-        Event::listen('igniterlabs.webhook.succeeded', function ($eventPayload) {
+        Event::listen('igniterlabs.webhook.succeeded', function($eventPayload) {
             WebhookLog::createLog($eventPayload, true);
         });
 
-        Event::listen('igniterlabs.webhook.failed', function ($eventPayload) {
+        Event::listen('igniterlabs.webhook.failed', function($eventPayload) {
             WebhookLog::createLog($eventPayload);
         });
     }
