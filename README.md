@@ -12,7 +12,7 @@ For example:
 
 In the admin user interface:
 
-- Go to **System > Settings > Webhooks Settings** to configure the extension settings
+- Go to **Manage > Settings > Webhooks Settings** to configure the extension settings
 - Go to **Tools > Webhooks** to manage outgoing webhooks.
 - Go to **Tools > Automations** to automate outgoing webhooks when certain events happen.
 
