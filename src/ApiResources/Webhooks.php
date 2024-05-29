@@ -19,8 +19,8 @@ class Webhooks extends ApiController
             'update' => [],
             'destroy' => [],
         ],
-        'request' => \IgniterLabs\Webhook\Requests\Outgoing::class,
-        'repository' => \IgniterLabs\Webhook\Models\Webhook::class,
+        'request' => \IgniterLabs\Webhook\Http\Requests\OutgoingRequest::class,
+        'repository' => \IgniterLabs\Webhook\Models\Outgoing::class,
         'transformer' => \IgniterLabs\Webhook\ApiResources\Transformers\WebhookTransformer::class,
     ];
 

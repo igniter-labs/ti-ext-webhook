@@ -29,7 +29,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
     public array $formConfig = [
         'name' => 'lang:igniterlabs.webhook::default.outgoing.text_form_name',
         'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
-        'request' => \IgniterLabs\Webhook\Requests\Outgoing::class,
+        'request' => \IgniterLabs\Webhook\Http\Requests\OutgoingRequest::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniterlabs/webhook/outgoing/edit/{id}',

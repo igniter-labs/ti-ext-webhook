@@ -1,10 +1,10 @@
 <?php
 
-namespace IgniterLabs\Webhook\Requests;
+namespace IgniterLabs\Webhook\Http\Requests;
 
 use Igniter\System\Classes\FormRequest;
 
-class Outgoing extends FormRequest
+class OutgoingRequest extends FormRequest
 {
     public function attributes()
     {
