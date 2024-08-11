@@ -25,7 +25,7 @@ class WebhookCall
     {
         $config = config('webhook-server');
 
-        return (new static())
+        return (new static)
             ->uuid(Str::uuid())
             ->onQueue($config['queue'])
             ->onConnection($config['connection'] ?? null)
