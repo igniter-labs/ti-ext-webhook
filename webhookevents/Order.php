@@ -42,6 +42,8 @@ class Order extends BaseEvent
 
         return [
             'order' => $order->toArray(),
+            'order_menus' => $order->getOrderMenusWithOptions()->toArray(),
+            'order_totals' => $order->getOrderTotals()->toArray(),
         ];
     }
 }
