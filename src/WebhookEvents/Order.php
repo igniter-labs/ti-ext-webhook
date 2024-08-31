@@ -3,6 +3,7 @@
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Admin\Models\StatusHistory;
+use Igniter\Cart\Models\Order as OrderModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Order extends BaseEvent
@@ -23,12 +24,12 @@ class Order extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Admin\Models\Order',
-            'updated' => 'eloquent.updated: Igniter\Admin\Models\Order',
+            'created' => 'eloquent.created: '.OrderModel::class,
+            'updated' => 'eloquent.updated: '.OrderModel::class,
             'placed' => 'admin.order.paymentProcessed',
-            'status_added' => 'eloquent.created: Igniter\Admin\Models\StatusHistory',
+            'status_added' => 'eloquent.created: '.StatusHistory::class,
             'assigned' => 'admin.assignable.assigned',
-            'deleted' => 'eloquent.deleted: Igniter\Admin\Models\Order',
+            'deleted' => 'eloquent.deleted: '.OrderModel::class,
         ];
     }
 
@@ -39,12 +40,14 @@ class Order extends BaseEvent
             $order = $order->object;
         }
 
-        if (!$order instanceof Order) {
+        if (!$order instanceof OrderModel) {
             return;
         }
 
         return [
             'order' => $order->toArray(),
+            'order_menus' => $order->getOrderMenusWithOptions()->toArray(),
+            'order_totals' => $order->getOrderTotals()->toArray(),
         ];
     }
 }

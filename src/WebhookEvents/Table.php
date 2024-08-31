@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Igniter\Reservation\Models\DiningTable;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Table extends BaseEvent
@@ -22,16 +23,16 @@ class Table extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Admin\Models\Table',
-            'updated' => 'eloquent.updated: Igniter\Admin\Models\Table',
-            'deleted' => 'eloquent.deleted: Igniter\Admin\Models\Table',
+            'created' => 'eloquent.created: '.DiningTable::class,
+            'updated' => 'eloquent.updated: '.DiningTable::class,
+            'deleted' => 'eloquent.deleted: '.DiningTable::class,
         ];
     }
 
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $table = array_get($args, 0);
-        if (!$table instanceof Table) {
+        if (!$table instanceof DiningTable) {
             return;
         }
 

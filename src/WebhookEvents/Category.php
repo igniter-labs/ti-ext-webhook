@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Igniter\Cart\Models\Category as CategoryModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Category extends BaseEvent
@@ -22,16 +23,16 @@ class Category extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Cart\Models\Category',
-            'updated' => 'eloquent.updated: Igniter\Cart\Models\Category',
-            'deleted' => 'eloquent.deleted: Igniter\Cart\Models\Category',
+            'created' => 'eloquent.created: '.CategoryModel::class,
+            'updated' => 'eloquent.updated: '.CategoryModel::class,
+            'deleted' => 'eloquent.deleted: '.CategoryModel::class,
         ];
     }
 
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $category = array_get($args, 0);
-        if (!$category instanceof Category) {
+        if (!$category instanceof CategoryModel) {
             return;
         }
 

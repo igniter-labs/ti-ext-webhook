@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\Webhook\WebhookEvents;
 
+use Igniter\User\Models\Customer as CustomerModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Customer extends BaseEvent
@@ -23,16 +24,16 @@ class Customer extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\User\Models\Customer',
-            'updated' => 'eloquent.updated: Igniter\User\Models\Customer',
-            'deleted' => 'eloquent.deleted: Igniter\User\Models\Customer',
+            'created' => 'eloquent.created: '.CustomerModel::class,
+            'updated' => 'eloquent.updated: '.CustomerModel::class,
+            'deleted' => 'eloquent.deleted: '.CustomerModel::class,
         ];
     }
 
     public static function makePayloadFromEvent(array $args, $actionCode = null)
     {
         $customer = array_get($args, 0);
-        if (!$customer instanceof Customer) {
+        if (!$customer instanceof CustomerModel) {
             return;
         }
 

@@ -3,6 +3,7 @@
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Admin\Models\StatusHistory;
+use Igniter\Reservation\Models\Reservation as ReservationModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 
 class Reservation extends BaseEvent
@@ -23,11 +24,11 @@ class Reservation extends BaseEvent
     public static function registerEventListeners()
     {
         return [
-            'created' => 'eloquent.created: Igniter\Admin\Models\Reservation',
-            'updated' => 'eloquent.updated: Igniter\Admin\Models\Reservation',
-            'status_added' => 'eloquent.created: Igniter\Admin\Models\StatusHistory',
+            'created' => 'eloquent.created: '.ReservationModel::class,
+            'updated' => 'eloquent.updated: '.ReservationModel::class,
+            'status_added' => 'eloquent.created: '.StatusHistory::class,
             'assigned' => 'admin.assignable.assigned',
-            'deleted' => 'eloquent.deleted: Igniter\Admin\Models\Reservation',
+            'deleted' => 'eloquent.deleted: '.ReservationModel::class,
         ];
     }
 
@@ -38,7 +39,7 @@ class Reservation extends BaseEvent
             $reservation = $reservation->object;
         }
 
-        if (!$reservation instanceof Reservation) {
+        if (!$reservation instanceof ReservationModel) {
             return;
         }
 
