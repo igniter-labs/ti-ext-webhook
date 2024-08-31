@@ -5,12 +5,16 @@ namespace IgniterLabs\Webhook\Models;
 use GuzzleHttp\Psr7\Response;
 use Igniter\Flame\Database\Model;
 use IgniterLabs\Webhook\Classes\EventPayload;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\MassPrunable;
 
 /**
  * Webhook Log Model
  */
 class WebhookLog extends Model
 {
+    use MassPrunable;
+
     /**
      * @var string The database table used by the model.
      */
@@ -111,5 +115,10 @@ class WebhookLog extends Model
     public function getCreatedSinceAttribute($value)
     {
         return $this->created_at ? day_elapsed($this->created_at) : null;
+    }
+
+    public function prunable(): Builder
+    {
+        return static::where('created_at', '<=', now()->subMonth());
     }
 }

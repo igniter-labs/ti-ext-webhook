@@ -5,7 +5,6 @@ namespace IgniterLabs\Webhook\AutomationRules\Actions;
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use IgniterLabs\Webhook\Classes\WebhookCall;
-use IgniterLabs\Webhook\Classes\WebhookManager;
 
 class SendWebhook extends BaseAction
 {
@@ -45,8 +44,6 @@ class SendWebhook extends BaseAction
         if (!strlen($webhookUrl = $this->model->url)) {
             throw new AutomationException('Send Webhook event rule is missing a valid webhook url');
         }
-
-        WebhookManager::instance();
 
         $webhookJob = WebhookCall::create()->url($webhookUrl);
 

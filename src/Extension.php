@@ -2,11 +2,11 @@
 
 namespace IgniterLabs\Webhook;
 
+use Igniter\Flame\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
 
 /**
@@ -14,34 +14,29 @@ use Illuminate\Support\Facades\Event;
  */
 class Extension extends BaseExtension
 {
-    /**
-     * Register method, called when the extension is first registered.
-     *
-     * @return void
-     */
+    protected array $morphMap = [
+        'outgoing_webhook' => \IgniterLabs\Webhook\Models\Outgoing::class,
+    ];
+
+    public $singletons = [
+        WebhookManager::class,
+    ];
+
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/webhook-server.php', 'webhook-server');
+        parent::register();
 
-        $this->app->singleton(WebhookManager::class);
+        $this->mergeConfigFrom(__DIR__.'/../config/webhook-server.php', 'webhook-server');
     }
 
-    /**
-     * Boot method, called right before the request route.
-     *
-     * @return void
-     */
     public function boot()
     {
-        Relation::morphMap([
-            'outgoing_webhook' => \IgniterLabs\Webhook\Models\Outgoing::class,
-        ]);
-
         $this->bootWebhookServer();
 
         if (WebhookManager::isConfigured()) {
             WebhookManager::applyWebhookConfigValues();
             WebhookManager::bindWebhookEvents();
+            Igniter::prunableModel(WebhookLog::class);
         }
     }
 
@@ -53,6 +48,7 @@ class Extension extends BaseExtension
                 'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
                 'icon' => 'fa fa-cog',
                 'model' => \IgniterLabs\Webhook\Models\Settings::class,
+                'request' => \IgniterLabs\Webhook\Http\Requests\SettingsRequest::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
             ],
         ];
