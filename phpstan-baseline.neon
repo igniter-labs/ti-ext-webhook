@@ -131,27 +131,7 @@ parameters:
 			path: src/Models/WebhookLog.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Category\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Category.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Customer\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Customer.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Menu\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Menu.php
-
-		-
 			message: "#^Access to an undefined property Igniter\\\\Admin\\\\Models\\\\StatusHistory\\:\\:\\$object\\.$#"
-			count: 1
-			path: src/WebhookEvents/Order.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Order\\:\\:toArray\\(\\)\\.$#"
 			count: 1
 			path: src/WebhookEvents/Order.php
 
@@ -159,13 +139,3 @@ parameters:
 			message: "#^Access to an undefined property Igniter\\\\Admin\\\\Models\\\\StatusHistory\\:\\:\\$object\\.$#"
 			count: 1
 			path: src/WebhookEvents/Reservation.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Reservation\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Reservation.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\Webhook\\\\WebhookEvents\\\\Table\\:\\:toArray\\(\\)\\.$#"
-			count: 1
-			path: src/WebhookEvents/Table.php
