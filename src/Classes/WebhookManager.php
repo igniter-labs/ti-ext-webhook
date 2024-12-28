@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook\Classes;
 
-use Igniter\Flame\Igniter;
+use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;

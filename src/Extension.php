@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\Webhook;
 
-use Igniter\Flame\Igniter;
+use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\WebhookLog;
