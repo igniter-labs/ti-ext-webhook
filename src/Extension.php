@@ -5,6 +5,7 @@ namespace IgniterLabs\Webhook;
 use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Console\Cleanup;
 use IgniterLabs\Webhook\Models\WebhookLog;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
@@ -27,6 +28,8 @@ class Extension extends BaseExtension
         parent::register();
 
         $this->mergeConfigFrom(__DIR__.'/../config/webhook-server.php', 'webhook-server');
+
+        $this->registerConsoleCommand('webhook.cleanup', Cleanup::class);
     }
 
     public function boot()
