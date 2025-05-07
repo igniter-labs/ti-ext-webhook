@@ -20,6 +20,7 @@ class Extension extends BaseExtension
      */
     public function register()
     {
+        $this->registerConsoleCommand('webhook.cleanup', Console\Cleanup::class);
         $this->mergeConfigFrom(__DIR__.'/config/webhook-server.php', 'webhook-server');
     }
 

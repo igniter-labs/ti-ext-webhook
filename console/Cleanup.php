@@ -1,6 +1,6 @@
 <?php
 
-namespace Igniter\Automation\Console;
+namespace IgniterLabs\Webhook\Console;
 
 use IgniterLabs\Webhook\Models\WebhookLog;
 use Illuminate\Console\Command;
