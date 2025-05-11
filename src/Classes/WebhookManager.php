@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Classes;
 
 use Igniter\Flame\Support\Facades\Igniter;
@@ -9,6 +11,7 @@ use IgniterLabs\Webhook\Models\Settings;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
+use InvalidArgumentException;
 
 class WebhookManager
 {
@@ -24,7 +27,7 @@ class WebhookManager
      */
     protected $webhookEventsCallbacks = [];
 
-    public static function applyWebhookConfigValues()
+    public static function applyWebhookConfigValues(): void
     {
         Config::set('webhook-server.verify_ssl', (bool)Settings::get('verify_ssl', Config::get('webhook-server.verify_ssl')));
         Config::set('webhook-server.timeout_in_seconds', (int)Settings::get('timeout_in_seconds', Config::get('webhook-server.timeout_in_seconds')));
@@ -37,15 +40,15 @@ class WebhookManager
     //
     //
 
-    public static function isConfigured()
+    public static function isConfigured(): bool
     {
         return Igniter::hasDatabase()
             && Schema::hasTable('igniterlabs_webhook_outgoing');
     }
 
-    public static function bindWebhookEvents()
+    public static function bindWebhookEvents(): void
     {
-        collect((new static)->listEvents())->each(function($eventClass, $eventCode) {
+        collect((new static)->listEvents())->each(function($eventClass, $eventCode): void {
             if (!method_exists($eventClass, 'registerEventListeners')) {
                 return;
             }
@@ -57,9 +60,9 @@ class WebhookManager
         });
     }
 
-    public static function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass)
+    public static function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass): void
     {
-        Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass) {
+        Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass): void {
             if (!method_exists($eventClass, 'makePayloadFromEvent')) {
                 return;
             }
@@ -73,16 +76,16 @@ class WebhookManager
         });
     }
 
-    public function runWebhookEvent($eventCode, $actionCode, array $payload)
+    public function runWebhookEvent($eventCode, $actionCode, array $payload): void
     {
         $eventClass = $this->getEventClass($eventCode);
         if (!class_exists($eventClass)) {
-            throw new \InvalidArgumentException('Webhook event class ['.$eventClass.'] not found');
+            throw new InvalidArgumentException('Webhook event class ['.$eventClass.'] not found');
         }
 
         $models = Outgoing::listWebhooksForEvent($eventCode);
 
-        $models->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload) {
+        $models->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload): void {
             if ($model->applyEventClass($eventClass)) {
                 $model->setEventPayload($payload);
                 $model->dispatchWebhook($actionCode, $eventCode);
@@ -107,7 +110,7 @@ class WebhookManager
     /**
      * Returns a single event object
      *
-     * @return \IgniterLabs\Webhook\Classes\BaseEvent
+     * @return BaseEvent
      */
     public function getEventObject($eventCode)
     {
@@ -125,6 +128,7 @@ class WebhookManager
             if (!class_exists($className)) {
                 continue;
             }
+
             $results[$code] = new $className;
         }
 
@@ -157,7 +161,7 @@ class WebhookManager
         return $this->webhookEventsCache = $this->webhookEvents;
     }
 
-    public function registerWebhookEvent($definitions)
+    public function registerWebhookEvent($definitions): void
     {
         if (!$this->webhookEvents) {
             $this->webhookEvents = [];
@@ -179,7 +183,7 @@ class WebhookManager
      *   });
      * </pre>
      */
-    public function registerCallback(callable $definitions)
+    public function registerCallback(callable $definitions): void
     {
         $this->webhookEventsCallbacks[] = $definitions;
     }

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Reservation\Models\DiningTable;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use Override;
 
 class Table extends BaseEvent
 {
@@ -12,7 +15,8 @@ class Table extends BaseEvent
     /**
      * {@inheritdoc}
      */
-    public function eventDetails()
+    #[Override]
+    public function eventDetails(): array
     {
         return [
             'name' => 'Tables',
@@ -20,7 +24,8 @@ class Table extends BaseEvent
         ];
     }
 
-    public static function registerEventListeners()
+    #[Override]
+    public static function registerEventListeners(): array
     {
         return [
             'created' => 'eloquent.created: '.DiningTable::class,
@@ -29,11 +34,12 @@ class Table extends BaseEvent
         ];
     }
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    #[Override]
+    public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $table = array_get($args, 0);
         if (!$table instanceof DiningTable) {
-            return;
+            return null;
         }
 
         return [

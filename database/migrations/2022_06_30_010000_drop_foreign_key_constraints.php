@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
@@ -8,11 +10,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::table('igniterlabs_webhook_logs', function(Blueprint $table) {
+        Schema::table('igniterlabs_webhook_logs', function(Blueprint $table): void {
             $table->dropForeignKeyIfExists('webhook_id');
             $table->dropIndexIfExists('igniterlabs_webhook_logs_webhook_id_foreign');
         });
@@ -20,5 +22,5 @@ return new class extends Migration
         Schema::enableForeignKeyConstraints();
     }
 
-    public function down() {}
+    public function down(): void {}
 };

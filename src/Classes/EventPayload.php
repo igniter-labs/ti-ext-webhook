@@ -1,31 +1,66 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Classes;
 
 use GuzzleHttp\Psr7\Response;
 
 class EventPayload
 {
+    /**
+     * @var string
+     */
     public $httpVerb;
 
+    /**
+     * @var string
+     */
     public $webhookUrl;
 
+    /**
+     * @var mixed[]
+     */
     public $payload;
 
+    /**
+     * @var mixed[]
+     */
     public $headers;
 
+    /**
+     * @var mixed[]
+     */
     public $meta;
 
+    /**
+     * @var mixed[]
+     */
     public $tags;
 
+    /**
+     * @var int
+     */
     public $attempt;
 
+    /**
+     * @var null|Response
+     */
     public $response;
 
+    /**
+     * @var string|null
+     */
     public $errorType;
 
+    /**
+     * @var string|null
+     */
     public $errorMessage;
 
+    /**
+     * @var string
+     */
     public $uuid;
 
     public function __construct(

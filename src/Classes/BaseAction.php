@@ -1,30 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Classes;
 
+use Igniter\Flame\Database\Model;
 use Igniter\Flame\Mail\Markdown;
+use Igniter\Flame\Traits\ExtensionTrait;
 use Illuminate\Support\Facades\File;
 
 abstract class BaseAction
 {
-    use \Igniter\Flame\Traits\ExtensionTrait;
+    use ExtensionTrait;
 
-    /**
-     * @var \Igniter\Flame\Database\Model model object
-     */
-    protected $model;
-
-    protected $path;
+    protected string $path;
 
     /**
      * @var array Contains the event parameter values.
      */
     protected $params = [];
 
-    public function __construct($model = null)
-    {
-        $this->model = $model;
-        $this->path = '$/'.strtolower(str_replace('\\', '/', get_called_class()));
+    /**
+     * @param Model $model
+     */
+    public function __construct(
+        /**
+         * @var Model model object
+         */
+        protected $model = null,
+    ) {
+        $this->path = '$/'.strtolower(str_replace('\\', '/', static::class));
     }
 
     /**
@@ -60,9 +65,8 @@ abstract class BaseAction
     /**
      * Sets multiple params.
      * @param array $params
-     * @return void
      */
-    public function setActionParams($params)
+    public function setActionParams($params): void
     {
         $this->params = $params;
     }
@@ -78,12 +82,11 @@ abstract class BaseAction
 
     /**
      * Resolves an action identifier from the called class name or object.
-     * @param mixed Class name or object
      * @return string Identifier in format of vendor-extension-class
      */
     public function getActionIdentifier()
     {
-        $namespace = normalize_class_name(get_called_class());
+        $namespace = normalize_class_name(static::class);
         if (strpos($namespace, '\\') === null) {
             return $namespace;
         }
@@ -113,7 +116,7 @@ abstract class BaseAction
         return Markdown::parseFile($setupPath)->toHtml();
     }
 
-    public static function extend(callable $callback)
+    public static function extend(callable $callback): void
     {
         self::extensionExtendCallback($callback);
     }

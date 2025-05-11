@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\User\Models\Customer as CustomerModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use Override;
 
 class Customer extends BaseEvent
 {
@@ -12,7 +15,8 @@ class Customer extends BaseEvent
     /**
      * {@inheritdoc}
      */
-    public function eventDetails()
+    #[Override]
+    public function eventDetails(): array
     {
         return [
             'name' => 'Customers',
@@ -21,7 +25,8 @@ class Customer extends BaseEvent
         ];
     }
 
-    public static function registerEventListeners()
+    #[Override]
+    public static function registerEventListeners(): array
     {
         return [
             'created' => 'eloquent.created: '.CustomerModel::class,
@@ -30,11 +35,12 @@ class Customer extends BaseEvent
         ];
     }
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    #[Override]
+    public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $customer = array_get($args, 0);
         if (!$customer instanceof CustomerModel) {
-            return;
+            return null;
         }
 
         return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Tests\WebhookEvents;
 
 use IgniterLabs\Webhook\Classes\WebhookManager;
@@ -8,7 +10,7 @@ use IgniterLabs\Webhook\WebhookEvents\Category;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 
-it('runs category webhook event', function($action) {
+it('runs category webhook event', function($action): void {
     Queue::fake();
     Event::fake();
 

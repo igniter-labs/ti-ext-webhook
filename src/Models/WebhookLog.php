@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Models;
 
 use GuzzleHttp\Psr7\Response;
@@ -46,10 +48,9 @@ class WebhookLog extends Model
     //
     //
     //
-
     /**
      * @param \Igniter\Flame\Database\Query\Builder $query
-     * @param \Igniter\Flame\Database\Model $webhook
+     * @param Model $webhook
      * @return mixed
      */
     public function scopeApplyWebhook($query, $webhook)
@@ -82,7 +83,7 @@ class WebhookLog extends Model
         ]));
     }
 
-    public function markAsSuccessful()
+    public function markAsSuccessful(): static
     {
         $this->is_success = true;
 
@@ -91,7 +92,7 @@ class WebhookLog extends Model
         return $this;
     }
 
-    public function markAsFailed()
+    public function markAsFailed(): static
     {
         $this->is_success = false;
 
@@ -104,7 +105,7 @@ class WebhookLog extends Model
     //
     //
 
-    public function getStatusNameAttribute($value)
+    public function getStatusNameAttribute($value): string
     {
         return lang($this->is_success
             ? 'igniterlabs.webhook::default.text_success'
@@ -112,7 +113,7 @@ class WebhookLog extends Model
         );
     }
 
-    public function getCreatedSinceAttribute($value)
+    public function getCreatedSinceAttribute($value): ?string
     {
         return $this->created_at ? day_elapsed($this->created_at) : null;
     }

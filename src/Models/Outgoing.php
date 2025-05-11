@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Models;
 
 use Igniter\Flame\Database\Model;
@@ -7,6 +9,7 @@ use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
 use IgniterLabs\Webhook\Classes\WebhookCall;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 
@@ -31,7 +34,7 @@ class Outgoing extends Model
 
     public $relation = [
         'morphMany' => [
-            'deliveries' => [\IgniterLabs\Webhook\Models\WebhookLog::class, 'name' => 'webhook', 'delete' => true],
+            'deliveries' => [WebhookLog::class, 'name' => 'webhook', 'delete' => true],
         ],
     ];
 
@@ -45,23 +48,19 @@ class Outgoing extends Model
 
     /**
      * @param string $eventCode
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public static function listWebhooksForEvent($eventCode)
     {
-        return self::where('is_active', true)->get()->filter(function($model) use ($eventCode) {
-            return in_array($eventCode, $model->events ?? []);
-        });
+        return self::where('is_active', true)->get()->filter(fn($model): bool => in_array($eventCode, $model->events ?? []));
     }
 
-    public function getDropdownOptions()
+    public function getDropdownOptions(): array
     {
-        return array_map(function(BaseEvent $event) {
-            return [$event->eventName(), $event->eventDescription()];
-        }, resolve(WebhookManager::class)->listEventObjects());
+        return array_map(fn(BaseEvent $event): array => [$event->eventName(), $event->eventDescription()], resolve(WebhookManager::class)->listEventObjects());
     }
 
-    public function getContentTypeOptions()
+    public function getContentTypeOptions(): array
     {
         return [
             'application/json' => 'application/json',
@@ -74,9 +73,9 @@ class Outgoing extends Model
      * @param string $actionCode
      * @param string $eventCode
      */
-    public function dispatchWebhook($actionCode, $eventCode)
+    public function dispatchWebhook($actionCode, $eventCode): void
     {
-        if (!strlen($this->url)) {
+        if ((string) $this->url === '') {
             throw new SystemException('Missing a webhook payload URL.');
         }
 
@@ -88,7 +87,7 @@ class Outgoing extends Model
 
         $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', true));
 
-        strlen($secretKey) ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
+        strlen((string) $secretKey) !== 0 ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
 
         $webhookJob->postAsJson($contentType !== 'application/x-www-form-urlencoded');
 
@@ -124,13 +123,11 @@ class Outgoing extends Model
     //
     // Manager
     //
-
     /**
      * Extends this class with the event class
      * @param string $className Class name
-     * @return bool
      */
-    public function applyEventClass($className)
+    public function applyEventClass($className): bool
     {
         if (!$className) {
             return false;
@@ -147,9 +144,9 @@ class Outgoing extends Model
 
     /**
      * Returns the event class extension object.
-     * @return \IgniterLabs\Webhook\Classes\BaseEvent
+     * @return BaseEvent
      */
-    public function getEventObject()
+    public function getEventObject(): mixed
     {
         return $this->asExtension($this->eventClassName);
     }

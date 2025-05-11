@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Jobs;
 
 use Exception;
@@ -19,7 +21,10 @@ use Illuminate\Support\Str;
 
 class CallWebhook implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $webhookUrl;
 
@@ -53,27 +58,27 @@ class CallWebhook implements ShouldQueue
 
     protected ?TransferStats $transferStats = null;
 
-    public function handle()
+    public function handle(): void
     {
-        /** @var \GuzzleHttp\Client $client */
+        /** @var Client $client */
         $client = app(Client::class);
 
         $lastAttempt = $this->attempts() >= $this->tries;
 
         try {
-            if (strtoupper($this->httpVerb) === 'GET') {
+            if (strtoupper((string) $this->httpVerb) === 'GET') {
                 $body = ['query' => $this->payload];
             } else {
-                $body = !$this->postAsJson
-                    ? ['form_params' => $this->payload]
-                    : ['body' => json_encode($this->payload)];
+                $body = $this->postAsJson
+                    ? ['body' => json_encode($this->payload)]
+                    : ['form_params' => $this->payload];
             }
 
             $this->response = $client->request($this->httpVerb, $this->webhookUrl, array_merge([
                 'timeout' => $this->requestTimeout,
                 'verify' => $this->verifySsl,
                 'headers' => $this->headers,
-                'on_stats' => function(TransferStats $stats) {
+                'on_stats' => function(TransferStats $stats): void {
                     $this->transferStats = $stats;
                 },
             ], $body));
@@ -88,12 +93,12 @@ class CallWebhook implements ShouldQueue
         } catch (Exception $exception) {
             if ($exception instanceof RequestException) {
                 $this->response = $exception->getResponse();
-                $this->errorType = get_class($exception);
+                $this->errorType = $exception::class;
                 $this->errorMessage = $exception->getMessage();
             }
 
             if ($exception instanceof ConnectException) {
-                $this->errorType = get_class($exception);
+                $this->errorType = $exception::class;
                 $this->errorMessage = $exception->getMessage();
             }
 

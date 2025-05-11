@@ -1,21 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
 use IgniterLabs\Webhook\Classes\WebhookCall;
+use Override;
 
 class SendWebhook extends BaseAction
 {
+    #[Override]
     public function actionDetails()
     {
         return [
             'name' => 'Send payload to Webhooks',
-            'description' => 'Send HTTP POST payload to the webhook\'s URL',
+            'description' => "Send HTTP POST payload to the webhook's URL",
         ];
     }
 
+    #[Override]
     public function defineFormFields()
     {
         return [
@@ -39,9 +44,9 @@ class SendWebhook extends BaseAction
         ];
     }
 
-    public function triggerAction($params)
+    public function triggerAction($params): void
     {
-        if (!strlen($webhookUrl = $this->model->url)) {
+        if (!$webhookUrl = $this->model->url) {
             throw new AutomationException('Send Webhook event rule is missing a valid webhook url');
         }
 
@@ -50,7 +55,7 @@ class SendWebhook extends BaseAction
         $payload = array_except($params, ['order', 'reservation']);
         $webhookJob->payload(['action' => $this->model->automation_rule->code] + $payload);
 
-        if (strlen($webhookSecret = $this->model->secret)) {
+        if (strlen((string)$webhookSecret = $this->model->secret) !== 0) {
             $webhookJob->useSecret($webhookSecret);
         } else {
             $webhookJob->doNotSign();

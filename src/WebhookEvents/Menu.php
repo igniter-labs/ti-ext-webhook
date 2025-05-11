@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Cart\Models\Menu as MenuModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use Override;
 
 class Menu extends BaseEvent
 {
@@ -12,7 +15,8 @@ class Menu extends BaseEvent
     /**
      * {@inheritdoc}
      */
-    public function eventDetails()
+    #[Override]
+    public function eventDetails(): array
     {
         return [
             'name' => 'Menu Items',
@@ -20,7 +24,8 @@ class Menu extends BaseEvent
         ];
     }
 
-    public static function registerEventListeners()
+    #[Override]
+    public static function registerEventListeners(): array
     {
         return [
             'created' => 'eloquent.created: '.MenuModel::class,
@@ -30,11 +35,12 @@ class Menu extends BaseEvent
         ];
     }
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    #[Override]
+    public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $menu = array_get($args, 0);
         if (!$menu instanceof MenuModel) {
-            return;
+            return null;
         }
 
         return [

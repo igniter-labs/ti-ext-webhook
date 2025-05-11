@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('igniterlabs_webhook_outgoing', function(Blueprint $table) {
+        Schema::create('igniterlabs_webhook_outgoing', function(Blueprint $table): void {
             $table->increments('id');
             $table->string('name');
             $table->string('url');
@@ -18,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_webhook_logs', function(Blueprint $table) {
+        Schema::create('igniterlabs_webhook_logs', function(Blueprint $table): void {
             $table->bigIncrements('id');
             $table->bigInteger('uuid')->unsigned();
             $table->integer('webhook_id')->nullable()->unsigned()->index();
@@ -32,7 +34,7 @@ return new class extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('igniterlabs_webhook_outgoing');
         Schema::dropIfExists('igniterlabs_webhook_logs');

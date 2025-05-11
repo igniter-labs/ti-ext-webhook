@@ -1,14 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook;
 
 use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Classes\BaseExtension;
+use IgniterLabs\Webhook\ApiResources\Webhooks;
+use IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Console\Cleanup;
+use IgniterLabs\Webhook\Http\Requests\SettingsRequest;
+use IgniterLabs\Webhook\Models\Outgoing;
+use IgniterLabs\Webhook\Models\Settings;
 use IgniterLabs\Webhook\Models\WebhookLog;
+use IgniterLabs\Webhook\WebhookEvents\Category;
+use IgniterLabs\Webhook\WebhookEvents\Customer;
+use IgniterLabs\Webhook\WebhookEvents\Menu;
+use IgniterLabs\Webhook\WebhookEvents\Order;
+use IgniterLabs\Webhook\WebhookEvents\Reservation;
+use IgniterLabs\Webhook\WebhookEvents\Table;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
+use Override;
 
 /**
  * Webhook Extension Information File
@@ -16,14 +30,15 @@ use Illuminate\Support\Facades\Event;
 class Extension extends BaseExtension
 {
     protected array $morphMap = [
-        'outgoing_webhook' => \IgniterLabs\Webhook\Models\Outgoing::class,
+        'outgoing_webhook' => Outgoing::class,
     ];
 
     public $singletons = [
         WebhookManager::class,
     ];
 
-    public function register()
+    #[Override]
+    public function register(): void
     {
         parent::register();
 
@@ -32,7 +47,8 @@ class Extension extends BaseExtension
         $this->registerConsoleCommand('webhook.cleanup', Cleanup::class);
     }
 
-    public function boot()
+    #[Override]
+    public function boot(): void
     {
         $this->bootWebhookServer();
 
@@ -43,6 +59,7 @@ class Extension extends BaseExtension
         }
     }
 
+    #[Override]
     public function registerSettings(): array
     {
         return [
@@ -50,8 +67,8 @@ class Extension extends BaseExtension
                 'label' => 'Webhooks Settings',
                 'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
                 'icon' => 'fa fa-cog',
-                'model' => \IgniterLabs\Webhook\Models\Settings::class,
-                'request' => \IgniterLabs\Webhook\Http\Requests\SettingsRequest::class,
+                'model' => Settings::class,
+                'request' => SettingsRequest::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
             ],
         ];
@@ -60,6 +77,7 @@ class Extension extends BaseExtension
     /**
      * Registers any admin permissions used by this extension.
      */
+    #[Override]
     public function registerPermissions(): array
     {
         return [
@@ -70,6 +88,7 @@ class Extension extends BaseExtension
         ];
     }
 
+    #[Override]
     public function registerNavigation(): array
     {
         return [
@@ -87,28 +106,28 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSchedule(Schedule $schedule)
+    public function registerSchedule(Schedule $schedule): void
     {
         $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
     }
 
-    public function registerWebhookEvents()
+    public function registerWebhookEvents(): array
     {
         return [
-            'category' => \IgniterLabs\Webhook\WebhookEvents\Category::class,
-            'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
-            'menu' => \IgniterLabs\Webhook\WebhookEvents\Menu::class,
-            'order' => \IgniterLabs\Webhook\WebhookEvents\Order::class,
-            'reservation' => \IgniterLabs\Webhook\WebhookEvents\Reservation::class,
-            'table' => \IgniterLabs\Webhook\WebhookEvents\Table::class,
+            'category' => Category::class,
+            'customer' => Customer::class,
+            'menu' => Menu::class,
+            'order' => Order::class,
+            'reservation' => Reservation::class,
+            'table' => Table::class,
         ];
     }
 
-    public function registerApiResources()
+    public function registerApiResources(): array
     {
         return [
             'webhooks' => [
-                'controller' => \IgniterLabs\Webhook\ApiResources\Webhooks::class,
+                'controller' => Webhooks::class,
                 'name' => 'Webhooks',
                 'description' => 'An API resource for webhooks',
                 'actions' => [
@@ -118,12 +137,12 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerAutomationRules()
+    public function registerAutomationRules(): array
     {
         return [
             'events' => [],
             'actions' => [
-                \IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook::class,
+                SendWebhook::class,
             ],
             'conditions' => [],
         ];
@@ -131,11 +150,11 @@ class Extension extends BaseExtension
 
     protected function bootWebhookServer()
     {
-        Event::listen('igniterlabs.webhook.succeeded', function($eventPayload) {
+        Event::listen('igniterlabs.webhook.succeeded', function($eventPayload): void {
             WebhookLog::createLog($eventPayload, true);
         });
 
-        Event::listen('igniterlabs.webhook.failed', function($eventPayload) {
+        Event::listen('igniterlabs.webhook.failed', function($eventPayload): void {
             WebhookLog::createLog($eventPayload);
         });
     }

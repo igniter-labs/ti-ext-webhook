@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Admin\Models\StatusHistory;
 use Igniter\Cart\Models\Order as OrderModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use Override;
 
 class Order extends BaseEvent
 {
@@ -13,7 +16,8 @@ class Order extends BaseEvent
     /**
      * {@inheritdoc}
      */
-    public function eventDetails()
+    #[Override]
+    public function eventDetails(): array
     {
         return [
             'name' => 'Orders',
@@ -21,7 +25,8 @@ class Order extends BaseEvent
         ];
     }
 
-    public static function registerEventListeners()
+    #[Override]
+    public static function registerEventListeners(): array
     {
         return [
             'created' => 'eloquent.created: '.OrderModel::class,
@@ -33,7 +38,8 @@ class Order extends BaseEvent
         ];
     }
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    #[Override]
+    public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $order = array_get($args, 0);
         if ($order instanceof StatusHistory) {
@@ -41,7 +47,7 @@ class Order extends BaseEvent
         }
 
         if (!$order instanceof OrderModel) {
-            return;
+            return null;
         }
 
         return [

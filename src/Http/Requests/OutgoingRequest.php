@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Http\Requests;
 
 use Igniter\System\Classes\FormRequest;
+use Override;
 
 class OutgoingRequest extends FormRequest
 {
+    #[Override]
     public function attributes()
     {
         return [
@@ -19,7 +23,7 @@ class OutgoingRequest extends FormRequest
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'between:2,128'],

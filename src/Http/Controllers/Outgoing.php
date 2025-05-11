@@ -1,19 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Http\Controllers;
 
+use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
+use Igniter\Admin\Http\Actions\FormController;
+use Igniter\Admin\Http\Actions\ListController;
 use Igniter\Flame\Exception\FlashException;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Http\Requests\OutgoingRequest;
 
 /**
  * Webhooks Admin Controller
  */
-class Outgoing extends \Igniter\Admin\Classes\AdminController
+class Outgoing extends AdminController
 {
     public array $implement = [
-        \Igniter\Admin\Http\Actions\FormController::class,
-        \Igniter\Admin\Http\Actions\ListController::class,
+        FormController::class,
+        ListController::class,
     ];
 
     public array $listConfig = [
@@ -29,7 +35,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
     public array $formConfig = [
         'name' => 'lang:igniterlabs.webhook::default.outgoing.text_form_name',
         'model' => \IgniterLabs\Webhook\Models\Outgoing::class,
-        'request' => \IgniterLabs\Webhook\Http\Requests\OutgoingRequest::class,
+        'request' => OutgoingRequest::class,
         'create' => [
             'title' => 'lang:admin::lang.form.create_title',
             'redirect' => 'igniterlabs/webhook/outgoing/edit/{id}',
@@ -59,7 +65,7 @@ class Outgoing extends \Igniter\Admin\Classes\AdminController
         AdminMenu::setContext('tools', 'webhooks');
     }
 
-    public function onLoadSetupInstructions()
+    public function onLoadSetupInstructions(): array
     {
         throw_unless($eventCode = post('setup_event_code'),
             new FlashException('Please choose an event.')

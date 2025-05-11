@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Classes;
 
 use IgniterLabs\Webhook\Exceptions\CouldNotCallWebhook;
@@ -17,16 +19,16 @@ class WebhookCall
 
     protected $headers = [];
 
-    private $payload = [];
+    private array $payload = [];
 
-    private $signWebhook = true;
+    private bool $signWebhook = true;
 
     public static function create(): self
     {
         $config = config('webhook-server');
 
         return (new static)
-            ->uuid(Str::uuid())
+            ->uuid(Str::uuid()->toString())
             ->onQueue($config['queue'])
             ->onConnection($config['connection'] ?? null)
             ->useHttpVerb($config['http_verb'])

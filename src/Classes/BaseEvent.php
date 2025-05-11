@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Classes;
 
+use Igniter\Flame\Database\Model;
+use Igniter\Flame\Traits\ExtensionTrait;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
 abstract class BaseEvent
 {
-    use \Igniter\Flame\Traits\ExtensionTrait;
-
-    /**
-     * @var \Igniter\Flame\Database\Model model object
-     */
-    protected $model;
+    use ExtensionTrait;
 
     protected $setupPartial;
 
@@ -22,10 +21,15 @@ abstract class BaseEvent
      */
     protected $payload = [];
 
-    public function __construct($model = null)
-    {
-        $this->model = $model;
-    }
+    /**
+     * @param Model $model
+     */
+    public function __construct(
+        /**
+         * @var Model model object
+         */
+        protected $model = null,
+    ) {}
 
     /**
      * Returns information about this event, including name and description.
@@ -75,9 +79,8 @@ abstract class BaseEvent
     /**
      * Sets multiple payload.
      * @param array $payload
-     * @return void
      */
-    public function setEventPayload($payload)
+    public function setEventPayload($payload): void
     {
         $this->payload = $payload;
     }
@@ -93,12 +96,11 @@ abstract class BaseEvent
 
     /**
      * Resolves an event identifier from the called class name or object.
-     * @param mixed Class name or object
      * @return string Identifier in format of vendor-extension-class
      */
     public function getEventIdentifier()
     {
-        $namespace = normalize_class_name(get_called_class());
+        $namespace = normalize_class_name(static::class);
         if (strpos($namespace, '\\') === null) {
             return $namespace;
         }
@@ -106,9 +108,8 @@ abstract class BaseEvent
         $parts = explode('\\', $namespace);
         $class = array_pop($parts);
         $slice = array_slice($parts, 1, 2);
-        $code = strtolower(implode('-', $slice).'-'.$class);
 
-        return $code;
+        return strtolower(implode('-', $slice).'-'.$class);
     }
 
     public function renderSetupPartial()
@@ -120,7 +121,7 @@ abstract class BaseEvent
         return 'No setup instructions provided';
     }
 
-    public static function extend(callable $callback)
+    public static function extend(callable $callback): void
     {
         self::extensionExtendCallback($callback);
     }

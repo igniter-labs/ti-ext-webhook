@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Tests;
 
 use IgniterLabs\Webhook\Classes\WebhookCall;
@@ -7,16 +9,16 @@ use IgniterLabs\Webhook\Exceptions\CouldNotCallWebhook;
 use IgniterLabs\Webhook\Jobs\CallWebhook;
 use Illuminate\Support\Facades\Queue;
 
-beforeEach(function() {
+beforeEach(function(): void {
     Queue::fake();
 });
 
-it('can_dispatch_a_job_that_calls_a_webhook', function() {
+it('can_dispatch_a_job_that_calls_a_webhook', function(): void {
     $url = 'https://localhost';
 
     WebhookCall::create()->url($url)->useSecret('123')->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) use ($url) {
+    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) use ($url): true {
         $config = config('webhook-server');
 
         $this->assertEquals($config['queue'], $job->queue);
@@ -32,7 +34,7 @@ it('can_dispatch_a_job_that_calls_a_webhook', function() {
     });
 });
 
-test('can_keep_default_config_headers_and_set_new_ones', function() {
+test('can_keep_default_config_headers_and_set_new_ones', function(): void {
     $url = 'https://localhost';
 
     WebhookCall::create()->url($url)
@@ -40,7 +42,7 @@ test('can_keep_default_config_headers_and_set_new_ones', function() {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) {
+    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('User-Agent', $job->headers);
@@ -49,7 +51,7 @@ test('can_keep_default_config_headers_and_set_new_ones', function() {
     });
 });
 
-it('can_override_default_config_headers', function() {
+it('can_override_default_config_headers', function(): void {
     $url = 'https://localhost';
 
     WebhookCall::create()->url($url)
@@ -57,7 +59,7 @@ it('can_override_default_config_headers', function() {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) {
+    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('Content-Type', $job->headers);
@@ -67,7 +69,7 @@ it('can_override_default_config_headers', function() {
     });
 });
 
-it('can_override_default_queue_connection', function() {
+it('can_override_default_queue_connection', function(): void {
     $url = 'https://localhost';
 
     WebhookCall::create()->url($url)
@@ -75,32 +77,32 @@ it('can_override_default_queue_connection', function() {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) {
+    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
         $this->assertEquals('foo', $job->connection);
 
         return true;
     });
 });
 
-it('will_throw_an_exception_when_calling_a_webhook_without_proving_an_url', function() {
+it('will_throw_an_exception_when_calling_a_webhook_without_proving_an_url', function(): void {
     $this->expectException(CouldNotCallWebhook::class);
 
     WebhookCall::create()->dispatch();
 });
 
-it('will_throw_an_exception_when_no_secret_has_been_set', function() {
+it('will_throw_an_exception_when_no_secret_has_been_set', function(): void {
     $this->expectException(CouldNotCallWebhook::class);
 
     WebhookCall::create()->url('https://localhost')->dispatch();
 });
 
-it('will_not_throw_an_exception_if_there_is_not_secret_and_the_request_should_not_be_signed', function() {
+it('will_not_throw_an_exception_if_there_is_not_secret_and_the_request_should_not_be_signed', function(): void {
     WebhookCall::create()->doNotSign()->url('https://localhost')->dispatch();
 
     $this->assertTrue(true);
 });
 
-it('can_get_the_uuid_property', function() {
+it('can_get_the_uuid_property', function(): void {
     $webhookCall = WebhookCall::create()->uuid('my-unique-identifier');
 
     $this->assertIsString($webhookCall->getUuid());

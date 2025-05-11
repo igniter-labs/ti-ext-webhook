@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\WebhookEvents;
 
 use Igniter\Admin\Models\StatusHistory;
 use Igniter\Reservation\Models\Reservation as ReservationModel;
 use IgniterLabs\Webhook\Classes\BaseEvent;
+use Override;
 
 class Reservation extends BaseEvent
 {
@@ -13,7 +16,8 @@ class Reservation extends BaseEvent
     /**
      * {@inheritdoc}
      */
-    public function eventDetails()
+    #[Override]
+    public function eventDetails(): array
     {
         return [
             'name' => 'Reservations',
@@ -21,7 +25,8 @@ class Reservation extends BaseEvent
         ];
     }
 
-    public static function registerEventListeners()
+    #[Override]
+    public static function registerEventListeners(): array
     {
         return [
             'created' => 'eloquent.created: '.ReservationModel::class,
@@ -32,7 +37,8 @@ class Reservation extends BaseEvent
         ];
     }
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
+    #[Override]
+    public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $reservation = array_get($args, 0);
         if ($reservation instanceof StatusHistory) {
@@ -40,7 +46,7 @@ class Reservation extends BaseEvent
         }
 
         if (!$reservation instanceof ReservationModel) {
-            return;
+            return null;
         }
 
         return [
