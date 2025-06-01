@@ -1,3 +1,9 @@
+---
+title: "WebHooks"
+section: "extensions"
+sortOrder: 999
+---
+
 Webhooks extension allows you to integrate your TastyIgniter site with external systems
 
 It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps
