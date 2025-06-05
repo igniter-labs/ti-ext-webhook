@@ -13,7 +13,6 @@ class SettingsRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'enable_authentication' => lang('igniterlabs.webhook::default.label_enable_authentication'),
             'verify_ssl' => lang('igniterlabs.webhook::default.label_verify_ssl'),
             'timeout_in_seconds' => lang('igniterlabs.webhook::default.label_timeout_in_seconds'),
             'tries' => lang('igniterlabs.webhook::default.label_tries'),
@@ -25,7 +24,6 @@ class SettingsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'enable_authentication' => ['required', 'integer'],
             'verify_ssl' => ['required', 'integer'],
             'timeout_in_seconds' => ['required', 'integer'],
             'tries' => ['required', 'integer'],

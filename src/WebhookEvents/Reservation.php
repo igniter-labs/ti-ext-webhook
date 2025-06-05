@@ -11,7 +11,7 @@ use Override;
 
 class Reservation extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.reservation';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.reservation';
 
     /**
      * {@inheritdoc}

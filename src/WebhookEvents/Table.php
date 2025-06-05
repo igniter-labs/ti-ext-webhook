@@ -10,7 +10,7 @@ use Override;
 
 class Table extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.table';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.table';
 
     /**
      * {@inheritdoc}

@@ -10,7 +10,7 @@ use Override;
 
 class Menu extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.menu';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.menu';
 
     /**
      * {@inheritdoc}

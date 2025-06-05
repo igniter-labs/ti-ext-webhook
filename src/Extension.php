@@ -9,8 +9,8 @@ use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\Webhook\ApiResources\Webhooks;
 use IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook;
 use IgniterLabs\Webhook\Classes\WebhookManager;
-use IgniterLabs\Webhook\Console\Cleanup;
 use IgniterLabs\Webhook\Http\Requests\SettingsRequest;
+use IgniterLabs\Webhook\Listeners\WebhookSubscriber;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
 use IgniterLabs\Webhook\Models\WebhookLog;
@@ -20,8 +20,6 @@ use IgniterLabs\Webhook\WebhookEvents\Menu;
 use IgniterLabs\Webhook\WebhookEvents\Order;
 use IgniterLabs\Webhook\WebhookEvents\Reservation;
 use IgniterLabs\Webhook\WebhookEvents\Table;
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Facades\Event;
 use Override;
 
 /**
@@ -37,26 +35,21 @@ class Extension extends BaseExtension
         WebhookManager::class,
     ];
 
-    #[Override]
-    public function register(): void
-    {
-        parent::register();
-
-        $this->mergeConfigFrom(__DIR__.'/../config/webhook-server.php', 'webhook-server');
-
-        $this->registerConsoleCommand('webhook.cleanup', Cleanup::class);
-    }
+    protected $subscribe = [
+        WebhookSubscriber::class,
+    ];
 
     #[Override]
     public function boot(): void
     {
-        $this->bootWebhookServer();
-
-        if (WebhookManager::isConfigured()) {
-            WebhookManager::applyWebhookConfigValues();
-            WebhookManager::bindWebhookEvents();
-            Igniter::prunableModel(WebhookLog::class);
-        }
+        $this->app->booted(function(): void {
+            $webhookManager = resolve(WebhookManager::class);
+            if ($webhookManager->isConfigured()) {
+                $webhookManager->applyWebhookConfigValues();
+                $webhookManager->bindWebhookEvents();
+                Igniter::prunableModel(WebhookLog::class);
+            }
+        });
     }
 
     #[Override]
@@ -106,11 +99,6 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSchedule(Schedule $schedule): void
-    {
-        $schedule->command('webhook:cleanup')->name('Webhook Log Cleanup')->daily();
-    }
-
     public function registerWebhookEvents(): array
     {
         return [
@@ -146,16 +134,5 @@ class Extension extends BaseExtension
             ],
             'conditions' => [],
         ];
-    }
-
-    protected function bootWebhookServer()
-    {
-        Event::listen('igniterlabs.webhook.succeeded', function($eventPayload): void {
-            WebhookLog::createLog($eventPayload, true);
-        });
-
-        Event::listen('igniterlabs.webhook.failed', function($eventPayload): void {
-            WebhookLog::createLog($eventPayload);
-        });
     }
 }

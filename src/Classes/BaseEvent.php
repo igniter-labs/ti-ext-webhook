@@ -14,12 +14,12 @@ abstract class BaseEvent
 {
     use ExtensionTrait;
 
-    protected $setupPartial;
+    protected string $setupPartial;
 
     /**
      * @var array Contains the event payload.
      */
-    protected $payload = [];
+    protected array $payload = [];
 
     /**
      * @param Model $model
@@ -78,9 +78,8 @@ abstract class BaseEvent
 
     /**
      * Sets multiple payload.
-     * @param array $payload
      */
-    public function setEventPayload($payload): void
+    public function setEventPayload(array $payload): void
     {
         $this->payload = $payload;
     }

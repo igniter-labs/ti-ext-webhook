@@ -15,52 +15,52 @@ use InvalidArgumentException;
 
 class WebhookManager
 {
-    protected $webhookEvents;
+    protected array $webhookEvents = [];
 
     /**
      * @var array A cache of webhook events.
      */
-    protected $webhookEventsCache = [];
+    protected array $webhookEventsCache = [];
 
     /**
      * @var array Cache of registration callbacks.
      */
-    protected $webhookEventsCallbacks = [];
+    protected array $webhookEventsCallbacks = [];
 
-    public static function applyWebhookConfigValues(): void
+    public function applyWebhookConfigValues(): void
     {
-        Config::set('webhook-server.verify_ssl', (bool)Settings::get('verify_ssl', Config::get('webhook-server.verify_ssl')));
-        Config::set('webhook-server.timeout_in_seconds', (int)Settings::get('timeout_in_seconds', Config::get('webhook-server.timeout_in_seconds')));
-        Config::set('webhook-server.tries', (int)Settings::get('tries', Config::get('webhook-server.tries')));
-        Config::set('webhook-server.signature_header_name', Settings::get('server_signature_header', Config::get('webhook-server.signature_header_name')));
-        //        Config::set('webhook-server.headers', Settings::get('headers', Config::get('webhook-server.headers')));
+        Config::set('webhook-server.verify_ssl', Settings::get('verify_ssl') ?: Config::get('webhook-server.verify_ssl'));
+        Config::set('webhook-server.timeout_in_seconds', Settings::get('timeout_in_seconds') ?: Config::get('webhook-server.timeout_in_seconds'));
+        Config::set('webhook-server.tries', Settings::get('tries') ?: Config::get('webhook-server.tries'));
+        Config::set('webhook-server.signature_header_name', Settings::get('server_signature_header') ?: Config::get('webhook-server.signature_header_name'));
+        Config::set('webhook-server.headers', Settings::getHeaders() ?: Config::get('webhook-server.headers'));
     }
 
     //
     //
     //
 
-    public static function isConfigured(): bool
+    public function isConfigured(): bool
     {
         return Igniter::hasDatabase()
             && Schema::hasTable('igniterlabs_webhook_outgoing');
     }
 
-    public static function bindWebhookEvents(): void
+    public function bindWebhookEvents(): void
     {
-        collect((new static)->listEvents())->each(function($eventClass, $eventCode): void {
+        collect($this->listEvents())->each(function($eventClass, $eventCode): void {
             if (!method_exists($eventClass, 'registerEventListeners')) {
                 return;
             }
 
             $eventListeners = $eventClass::registerEventListeners();
             foreach ($eventListeners as $actionCode => $systemEvent) {
-                self::bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass);
+                $this->bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass);
             }
         });
     }
 
-    public static function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass): void
+    public function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass): void
     {
         Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass): void {
             if (!method_exists($eventClass, 'makePayloadFromEvent')) {
@@ -72,7 +72,7 @@ class WebhookManager
                 return;
             }
 
-            (new static)->runWebhookEvent($eventCode, $actionCode, $payload);
+            $this->runWebhookEvent($eventCode, $actionCode, $payload);
         });
     }
 
@@ -83,14 +83,13 @@ class WebhookManager
             throw new InvalidArgumentException('Webhook event class ['.$eventClass.'] not found');
         }
 
-        $models = Outgoing::listWebhooksForEvent($eventCode);
-
-        $models->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload): void {
-            if ($model->applyEventClass($eventClass)) {
-                $model->setEventPayload($payload);
-                $model->dispatchWebhook($actionCode, $eventCode);
-            }
-        });
+        Outgoing::listWebhooksForEvent($eventCode)
+            ->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload): void {
+                if ($model->applyEventClass($eventClass)) {
+                    $model->setEventPayload($payload);
+                    $model->dispatchWebhook($actionCode, $eventCode);
+                }
+            });
     }
 
     //

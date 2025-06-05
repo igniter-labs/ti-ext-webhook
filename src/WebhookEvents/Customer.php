@@ -10,7 +10,7 @@ use Override;
 
 class Customer extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.customer';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.customer';
 
     /**
      * {@inheritdoc}
@@ -21,7 +21,6 @@ class Customer extends BaseEvent
         return [
             'name' => 'Customers',
             'description' => 'Customer created, updated or deleted.',
-            'setup' => '$/igniterlabs/webhook/webhookevents/customer/setup.md',
         ];
     }
 

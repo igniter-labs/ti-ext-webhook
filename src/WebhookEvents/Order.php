@@ -11,7 +11,7 @@ use Override;
 
 class Order extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.order';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.order';
 
     /**
      * {@inheritdoc}

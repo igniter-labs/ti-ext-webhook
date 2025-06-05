@@ -10,7 +10,7 @@ use Override;
 
 class Category extends BaseEvent
 {
-    protected $setupPartial = 'igniterlabs.webhook::_partials.setup.category';
+    protected string $setupPartial = 'igniterlabs.webhook::_partials.setup.category';
 
     /**
      * {@inheritdoc}

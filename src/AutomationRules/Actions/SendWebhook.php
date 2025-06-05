@@ -6,9 +6,15 @@ namespace IgniterLabs\Webhook\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
-use IgniterLabs\Webhook\Classes\WebhookCall;
+use Igniter\Automation\Models\RuleAction;
 use Override;
+use Spatie\WebhookServer\WebhookCall;
 
+/**
+ * SendWebhook Action
+ *
+ * @property RuleAction $model
+ */
 class SendWebhook extends BaseAction
 {
     #[Override]
@@ -60,6 +66,13 @@ class SendWebhook extends BaseAction
         } else {
             $webhookJob->doNotSign();
         }
+
+        $webhookJob->meta([
+            'webhook_id' => $this->model->automation_rule->getKey(),
+            'webhook_type' => $this->model->automation_rule->getMorphClass(),
+            'name' => $this->model->automation_rule->name,
+            'event_code' => $this->model->automation_rule->code,
+        ]);
 
         $webhookJob->dispatch();
     }

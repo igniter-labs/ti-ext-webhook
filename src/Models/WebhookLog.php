@@ -6,12 +6,26 @@ namespace IgniterLabs\Webhook\Models;
 
 use GuzzleHttp\Psr7\Response;
 use Igniter\Flame\Database\Model;
-use IgniterLabs\Webhook\Classes\EventPayload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\MassPrunable;
+use Spatie\WebhookServer\Events\WebhookCallEvent;
+use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
 
 /**
  * Webhook Log Model
+ *
+ * @property int $id
+ * @property int $webhook_id
+ * @property string $webhook_type
+ * @property string $name
+ * @property string $message
+ * @property bool $is_success
+ * @property array $payload
+ * @property array $response
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $event_code
+ * @property string $exception
  */
 class WebhookLog extends Model
 {
@@ -64,41 +78,30 @@ class WebhookLog extends Model
     //
     //
 
-    public static function createLog(EventPayload $eventPayload, $isSuccess = false)
+    public static function createLog(WebhookCallEvent $eventPayload)
     {
         $response = [];
         if ($eventPayload->response instanceof Response) {
             $response = $eventPayload->response->getBody()->getContents();
         }
 
-        $message = $isSuccess
-            ? 'Payload delivered successfully'
-            : e($eventPayload->errorMessage ?? 'No error message available.');
+        $webhookSucceeded = $eventPayload instanceof WebhookCallSucceededEvent;
 
-        return self::create(array_merge($eventPayload->meta, [
+        $message = $webhookSucceeded
+            ? 'Payload delivered successfully'
+            : e($eventPayload->errorType ?? 'No error type available.')
+            .':'.e($eventPayload->errorMessage ?? 'No error message available.');
+
+        return self::query()->create([
+            'webhook_id' => array_get($eventPayload->meta, 'webhook_id'),
+            'webhook_type' => array_get($eventPayload->meta, 'webhook_type'),
+            'name' => array_get($eventPayload->meta, 'name'),
+            'event_code' => array_get($eventPayload->meta, 'event_code'),
             'payload' => $eventPayload->payload,
-            'is_success' => $isSuccess,
+            'is_success' => $webhookSucceeded,
             'message' => $message,
             'response' => $response,
-        ]));
-    }
-
-    public function markAsSuccessful(): static
-    {
-        $this->is_success = true;
-
-        $this->save();
-
-        return $this;
-    }
-
-    public function markAsFailed(): static
-    {
-        $this->is_success = false;
-
-        $this->save();
-
-        return $this;
+        ]);
     }
 
     //
@@ -109,7 +112,7 @@ class WebhookLog extends Model
     {
         return lang($this->is_success
             ? 'igniterlabs.webhook::default.text_success'
-            : 'igniterlabs.webhook::default.text_failed'
+            : 'igniterlabs.webhook::default.text_failed',
         );
     }
 
@@ -120,6 +123,6 @@ class WebhookLog extends Model
 
     public function prunable(): Builder
     {
-        return static::where('created_at', '<=', now()->subMonth());
+        return static::query()->where('created_at', '<=', now()->subMonth());
     }
 }

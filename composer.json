@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "spatie/laravel-webhook-server": "^3.8",
         "tastyigniter/core": "^v4.0",
         "tastyigniter/ti-ext-api": "^v4.0",
         "tastyigniter/ti-ext-automation": "^v4.0",

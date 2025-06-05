@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace IgniterLabs\Webhook\Tests;
 
-use IgniterLabs\Webhook\Classes\WebhookCall;
-use IgniterLabs\Webhook\Exceptions\CouldNotCallWebhook;
-use IgniterLabs\Webhook\Jobs\CallWebhook;
 use Illuminate\Support\Facades\Queue;
+use Spatie\WebhookServer\CallWebhookJob;
+use Spatie\WebhookServer\Exceptions\CouldNotCallWebhook;
+use Spatie\WebhookServer\WebhookCall;
 
 beforeEach(function(): void {
     Queue::fake();
@@ -18,7 +18,7 @@ it('can_dispatch_a_job_that_calls_a_webhook', function(): void {
 
     WebhookCall::create()->url($url)->useSecret('123')->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job) use ($url): true {
+    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job) use ($url): true {
         $config = config('webhook-server');
 
         $this->assertEquals($config['queue'], $job->queue);
@@ -42,7 +42,7 @@ test('can_keep_default_config_headers_and_set_new_ones', function(): void {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
+    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job): true {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('User-Agent', $job->headers);
@@ -59,7 +59,7 @@ it('can_override_default_config_headers', function(): void {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
+    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job): true {
         $config = config('webhook-server');
 
         $this->assertArrayHasKey('Content-Type', $job->headers);
@@ -77,7 +77,7 @@ it('can_override_default_queue_connection', function(): void {
         ->useSecret('123')
         ->dispatch();
 
-    Queue::assertPushed(CallWebhook::class, function(CallWebhook $job): true {
+    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job): true {
         $this->assertEquals('foo', $job->connection);
 
         return true;
