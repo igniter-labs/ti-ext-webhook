@@ -17,14 +17,6 @@ return [
             ],
         ],
         'fields' => [
-            'enable_authentication' => [
-                'tab' => 'igniterlabs.webhook::default.text_tab_server',
-                'label' => 'igniterlabs.webhook::default.label_enable_authentication',
-                'type' => 'switch',
-                'default' => true,
-                'span' => 'left',
-                'comment' => 'igniterlabs.webhook::default.help_enable_authentication',
-            ],
             'verify_ssl' => [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
                 'label' => 'igniterlabs.webhook::default.label_verify_ssl',
@@ -32,6 +24,14 @@ return [
                 'default' => true,
                 'span' => 'right',
                 'comment' => 'igniterlabs.webhook::default.help_verify_ssl',
+            ],
+            'server_signature_header' => [
+                'tab' => 'igniterlabs.webhook::default.text_tab_server',
+                'label' => 'igniterlabs.webhook::default.label_server_signature_header',
+                'type' => 'text',
+                'default' => 'TI-Signature',
+                'span' => 'left',
+                'comment' => 'igniterlabs.webhook::default.help_server_signature_header',
             ],
             'timeout_in_seconds' => [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
@@ -48,14 +48,6 @@ return [
                 'default' => 3,
                 'span' => 'right',
                 'comment' => 'igniterlabs.webhook::default.help_tries',
-            ],
-            'server_signature_header' => [
-                'tab' => 'igniterlabs.webhook::default.text_tab_server',
-                'label' => 'igniterlabs.webhook::default.label_server_signature_header',
-                'type' => 'text',
-                'default' => 'TI-Signature',
-                'span' => 'left',
-                'comment' => 'igniterlabs.webhook::default.help_server_signature_header',
             ],
             'headers' => [
                 'tab' => 'igniterlabs.webhook::default.text_tab_server',
@@ -75,6 +67,13 @@ return [
                     ],
                 ],
             ],
+        ],
+        'rules' => [
+            'verify_ssl' => ['required', 'boolean'],
+            'server_signature_header' => ['required', 'string'],
+            'timeout_in_seconds' => ['required', 'integer'],
+            'tries' => ['required', 'integer'],
+            'headers' => ['nullable', 'array'],
         ],
     ],
 ];

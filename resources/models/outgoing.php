@@ -115,13 +115,6 @@ return [
                     'span' => 'right',
                     'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_secret',
                 ],
-                'config_data[content_type]' => [
-                    'label' => 'lang:igniterlabs.webhook::default.outgoing.label_content_type',
-                    'type' => 'select',
-                    'options' => 'getContentTypeOptions',
-                    'span' => 'left',
-                    'comment' => 'lang:igniterlabs.webhook::default.outgoing.help_content_type',
-                ],
                 'config_data[verify_ssl]' => [
                     'label' => 'lang:igniterlabs.webhook::default.outgoing.label_verify_ssl',
                     'type' => 'switch',
