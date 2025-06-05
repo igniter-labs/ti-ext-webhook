@@ -11,7 +11,7 @@ return [
     'label_server_signature_header' => 'Webhook Signature Header Name',
     'label_headers' => 'Additional HTTP Headers',
     'label_timeout_in_seconds' => 'Webhook Timeout',
-    'label_tries' => 'Webhook Tries',
+    'label_tries' => 'Webhook Retry Count',
     'label_verify_ssl' => 'Verify SSL Certificate',
 
     'help_server_signature_header' => 'The HTTP header key name of where the signature will be added for outgoing requests.',
