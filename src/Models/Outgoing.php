@@ -38,9 +38,6 @@ class Outgoing extends Model
 
     public $timestamps = true;
 
-    /**
-     * @var array Guarded fields
-     */
     protected $guarded = [];
 
     public $relation = [

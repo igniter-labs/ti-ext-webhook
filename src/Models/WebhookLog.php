@@ -40,9 +40,6 @@ class WebhookLog extends Model
 
     public $timestamps = true;
 
-    /**
-     * @var array Guarded fields
-     */
     public $guarded = [];
 
     public $relation = [
