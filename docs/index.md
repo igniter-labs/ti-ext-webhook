@@ -121,7 +121,9 @@ class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
 The `setupPartial` property is used to define the setup instructions for the webhook event, which can be displayed in the admin interface when configuring the webhook. This should point to a blade view file. In this example, it points to `author.extension::customer.setup`, which would be a view file located in the `resources/views/customer` directory of your extension.
 
 The `eventDetails` method returns an array containing the name and description of the event. This information is used in the admin interface to display the event details.
+
 The `registerEventListeners` method returns an array of event listeners that will trigger the webhook event. In this example, it listens for the `created`, `updated`, and `deleted` events on the `Igniter\User\Models\Customer` model.
+
 The `makePayloadFromEvent` method is responsible for preparing the payload that will be sent to the webhook. It takes the event arguments and returns an array of parameters that will be included in the webhook request. In this example, it retrieves the customer data from the event arguments and includes it in the payload.
 
 ### Registering Webhook Events
