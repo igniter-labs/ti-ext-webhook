@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IgniterLabs\Webhook\Tests\Models;
 
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\Webhook\Models\Outgoing;
 
 it('can list webhooks for an event', function(): void {
@@ -45,7 +46,7 @@ it('generates a secret key on creation if not provided', function(): void {
 
     expect($outgoing->config_data)->toHaveKey('secret_key')
         ->and($outgoing->config_data['secret_key'])->toBeString()
-        ->and(strlen($outgoing->config_data['secret_key']))->toBe(16);
+        ->and(strlen((string) $outgoing->config_data['secret_key']))->toBe(16);
 });
 
 it('throws an exception when dispatching without a URL', function(): void {
@@ -53,5 +54,5 @@ it('throws an exception when dispatching without a URL', function(): void {
     $outgoing->url = '';
 
     expect(fn() => $outgoing->dispatchWebhook('created', 'category'))
-        ->toThrow(\Igniter\Flame\Exception\SystemException::class, 'Missing a webhook payload URL.');
+        ->toThrow(SystemException::class, 'Missing a webhook payload URL.');
 });

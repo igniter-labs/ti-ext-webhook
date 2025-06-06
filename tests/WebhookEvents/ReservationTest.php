@@ -74,7 +74,7 @@ it('runs webhook event when reservation status is updated', function(): void {
     Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job): true {
         expect($job->payload['action'])->toBeIn(['updated', 'status_added'])
             ->and($job->payload)->toHaveKey('reservation')
-            ->when($job->payload['action'] == 'status_added', function() use ($job) {
+            ->when($job->payload['action'] == 'status_added', function() use ($job): void {
                 expect($job->payload)->toHaveKey('status_history');
             });
 

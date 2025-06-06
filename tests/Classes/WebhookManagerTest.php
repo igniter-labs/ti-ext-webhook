@@ -15,7 +15,7 @@ beforeEach(function(): void {
     $this->manager = new WebhookManager;
 });
 
-it('does not boot when already booted', function() {
+it('does not boot when already booted', function(): void {
     $this->manager->boot();
 
     // Call boot again to check if it does not change the booted state
@@ -24,7 +24,7 @@ it('does not boot when already booted', function() {
     expect($this->manager->isBooted())->toBeTrue();
 });
 
-it('does not boot when not configured', function() {
+it('does not boot when not configured', function(): void {
     Schema::shouldReceive('hasTable')
         ->with('igniterlabs_webhook_outgoing')
         ->andReturnFalse();
@@ -98,7 +98,7 @@ it('registers a webhook event', function(): void {
 it('registers a callback', function(): void {
     $called = false;
 
-    $this->manager->registerCallback(function($manager) use (&$called) {
+    $this->manager->registerCallback(function($manager) use (&$called): void {
         $called = true;
         $manager->registerWebhookEvent(['callback' => 'CallbackClass']);
     });

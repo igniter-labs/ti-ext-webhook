@@ -102,7 +102,7 @@ it('runs webhook event when order status is updated', function(): void {
             ->and($job->payload)->toHaveKey('order')
             ->toHaveKey('order_menus')
             ->toHaveKey('order_totals')
-            ->when($job->payload['action'] == 'status_added', function() use ($job) {
+            ->when($job->payload['action'] == 'status_added', function() use ($job): void {
                 expect($job->payload)->toHaveKey('status_history');
             });
 

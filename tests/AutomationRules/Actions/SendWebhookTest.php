@@ -63,12 +63,10 @@ it('dispatches a webhook with the correct payload', function(): void {
 
     (new SendWebhook($model))->triggerAction(['test' => 'data']);
 
-    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job) {
-        return $job->payload['action'] === 'test_rule'
-            && $job->payload['test'] === 'data'
-            && $job->webhookUrl === 'https://example.com/webhook'
-            && array_has($job->headers, ['Signature']);
-    });
+    Queue::assertPushed(CallWebhookJob::class, fn(CallWebhookJob $job): bool => $job->payload['action'] === 'test_rule'
+        && $job->payload['test'] === 'data'
+        && $job->webhookUrl === 'https://example.com/webhook'
+        && array_has($job->headers, ['Signature']));
 });
 
 it('dispatches a webhook with the correct payload and no signature', function(): void {
@@ -93,10 +91,8 @@ it('dispatches a webhook with the correct payload and no signature', function():
 
     (new SendWebhook($model))->triggerAction(['test' => 'data']);
 
-    Queue::assertPushed(CallWebhookJob::class, function(CallWebhookJob $job) {
-        return $job->payload['action'] === 'test_rule'
-            && $job->payload['test'] === 'data'
-            && $job->webhookUrl === 'https://example.com/webhook'
-            && !array_has($job->headers, ['Signature']);
-    });
+    Queue::assertPushed(CallWebhookJob::class, fn(CallWebhookJob $job): bool => $job->payload['action'] === 'test_rule'
+        && $job->payload['test'] === 'data'
+        && $job->webhookUrl === 'https://example.com/webhook'
+        && !array_has($job->headers, ['Signature']));
 });

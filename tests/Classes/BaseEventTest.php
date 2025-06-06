@@ -67,7 +67,7 @@ it('returns default message when setup partial does not exist', function(): void
 it('can extend the class', function(): void {
     $called = false;
 
-    TestEvent::extend(function($event) use (&$called) {
+    TestEvent::extend(function($event) use (&$called): void {
         $called = true;
     });
 

@@ -93,7 +93,7 @@ it('deletes outgoing webhook', function(): void {
     expect(Outgoing::find($webhook->getKey()))->toBeNull();
 });
 
-it('blocks unauthorized access', function() {
+it('blocks unauthorized access', function(): void {
     $this
         ->get(route('igniter.api.webhooks.index'))
         ->assertUnauthorized();
