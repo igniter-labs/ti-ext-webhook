@@ -11,19 +11,9 @@ use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
 
 class WebhookSubscriber
 {
-    public function handleSucceeded(WebhookCallSucceededEvent $event): void
-    {
-        WebhookLog::createLog($event);
-    }
-
-    public function handleFailed(FinalWebhookCallFailedEvent $event): void
-    {
-        WebhookLog::createLog($event);
-    }
-
     public function subscribe(Dispatcher $events): void
     {
-        $events->listen(WebhookCallSucceededEvent::class, $this->handleSucceeded(...));
-        $events->listen(FinalWebhookCallFailedEvent::class, $this->handleFailed(...));
+        $events->listen(WebhookCallSucceededEvent::class, WebhookLog::createLog(...));
+        $events->listen(FinalWebhookCallFailedEvent::class, WebhookLog::createLog(...));
     }
 }

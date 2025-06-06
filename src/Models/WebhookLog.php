@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IgniterLabs\Webhook\Models;
 
 use GuzzleHttp\Psr7\Response;
+use Igniter\Flame\Database\Factories\HasFactory;
 use Igniter\Flame\Database\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\MassPrunable;
@@ -29,6 +30,7 @@ use Spatie\WebhookServer\Events\WebhookCallSucceededEvent;
  */
 class WebhookLog extends Model
 {
+    use HasFactory;
     use MassPrunable;
 
     /**
@@ -43,6 +45,12 @@ class WebhookLog extends Model
      */
     public $guarded = [];
 
+    public $relation = [
+        'morphTo' => [
+            'webhook' => [Outgoing::class, 'name' => 'webhook'],
+        ],
+    ];
+
     protected $casts = [
         'webhook_id' => 'integer',
         'is_success' => 'boolean',
@@ -53,11 +61,6 @@ class WebhookLog extends Model
     protected $appends = [
         'status_name', 'created_since',
     ];
-
-    public function webhook()
-    {
-        return $this->morphTo('webhook');
-    }
 
     //
     //

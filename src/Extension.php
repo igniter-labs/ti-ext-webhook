@@ -42,13 +42,10 @@ class Extension extends BaseExtension
     #[Override]
     public function boot(): void
     {
+        Igniter::prunableModel(WebhookLog::class);
+
         $this->app->booted(function(): void {
-            $webhookManager = resolve(WebhookManager::class);
-            if ($webhookManager->isConfigured()) {
-                $webhookManager->applyWebhookConfigValues();
-                $webhookManager->bindWebhookEvents();
-                Igniter::prunableModel(WebhookLog::class);
-            }
+            resolve(WebhookManager::class)->boot();
         });
     }
 
@@ -57,8 +54,8 @@ class Extension extends BaseExtension
     {
         return [
             'settings' => [
-                'label' => 'Webhooks Settings',
-                'description' => 'Configure authentication, signature key settings for the Webhooks extension.',
+                'label' => 'Webhook Settings',
+                'description' => 'Configure authentication, signature key settings for the Webhook extension.',
                 'icon' => 'fa fa-cog',
                 'model' => Settings::class,
                 'request' => SettingsRequest::class,
@@ -119,7 +116,7 @@ class Extension extends BaseExtension
                 'name' => 'Webhooks',
                 'description' => 'An API resource for webhooks',
                 'actions' => [
-                    'store:admin', 'update:admin', 'destroy:admin',
+                    'index:admin', 'show:admin', 'store:admin', 'update:admin', 'destroy:admin',
                 ],
             ],
         ];

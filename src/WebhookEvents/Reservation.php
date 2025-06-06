@@ -31,7 +31,7 @@ class Reservation extends BaseEvent
         return [
             'created' => 'eloquent.created: '.ReservationModel::class,
             'updated' => 'eloquent.updated: '.ReservationModel::class,
-            'status_added' => 'eloquent.created: '.StatusHistory::class,
+            'status_added' => 'admin.statusHistory.added',
             'assigned' => 'admin.assignable.assigned',
             'deleted' => 'eloquent.deleted: '.ReservationModel::class,
         ];
@@ -41,16 +41,20 @@ class Reservation extends BaseEvent
     public static function makePayloadFromEvent(array $args, $actionCode = null): ?array
     {
         $reservation = array_get($args, 0);
-        if ($reservation instanceof StatusHistory) {
-            $reservation = $reservation->object;
-        }
-
-        if (!$reservation instanceof ReservationModel) {
+        if (in_array($actionCode, ['status_added', 'assigned']) && !$reservation instanceof ReservationModel) {
             return null;
         }
 
-        return [
-            'reservation' => $reservation->toArray(),
-        ];
+        $payload = [];
+        if ($reservation instanceof ReservationModel) {
+            $payload['reservation'] = $reservation->toArray();
+        }
+
+        $statusHistory = array_get($args, 1);
+        if ($statusHistory instanceof StatusHistory) {
+            $payload['status_history'] = $statusHistory->toArray();
+        }
+
+        return $payload;
     }
 }

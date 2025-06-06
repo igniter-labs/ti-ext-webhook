@@ -27,18 +27,32 @@ class WebhookManager
      */
     protected array $webhookEventsCallbacks = [];
 
+    protected bool $booted = false;
+
+    public function boot()
+    {
+        if ($this->booted) {
+            return;
+        }
+
+        if (!$this->isConfigured()) {
+            return;
+        }
+
+        $this->applyWebhookConfigValues();
+        $this->bindWebhookEvents();
+
+        $this->booted = true;
+    }
+
     public function applyWebhookConfigValues(): void
     {
         Config::set('webhook-server.verify_ssl', Settings::get('verify_ssl') ?: Config::get('webhook-server.verify_ssl'));
         Config::set('webhook-server.timeout_in_seconds', Settings::get('timeout_in_seconds') ?: Config::get('webhook-server.timeout_in_seconds'));
         Config::set('webhook-server.tries', Settings::get('tries') ?: Config::get('webhook-server.tries'));
         Config::set('webhook-server.signature_header_name', Settings::get('server_signature_header') ?: Config::get('webhook-server.signature_header_name'));
-        Config::set('webhook-server.headers', Settings::getHeaders() ?: Config::get('webhook-server.headers'));
+        Config::set('webhook-server.headers', array_merge(Config::get('webhook-server.headers'), Settings::getHeaders() ?: []));
     }
-
-    //
-    //
-    //
 
     public function isConfigured(): bool
     {
@@ -46,16 +60,19 @@ class WebhookManager
             && Schema::hasTable('igniterlabs_webhook_outgoing');
     }
 
+    public function isBooted(): bool
+    {
+        return $this->booted;
+    }
+
     public function bindWebhookEvents(): void
     {
         collect($this->listEvents())->each(function($eventClass, $eventCode): void {
-            if (!method_exists($eventClass, 'registerEventListeners')) {
-                return;
-            }
-
-            $eventListeners = $eventClass::registerEventListeners();
-            foreach ($eventListeners as $actionCode => $systemEvent) {
-                $this->bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass);
+            if (method_exists($eventClass, 'registerEventListeners')) {
+                $eventListeners = $eventClass::registerEventListeners();
+                foreach ($eventListeners as $actionCode => $systemEvent) {
+                    $this->bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass);
+                }
             }
         });
     }
@@ -63,25 +80,20 @@ class WebhookManager
     public function bindWebhookEvent($systemEvent, $eventCode, $actionCode, $eventClass): void
     {
         Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass): void {
-            if (!method_exists($eventClass, 'makePayloadFromEvent')) {
-                return;
+            if (method_exists($eventClass, 'makePayloadFromEvent')) {
+                $payload = $eventClass::makePayloadFromEvent(func_get_args(), $actionCode);
+                if (array_filter($payload ?? [])) {
+                    $this->runWebhookEvent($eventCode, $actionCode, $payload);
+                }
             }
-
-            $payload = $eventClass::makePayloadFromEvent(func_get_args(), $actionCode);
-            if (is_null($payload)) {
-                return;
-            }
-
-            $this->runWebhookEvent($eventCode, $actionCode, $payload);
         });
     }
 
     public function runWebhookEvent($eventCode, $actionCode, array $payload): void
     {
-        $eventClass = $this->getEventClass($eventCode);
-        if (!class_exists($eventClass)) {
-            throw new InvalidArgumentException('Webhook event class ['.$eventClass.'] not found');
-        }
+        throw_unless(class_exists($eventClass = $this->getEventClass($eventCode)),
+            new InvalidArgumentException('Webhook event class ['.$eventClass.'] not found'),
+        );
 
         Outgoing::listWebhooksForEvent($eventCode)
             ->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload): void {
@@ -124,11 +136,9 @@ class WebhookManager
     {
         $results = [];
         foreach ($this->listEvents() as $code => $className) {
-            if (!class_exists($className)) {
-                continue;
+            if (class_exists($className)) {
+                $results[$code] = new $className;
             }
-
-            $results[$code] = new $className;
         }
 
         return $results;
@@ -150,11 +160,9 @@ class WebhookManager
 
         $webhookEventsBundles = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerWebhookEvents');
         foreach ($webhookEventsBundles as $definitions) {
-            if (!is_array($definitions)) {
-                continue;
+            if (is_array($definitions)) {
+                $this->registerWebhookEvent($definitions);
             }
-
-            $this->registerWebhookEvent($definitions);
         }
 
         return $this->webhookEventsCache = $this->webhookEvents;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IgniterLabs\Webhook\Models;
 
+use Igniter\Flame\Database\Factories\HasFactory;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
@@ -28,6 +29,8 @@ use Spatie\WebhookServer\WebhookCall;
  */
 class Outgoing extends Model
 {
+    use HasFactory;
+
     /**
      * @var string The database table used by the model.
      */
@@ -66,14 +69,6 @@ class Outgoing extends Model
     public function getDropdownOptions(): array
     {
         return array_map(fn(BaseEvent $event): array => [$event->eventName(), $event->eventDescription()], resolve(WebhookManager::class)->listEventObjects());
-    }
-
-    public function getContentTypeOptions(): array
-    {
-        return [
-            'application/json' => 'application/json',
-            'application/x-www-form-urlencoded' => 'application/x-www-form-urlencoded',
-        ];
     }
 
     /**
@@ -134,17 +129,13 @@ class Outgoing extends Model
      */
     public function applyEventClass($className): bool
     {
-        if (!$className) {
-            return false;
-        }
-
-        if (!$this->isClassExtendedWith($className)) {
+        if ($className && !$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);
         }
 
         $this->eventClassName = $className;
 
-        return true;
+        return $this->isClassExtendedWith($className);
     }
 
     /**
