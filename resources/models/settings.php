@@ -68,12 +68,5 @@ return [
                 ],
             ],
         ],
-        'rules' => [
-            'verify_ssl' => ['required', 'boolean'],
-            'server_signature_header' => ['required', 'string'],
-            'timeout_in_seconds' => ['required', 'integer'],
-            'tries' => ['required', 'integer'],
-            'headers' => ['nullable', 'array'],
-        ],
     ],
 ];
