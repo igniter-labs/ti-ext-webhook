@@ -29,7 +29,7 @@ class WebhookManager
 
     protected bool $booted = false;
 
-    public function boot()
+    public function boot(): void
     {
         if ($this->booted) {
             return;

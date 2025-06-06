@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\ApiResources\Repositories;
 
 use Igniter\Api\Classes\AbstractRepository;

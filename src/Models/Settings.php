@@ -22,8 +22,8 @@ class Settings extends Model
 
     public static function getHeaders(): array
     {
-        $headers = self::get('headers');
+        $headers = (array)self::get('headers');
 
-        return is_array($headers) ? array_column($headers, 'value', 'key') : [];
+        return array_column($headers, 'value', 'key');
     }
 }

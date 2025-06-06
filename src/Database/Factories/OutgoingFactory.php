@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\Webhook\Database\Factories;
 
 use Igniter\Flame\Database\Factories\Factory;
