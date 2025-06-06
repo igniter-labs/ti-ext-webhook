@@ -25,13 +25,13 @@ parameters:
 			path: src/Classes/BaseEvent.php
 
 		-
-			message: '#^Access to an undefined property Igniter\\Admin\\Models\\StatusHistory\:\:\$object\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/WebhookEvents/Order.php
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 4
+			path: src/Classes/WebhookManager.php
 
 		-
-			message: '#^Access to an undefined property Igniter\\Admin\\Models\\StatusHistory\:\:\$object\.$#'
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Stock\:\:\$stockable\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/WebhookEvents/Reservation.php
+			path: src/WebhookEvents/Menu.php
