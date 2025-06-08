@@ -56,7 +56,7 @@ class Extension extends BaseExtension
             'settings' => [
                 'label' => 'Webhook Settings',
                 'description' => 'Configure authentication, signature key settings for the Webhook extension.',
-                'icon' => 'fa fa-cog',
+                'icon' => 'fa fa-link',
                 'model' => Settings::class,
                 'request' => SettingsRequest::class,
                 'permissions' => ['IgniterLabs.Webhook.ManageSetting'],
