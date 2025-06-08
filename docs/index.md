@@ -1,5 +1,5 @@
 ---
-title: "WebHooks"
+title: "Webhooks"
 section: "extensions"
 sortOrder: 999
 ---
