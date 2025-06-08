@@ -55,7 +55,7 @@ class Extension extends BaseExtension
         return [
             'settings' => [
                 'label' => 'Webhook Settings',
-                'description' => 'Configure authentication, signature key settings for the Webhook extension.',
+                'description' => 'Configure webhook settings.',
                 'icon' => 'fa fa-link',
                 'model' => Settings::class,
                 'request' => SettingsRequest::class,

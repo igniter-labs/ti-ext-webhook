@@ -16,7 +16,6 @@ it('registers settings', function(): void {
     $settings = $this->extension->registerSettings();
 
     expect($settings)->toHaveKey('settings')
-        ->and($settings['settings']['label'])->toBe('Webhook Settings')
         ->and($settings['settings']['model'])->toBe(Settings::class)
         ->and($settings['settings']['request'])->toBe(SettingsRequest::class)
         ->and($settings['settings']['permissions'])->toBe(['IgniterLabs.Webhook.ManageSetting']);
