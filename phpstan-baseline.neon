@@ -1,46 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Schema\\Blueprint\:\:dropForeignKeyIfExists\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: database/migrations/2022_06_30_010000_drop_foreign_key_constraints.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Schema\\Blueprint\:\:dropIndexIfExists\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: database/migrations/2022_06_30_010000_drop_foreign_key_constraints.php
-
-		-
-			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$automation_rule\.$#'
+			message: '#^Access to an undefined property Igniter\\Automation\\Models\\RuleAction\:\:\$secret\.$#'
 			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendWebhook.php
 
 		-
-			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$secret\.$#'
+			message: '#^Access to an undefined property Igniter\\Automation\\Models\\RuleAction\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
 			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$url\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
-			message: '#^Call to an undefined static method Illuminate\\Support\\Facades\\File\:\:existsInsensitive\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Classes/BaseAction.php
-
-		-
-			message: '#^Call to an undefined static method Illuminate\\Support\\Facades\\File\:\:symbolizePath\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Classes/BaseAction.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:getPath\(\)\.$#'
@@ -49,91 +19,13 @@ parameters:
 			path: src/Classes/BaseEvent.php
 
 		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
-			identifier: new.static
-			count: 1
-			path: src/Classes/WebhookCall.php
-
-		-
-			message: '#^Call to an undefined static method IgniterLabs\\Webhook\\Models\\Settings\:\:get\(\)\.$#'
-			identifier: staticMethod.notFound
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
 			count: 4
 			path: src/Classes/WebhookManager.php
 
 		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
-			identifier: new.static
-			count: 2
-			path: src/Classes/WebhookManager.php
-
-		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
-			identifier: new.static
-			count: 3
-			path: src/Exceptions/CouldNotCallWebhook.php
-
-		-
-			message: '#^Class IgniterLabs\\Webhook\\Classes\\EventPayload constructor invoked with 12 parameters, 11 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: src/Jobs/CallWebhook.php
-
-		-
-			message: '#^Access to an undefined property IgniterLabs\\Webhook\\Models\\Outgoing\:\:\$config_data\.$#'
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Stock\:\:\$stockable\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: '#^Access to an undefined property IgniterLabs\\Webhook\\Models\\Outgoing\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: '#^Access to an undefined property IgniterLabs\\Webhook\\Models\\Outgoing\:\:\$url\.$#'
-			identifier: property.notFound
-			count: 2
-			path: src/Models/Outgoing.php
-
-		-
-			message: '#^Call to an undefined static method IgniterLabs\\Webhook\\Models\\Outgoing\:\:where\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Models/Outgoing.php
-
-		-
-			message: '#^Access to an undefined property IgniterLabs\\Webhook\\Models\\WebhookLog\:\:\$created_at\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: '#^Access to an undefined property IgniterLabs\\Webhook\\Models\\WebhookLog\:\:\$is_success\.$#'
-			identifier: property.notFound
-			count: 3
-			path: src/Models/WebhookLog.php
-
-		-
-			message: '#^Call to an undefined static method IgniterLabs\\Webhook\\Models\\WebhookLog\:\:create\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: '#^Call to an undefined static method IgniterLabs\\Webhook\\Models\\WebhookLog\:\:where\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/Models/WebhookLog.php
-
-		-
-			message: '#^Access to an undefined property Igniter\\Admin\\Models\\StatusHistory\:\:\$object\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/WebhookEvents/Order.php
-
-		-
-			message: '#^Access to an undefined property Igniter\\Admin\\Models\\StatusHistory\:\:\$object\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/WebhookEvents/Reservation.php
+			path: src/WebhookEvents/Menu.php

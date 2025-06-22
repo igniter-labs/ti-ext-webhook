@@ -18,13 +18,28 @@ This webhook event is triggered when a table is `created`, `updated` or `deleted
 | Key         | Type     | Description                                                  |
 | ----------- | -------- | ------------------------------------------------------------ |
 | `action`    | `string` | The event type performed. Can be one of: `created` - A new table was created, `updated` - The table information was updated, `deleted` - An existing table was deleted. |
-| `table`  | `object` | The table itself                                          |
+| `table`  | `object` | The table object                                          |
 
 ### Webhook payload example
 
 ```json
 {
-  "action": "created",
-  "table": {}
+    "action": "created",
+    "table": {
+        "priority": 0,
+        "extra_capacity": 0,
+        "id": 31,
+        "dining_area_id": 2,
+        "name": "Jasper Small",
+        "min_capacity": 2,
+        "max_capacity": 6,
+        "shape": "rectangle",
+        "is_enabled": true,
+        "parent_id": null,
+        "nest_left": 61,
+        "nest_right": 62,
+        "updated_at": "2025-06-05T12:44:07.000000Z",
+        "created_at": "2025-06-05T12:44:07.000000Z"
+    }
 }
 ```

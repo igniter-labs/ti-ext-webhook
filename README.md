@@ -1,82 +1,47 @@
-Webhooks extension allows you to integrate your TastyIgniter site with external systems
+<p align="center">
+    <a href="https://github.com/igniter-labs/ti-ext-webhook/actions"><img src="https://github.com/igniter-labs/ti-ext-webhook/actions/workflows/pipeline.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-webhook"><img src="https://img.shields.io/packagist/dt/igniterlabs/ti-ext-webhook" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-webhook"><img src="https://img.shields.io/packagist/v/igniterlabs/ti-ext-webhook" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-webhook"><img src="https://img.shields.io/packagist/l/igniterlabs/ti-ext-webhook" alt="License"></a>
+</p>
 
-It turns your site into a powerful optimized webhook system so that your site can communicate with your third party apps
-like Zapier.
+## Introduction
 
-For example:
+The TastyIgniter Webhooks extension is designed to enhance the integration capabilities of your TastyIgniter website with external systems. It allows you to automate data exchange between your TastyIgniter site and third-party applications, such as Zapier, OpenTable, and various POS systems.
 
-- Send data to OpenTable when a new reservation is made on your TastyIgniter website.
-- Send data to your POS when a new order is placed on your TastyIgniter website.
+Whether you're triggering actions, syncing data, or integrating workflows, this extension makes it easy to extend the functionality of your platform without custom development.
 
-### Usage
-
-In the admin user interface:
-
-- Go to **Manage > Settings > Webhooks Settings** to configure the extension settings
-- Go to **Tools > Webhooks** to manage outgoing webhooks.
-- Go to **Tools > Automations** to automate outgoing webhooks when certain events happen.
+This extension is built on top of the robust [spatie/laravel-webhook-server](https://github.com/spatie/laravel-webhook-server) package, ensuring reliable and secure webhook delivery.
 
 ### Features
 
-- Send data when certain events happen in your TastyIgniter platform.
-- Advanced settings for each outgoing webhook
-- Supports JSON and form urlencode
-- Tested with Zapier, automate.io and more.
+- Automatically send data to external services when certain events occur on your TastyIgniter site (e.g. new order, customer registration, status updates).
+- Fine-tune each webhook with configurable headers, payloads, and delivery methods.
+- Include custom headers or secret tokens to authenticate your webhooks securely with external services.
+- Automatically retry failed webhook deliveries and log errors for easier debugging and reliability.
+- View a detailed history of webhook deliveries, including response codes and payloads, to ensure transparency and traceability.
+- Tested and compatible with popular automation platforms like Zapier, Make (formerly Integromat), automate.io, and more.
 
-### Advanced
+## Documentation
 
-**Example of Registering Webhook Events**
+More documentation can be found on [here](https://github.com/igniter-labs/ti-ext-webhook/blob/master/docs/index.md).
 
-Here is an example of an extension registering a webhook event to trigger an outgoing webhook.
+## Changelog
 
-```php
-public function registerWebhookEvents()
-{
-    return [
-        'events' => [
-            'customer' => \IgniterLabs\Webhook\WebhookEvents\Customer::class,
-        ],
-    ];
-}
-```
+Please see [CHANGELOG](https://github.com/igniter-labs/ti-ext-webhook/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
-**Example of a Webhook Event Class**
+## Reporting issues
 
-A webhook event class is responsible for preparing the parameters passed to the outgoing webhook.
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-webhook/issues) on GitHub.
 
-```php
-class Customer extends \IgniterLabs\Webhook\WebhookEvents\BaseEvent
-{
-    /**
-     * Returns information about this event, including name and description.
-     */
-    public function eventDetails()
-    {
-        return [
-            'name' => 'Customers',
-            'description' => 'Customer created, updated or deleted.',
-            'setup' => '$/igniterlabs/webhook/webhookevents/customer/setup.md',
-        ];
-    }
+## Contributing
 
-    public static function registerEventListeners()
-    {
-        return [
-            'created' => 'eloquent.created: Igniter\User\Models\Customer',
-            'updated' => 'eloquent.updated: Igniter\User\Models\Customer',
-            'deleted' => 'eloquent.deleted: Igniter\User\Models\Customer',
-        ];
-    }
+Contributions are welcome! Please read [TastyIgniter's contributing guide](https://tastyigniter.com/docs/resources/contribution-guide).
 
-    public static function makePayloadFromEvent(array $args, $actionCode = null)
-    {
-        $params = [];
-        $customer = array_get($args, 0);
-        if ($customer instanceof Customer)
-            $params['customer'] = $customer->toArray();
+## Security vulnerabilities
 
-        return $params;
-    }
-}
-```
+For reporting security vulnerabilities, please see [our security policy](https://github.com/igniter-labs/ti-ext-webhook/security/policy).
 
+## License
+
+TastyIgniter Visitor Tracker extension is open-source software licensed under the [MIT license](https://github.com/igniter-labs/ti-ext-webhook/blob/master/LICENSE.md).

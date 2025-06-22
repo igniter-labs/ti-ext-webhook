@@ -4,22 +4,33 @@ declare(strict_types=1);
 
 namespace IgniterLabs\Webhook\Models;
 
+use Igniter\Flame\Database\Factories\HasFactory;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\Webhook\Classes\BaseEvent;
-use IgniterLabs\Webhook\Classes\WebhookCall;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Spatie\WebhookServer\WebhookCall;
 
 /**
  * Outgoing Webhook Model
  *
+ * @property int $id
+ * @property string $name
+ * @property string $url
+ * @property array $events
+ * @property array $config_data
+ * @property bool $is_active
+ * @property string $created_at
+ * @property string $updated_at
  * @method setEventPayload(array $payload)
  */
 class Outgoing extends Model
 {
+    use HasFactory;
+
     /**
      * @var string The database table used by the model.
      */
@@ -27,9 +38,6 @@ class Outgoing extends Model
 
     public $timestamps = true;
 
-    /**
-     * @var array Guarded fields
-     */
     protected $guarded = [];
 
     public $relation = [
@@ -52,20 +60,12 @@ class Outgoing extends Model
      */
     public static function listWebhooksForEvent($eventCode)
     {
-        return self::where('is_active', true)->get()->filter(fn($model): bool => in_array($eventCode, $model->events ?? []));
+        return self::query()->where('is_active', true)->get()->filter(fn($model): bool => in_array($eventCode, $model->events ?? []));
     }
 
     public function getDropdownOptions(): array
     {
         return array_map(fn(BaseEvent $event): array => [$event->eventName(), $event->eventDescription()], resolve(WebhookManager::class)->listEventObjects());
-    }
-
-    public function getContentTypeOptions(): array
-    {
-        return [
-            'application/json' => 'application/json',
-            'application/x-www-form-urlencoded' => 'application/x-www-form-urlencoded',
-        ];
     }
 
     /**
@@ -75,21 +75,18 @@ class Outgoing extends Model
      */
     public function dispatchWebhook($actionCode, $eventCode): void
     {
-        if ((string) $this->url === '') {
+        if ((string)$this->url === '') {
             throw new SystemException('Missing a webhook payload URL.');
         }
 
         $options = $this->config_data ?? [];
         $secretKey = array_get($options, 'secret_key');
-        $contentType = array_get($options, 'content_type');
 
         $webhookJob = WebhookCall::create()->url($this->url);
 
         $webhookJob->verifySsl((bool)array_get($options, 'verify_ssl', true));
 
-        strlen((string) $secretKey) !== 0 ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
-
-        $webhookJob->postAsJson($contentType !== 'application/x-www-form-urlencoded');
+        strlen((string)$secretKey) !== 0 ? $webhookJob->useSecret($secretKey) : $webhookJob->doNotSign();
 
         $payload = ['action' => $actionCode] + $this->getEventObject()->getEventPayload();
         $webhookJob->payload($payload);
@@ -129,17 +126,13 @@ class Outgoing extends Model
      */
     public function applyEventClass($className): bool
     {
-        if (!$className) {
-            return false;
-        }
-
-        if (!$this->isClassExtendedWith($className)) {
+        if ($className && !$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);
         }
 
         $this->eventClassName = $className;
 
-        return true;
+        return $this->isClassExtendedWith($className);
     }
 
     /**

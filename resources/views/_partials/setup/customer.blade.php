@@ -18,17 +18,36 @@ This webhook event is triggered when a customer is `created`, `updated` or `dele
 | Key    | Type    | Description    |
 | ------ | ------- | -------------- |
 | `action` | `string` | The action performed. Can be one of: `created` - A new customer was created, `updated` - The custmer information was updated, `deleted` - An existing customer was deleted. |
-| `customer` | `object` | The customer itself |
+| `customer` | `object` | The customer object |
 
 ### Webhook payload example
 
 ```json
 {
-  "action": "created",
-  "customer": {
-    "group": {},
-    "address": {},
-    "addresses": []
-  }
+    "action": "updated",
+    "customer": {
+        "customer_id": 19,
+        "first_name": "Cody",
+        "last_name": "Hancock",
+        "email": "qinyzoxub@mailinator.com",
+        "telephone": "07121 421003",
+        "address_id": null,
+        "newsletter": true,
+        "customer_group_id": 1,
+        "ip_address": null,
+        "created_at": "2025-06-05T11:47:33.000000Z",
+        "status": 1,
+        "reset_code": "TPMQFZNV8dmbs9Q4wPsEq9iaxqYj3gBvifVzIZH9zA",
+        "reset_time": "2025-06-05T11:47:33.000000Z",
+        "activation_code": null,
+        "is_activated": null,
+        "activated_at": null,
+        "last_login": null,
+        "last_seen": null,
+        "updated_at": "2025-06-05T11:49:31.000000Z",
+        "invited_at": "2025-06-05T11:47:33.000000Z",
+        "orders": [],
+        "reservations": []
+    }
 }
 ```

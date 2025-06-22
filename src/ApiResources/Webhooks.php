@@ -6,9 +6,9 @@ namespace IgniterLabs\Webhook\ApiResources;
 
 use Igniter\Api\Classes\ApiController;
 use Igniter\Api\Http\Actions\RestController;
+use IgniterLabs\Webhook\ApiResources\Repositories\OutgoingRepository;
 use IgniterLabs\Webhook\ApiResources\Transformers\WebhookTransformer;
 use IgniterLabs\Webhook\Http\Requests\OutgoingRequest;
-use IgniterLabs\Webhook\Models\Outgoing;
 
 /**
  * Webhooks API Controller
@@ -21,12 +21,16 @@ class Webhooks extends ApiController
 
     public $restConfig = [
         'actions' => [
+            'index' => [
+                'pageLimit' => 20,
+            ],
+            'show' => [],
             'store' => [],
             'update' => [],
             'destroy' => [],
         ],
         'request' => OutgoingRequest::class,
-        'repository' => Outgoing::class,
+        'repository' => OutgoingRepository::class,
         'transformer' => WebhookTransformer::class,
     ];
 

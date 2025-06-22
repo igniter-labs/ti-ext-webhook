@@ -14,12 +14,12 @@ abstract class BaseEvent
 {
     use ExtensionTrait;
 
-    protected $setupPartial;
+    protected string $setupPartial;
 
     /**
      * @var array Contains the event payload.
      */
-    protected $payload = [];
+    protected array $payload = [];
 
     /**
      * @param Model $model
@@ -78,9 +78,8 @@ abstract class BaseEvent
 
     /**
      * Sets multiple payload.
-     * @param array $payload
      */
-    public function setEventPayload($payload): void
+    public function setEventPayload(array $payload): void
     {
         $this->payload = $payload;
     }
@@ -101,15 +100,15 @@ abstract class BaseEvent
     public function getEventIdentifier()
     {
         $namespace = normalize_class_name(static::class);
-        if (strpos($namespace, '\\') === null) {
-            return $namespace;
+        if (str_contains($namespace, '\\')) {
+            $parts = explode('\\', $namespace);
+            $class = array_pop($parts);
+            $slice = array_slice($parts, 1, 2);
+
+            $namespace = strtolower(implode('-', $slice).'-'.$class);
         }
 
-        $parts = explode('\\', $namespace);
-        $class = array_pop($parts);
-        $slice = array_slice($parts, 1, 2);
-
-        return strtolower(implode('-', $slice).'-'.$class);
+        return $namespace;
     }
 
     public function renderSetupPartial()
