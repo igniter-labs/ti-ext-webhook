@@ -160,7 +160,7 @@ it('runs order webhook event with missing payload', function(): void {
     Event::fake();
 
     $action = 'created';
-    Outgoing::create([
+    Outgoing::factory()->create([
         'name' => 'Order '.$action,
         'url' => 'http://webhook.tld',
         'events' => ['order'],

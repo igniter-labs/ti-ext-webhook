@@ -16,7 +16,7 @@ beforeEach(function(): void {
 });
 
 it('can create a log from a successful webhook call event', function(): void {
-    $webhook = Outgoing::create([
+    $webhook = Outgoing::factory()->create([
         'name' => 'Test Webhook',
         'url' => 'http://webhook.tld',
         'events' => ['category'],
@@ -60,7 +60,7 @@ it('can create a log from a successful webhook call event', function(): void {
 });
 
 it('can create a log from a failed webhook call event', function(): void {
-    $webhook = Outgoing::create([
+    $webhook = Outgoing::factory()->create([
         'name' => 'Test Webhook',
         'url' => 'http://webhook.tld',
         'events' => ['category'],
@@ -100,14 +100,14 @@ it('can create a log from a failed webhook call event', function(): void {
 });
 
 it('can filter logs by webhook', function(): void {
-    $webhook1 = Outgoing::create([
+    $webhook1 = Outgoing::factory()->create([
         'name' => 'Test Webhook 1',
         'url' => 'http://webhook1.tld',
         'events' => ['category'],
         'is_active' => true,
     ]);
 
-    $webhook2 = Outgoing::create([
+    $webhook2 = Outgoing::factory()->create([
         'name' => 'Test Webhook 2',
         'url' => 'http://webhook2.tld',
         'events' => ['category'],

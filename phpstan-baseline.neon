@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Access to an undefined property Igniter\\Automation\\Models\\RuleAction\:\:\$automation_rule\.$#'
-			identifier: property.notFound
-			count: 5
-			path: src/AutomationRules/Actions/SendWebhook.php
-
-		-
 			message: '#^Access to an undefined property Igniter\\Automation\\Models\\RuleAction\:\:\$secret\.$#'
 			identifier: property.notFound
 			count: 1

@@ -80,7 +80,7 @@ it('runs menu webhook event with missing payload', function(): void {
     Event::fake();
 
     $action = 'created';
-    Outgoing::create([
+    Outgoing::factory()->create([
         'name' => 'Customer '.$action,
         'url' => 'http://webhook.tld',
         'events' => ['customer'],

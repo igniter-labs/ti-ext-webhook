@@ -130,7 +130,7 @@ it('runs reservation webhook event with missing payload', function(): void {
     Event::fake();
 
     $action = 'created';
-    Outgoing::create([
+    Outgoing::factory()->create([
         'name' => 'Reservation '.$action,
         'url' => 'http://webhook.tld',
         'events' => ['reservation'],
