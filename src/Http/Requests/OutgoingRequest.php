@@ -10,7 +10,7 @@ use Override;
 class OutgoingRequest extends FormRequest
 {
     #[Override]
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => lang('lang:admin::lang.label_name'),
