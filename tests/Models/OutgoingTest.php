@@ -46,7 +46,7 @@ it('generates a secret key on creation if not provided', function(): void {
 
     expect($outgoing->config_data)->toHaveKey('secret_key')
         ->and($outgoing->config_data['secret_key'])->toBeString()
-        ->and(strlen((string) $outgoing->config_data['secret_key']))->toBe(16);
+        ->and(strlen((string)$outgoing->config_data['secret_key']))->toBe(16);
 });
 
 it('throws an exception when dispatching without a URL', function(): void {

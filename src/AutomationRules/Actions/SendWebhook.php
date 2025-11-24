@@ -18,7 +18,7 @@ use Spatie\WebhookServer\WebhookCall;
 class SendWebhook extends BaseAction
 {
     #[Override]
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Send payload to Webhooks',
@@ -27,7 +27,7 @@ class SendWebhook extends BaseAction
     }
 
     #[Override]
-    public function defineFormFields()
+    public function defineFormFields(): array
     {
         return [
             'fields' => [

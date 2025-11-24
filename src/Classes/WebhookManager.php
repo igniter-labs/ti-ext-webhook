@@ -115,7 +115,7 @@ class WebhookManager
      */
     public function getEventClass($eventCode)
     {
-        return array_get($this->listEvents(), $eventCode, null);
+        return array_get($this->listEvents(), $eventCode);
     }
 
     /**
@@ -125,7 +125,7 @@ class WebhookManager
      */
     public function getEventObject($eventCode)
     {
-        return array_get($this->listEventObjects(), $eventCode, null);
+        return array_get($this->listEventObjects(), $eventCode);
     }
 
     /**
