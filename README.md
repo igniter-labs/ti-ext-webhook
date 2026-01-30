@@ -32,7 +32,7 @@ Please see [CHANGELOG](https://github.com/igniter-labs/ti-ext-webhook/blob/maste
 
 ## Reporting issues
 
-If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-webhook/issues) on GitHub.
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
 
 ## Contributing
 
@@ -44,4 +44,4 @@ For reporting security vulnerabilities, please see [our security policy](https:/
 
 ## License
 
-TastyIgniter Visitor Tracker extension is open-source software licensed under the [MIT license](https://github.com/igniter-labs/ti-ext-webhook/blob/master/LICENSE.md).
+TastyIgniter Webhook extension is open-source software licensed under the [MIT license](https://github.com/igniter-labs/ti-ext-webhook/blob/master/LICENSE.md).
