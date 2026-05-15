@@ -51,7 +51,7 @@ class WebhookManager
         Config::set('webhook-server.timeout_in_seconds', Settings::get('timeout_in_seconds') ?: Config::get('webhook-server.timeout_in_seconds'));
         Config::set('webhook-server.tries', Settings::get('tries') ?: Config::get('webhook-server.tries'));
         Config::set('webhook-server.signature_header_name', Settings::get('server_signature_header') ?: Config::get('webhook-server.signature_header_name'));
-        Config::set('webhook-server.headers', array_merge(Config::get('webhook-server.headers'), Settings::getHeaders() ?: []));
+        Config::set('webhook-server.headers', array_merge(Config::get('webhook-server.headers'), Settings::getHeaders()));
     }
 
     public function isConfigured(): bool
