@@ -10,7 +10,7 @@ use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Models\Outgoing;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use Spatie\WebhookServer\CallWebhookJob;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('runs webhook event when menu is created', function(): void {
     Queue::fake();

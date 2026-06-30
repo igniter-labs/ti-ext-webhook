@@ -10,7 +10,7 @@ use Igniter\Automation\Models\RuleAction;
 use IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook;
 use Illuminate\Support\Facades\Queue;
 use Mockery;
-use Spatie\WebhookServer\CallWebhookJob;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('defines action details', function(): void {
     $details = (new SendWebhook)->actionDetails();

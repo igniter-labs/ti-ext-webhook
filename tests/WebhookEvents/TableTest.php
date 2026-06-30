@@ -10,7 +10,7 @@ use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\WebhookEvents\Table;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use Spatie\WebhookServer\CallWebhookJob;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('runs webhook event when table is created', function(): void {
     Queue::fake();
