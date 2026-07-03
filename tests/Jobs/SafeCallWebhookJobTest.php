@@ -18,7 +18,6 @@ it('returns guzzle client with redirects disabled', function(): void {
     expect($client)->toBeInstanceOf(Client::class);
 
     $config = new ReflectionProperty(Client::class, 'config');
-    $config->setAccessible(true);
 
     expect($config->getValue($client)['allow_redirects'])->toBeFalse();
 });
