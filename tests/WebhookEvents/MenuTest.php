@@ -7,10 +7,10 @@ namespace IgniterLabs\Webhook\Tests\WebhookEvents;
 use Igniter\Cart\Models\Menu;
 use Igniter\Cart\Models\Stock;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 use IgniterLabs\Webhook\Models\Outgoing;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('runs webhook event when menu is created', function(): void {
     Queue::fake();

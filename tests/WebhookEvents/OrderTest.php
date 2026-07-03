@@ -9,10 +9,10 @@ use Igniter\Cart\Models\Order;
 use Igniter\User\Models\User;
 use Igniter\User\Models\UserGroup;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 use IgniterLabs\Webhook\Models\Outgoing;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('runs webhook event when order is created', function(): void {
     Queue::fake();

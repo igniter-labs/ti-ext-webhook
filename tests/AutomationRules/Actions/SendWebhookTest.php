@@ -8,9 +8,9 @@ use Igniter\Automation\AutomationException;
 use Igniter\Automation\Models\AutomationRule;
 use Igniter\Automation\Models\RuleAction;
 use IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 use Illuminate\Support\Facades\Queue;
 use Mockery;
-use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 
 it('defines action details', function(): void {
     $details = (new SendWebhook)->actionDetails();
