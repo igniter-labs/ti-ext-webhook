@@ -10,6 +10,7 @@ use IgniterLabs\Webhook\ApiResources\Webhooks;
 use IgniterLabs\Webhook\AutomationRules\Actions\SendWebhook;
 use IgniterLabs\Webhook\Classes\WebhookManager;
 use IgniterLabs\Webhook\Http\Requests\SettingsRequest;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob;
 use IgniterLabs\Webhook\Listeners\WebhookSubscriber;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
@@ -38,6 +39,14 @@ class Extension extends BaseExtension
     protected $subscribe = [
         WebhookSubscriber::class,
     ];
+
+    #[Override]
+    public function register(): void
+    {
+        parent::register();
+
+        config(['webhook-server.webhook_job' => SafeCallWebhookJob::class]);
+    }
 
     #[Override]
     public function boot(): void

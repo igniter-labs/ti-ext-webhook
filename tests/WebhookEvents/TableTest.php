@@ -6,11 +6,11 @@ namespace IgniterLabs\Webhook\Tests\WebhookEvents;
 
 use Igniter\Reservation\Models\DiningTable;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
 use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\WebhookEvents\Table;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use Spatie\WebhookServer\CallWebhookJob;
 
 it('runs webhook event when table is created', function(): void {
     Queue::fake();
