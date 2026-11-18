@@ -147,6 +147,24 @@ In this example, the `customer` event is registered with the `\Author\Extension\
 
 The Webhooks extension dispatches the following events:
 
+- `igniterlabs.webhook.shouldDispatch`: This event is triggered for each webhook subscribed to an event, before its payload is built. Listeners receive the webhook model (`IgniterLabs\Webhook\Models\Outgoing`), the event code (for example `order`), the action code (for example `created`) and the arguments of the system event that triggered it. Return `false` to skip that webhook. The first listener that returns a value other than `null` decides, so return `null` to let other listeners and the default behaviour apply.
 - `igniterlabs.webhook.beforeDispatch`: This event is triggered before a webhook is dispatched. You can use this event to modify the webhook payload or perform any actions before the webhook is sent.
+
+For example, to only send order webhooks for orders at a given location:
+
+```php
+use IgniterLabs\Webhook\Models\Outgoing;
+use Illuminate\Support\Facades\Event;
+
+Event::listen('igniterlabs.webhook.shouldDispatch', function(Outgoing $webhook, string $eventCode, string $actionCode, array $eventArgs) {
+    if ($eventCode !== 'order') {
+        return null;
+    }
+
+    $order = $eventArgs[0] ?? null;
+
+    return $order?->location_id === 1 ? null : false;
+});
+```
 
 See the [Spatie Webhook Server documentation](https://github.com/spatie/laravel-webhook-server) for more events.

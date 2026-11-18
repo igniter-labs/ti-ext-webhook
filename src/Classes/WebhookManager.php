@@ -81,22 +81,27 @@ class WebhookManager
     {
         Event::listen($systemEvent, function() use ($eventCode, $actionCode, $eventClass): void {
             if (method_exists($eventClass, 'makePayloadFromEvent')) {
-                $payload = $eventClass::makePayloadFromEvent(func_get_args(), $actionCode);
+                $args = func_get_args();
+                $payload = $eventClass::makePayloadFromEvent($args, $actionCode);
                 if (array_filter($payload ?? [])) {
-                    $this->runWebhookEvent($eventCode, $actionCode, $payload);
+                    $this->runWebhookEvent($eventCode, $actionCode, $payload, $args);
                 }
             }
         });
     }
 
-    public function runWebhookEvent($eventCode, $actionCode, array $payload): void
+    public function runWebhookEvent($eventCode, $actionCode, array $payload, array $eventArgs = []): void
     {
         throw_unless(class_exists($eventClass = $this->getEventClass($eventCode)),
             new InvalidArgumentException('Webhook event class ['.$eventClass.'] not found'),
         );
 
         Outgoing::listWebhooksForEvent($eventCode)
-            ->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload): void {
+            ->each(function(Outgoing $model) use ($eventClass, $eventCode, $actionCode, $payload, $eventArgs): void {
+                if (Event::dispatch('igniterlabs.webhook.shouldDispatch', [$model, $eventCode, $actionCode, $eventArgs], true) === false) {
+                    return;
+                }
+
                 if ($model->applyEventClass($eventClass)) {
                     $model->setEventPayload($payload);
                     $model->dispatchWebhook($actionCode, $eventCode);
