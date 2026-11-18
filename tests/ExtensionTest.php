@@ -24,6 +24,10 @@ it('registers settings', function(): void {
 it('registers permissions', function(): void {
     $permissions = $this->extension->registerPermissions();
 
-    expect($permissions)->toHaveKey('IgniterLabs.Webhook.ManageSetting')
+    expect($permissions)->toHaveKeys(['IgniterLabs.Webhook.Manage', 'IgniterLabs.Webhook.ManageSetting'])
         ->and($permissions['IgniterLabs.Webhook.ManageSetting']['group'])->toBe('igniter::system.permissions.name');
+});
+
+it('shows the webhooks menu to staff with a webhook permission', function(): void {
+    expect($this->extension->registerNavigation()['tools']['child']['webhooks']['permission'])->toBe('IgniterLabs.Webhook.*');
 });

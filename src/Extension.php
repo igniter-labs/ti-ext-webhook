@@ -22,6 +22,7 @@ use IgniterLabs\Webhook\WebhookEvents\Order;
 use IgniterLabs\Webhook\WebhookEvents\Reservation;
 use IgniterLabs\Webhook\WebhookEvents\Table;
 use Override;
+use Spatie\WebhookServer\WebhookServerServiceProvider;
 
 /**
  * Webhook Extension Information File
@@ -44,6 +45,8 @@ class Extension extends BaseExtension
     public function register(): void
     {
         parent::register();
+
+        $this->app->register(WebhookServerServiceProvider::class);
 
         config(['webhook-server.webhook_job' => SafeCallWebhookJob::class]);
     }
@@ -80,6 +83,10 @@ class Extension extends BaseExtension
     public function registerPermissions(): array
     {
         return [
+            'IgniterLabs.Webhook.Manage' => [
+                'description' => 'Manage outgoing webhooks',
+                'group' => 'igniter::system.permissions.name',
+            ],
             'IgniterLabs.Webhook.ManageSetting' => [
                 'description' => 'Manage Webhook settings',
                 'group' => 'igniter::system.permissions.name',
@@ -98,7 +105,7 @@ class Extension extends BaseExtension
                         'class' => 'webhooks',
                         'href' => admin_url('igniterlabs/webhook/outgoing'),
                         'title' => lang('igniterlabs.webhook::default.text_title'),
-                        'permission' => 'IgniterLabs.Webhooks.*',
+                        'permission' => 'IgniterLabs.Webhook.*',
                     ],
                 ],
             ],

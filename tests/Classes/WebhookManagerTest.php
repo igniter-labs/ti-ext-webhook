@@ -6,8 +6,12 @@ namespace IgniterLabs\Webhook\Tests\Classes;
 
 use Igniter\System\Classes\ExtensionManager;
 use IgniterLabs\Webhook\Classes\WebhookManager;
+use IgniterLabs\Webhook\Jobs\SafeCallWebhookJob as CallWebhookJob;
+use IgniterLabs\Webhook\Models\Outgoing;
 use IgniterLabs\Webhook\Models\Settings;
 use IgniterLabs\Webhook\WebhookEvents\Category;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Schema;
 use Mockery;
 
@@ -108,4 +112,23 @@ it('registers a callback', function(): void {
     expect($called)->toBeTrue();
     expect($events)->toHaveKey('callback');
     expect($events['callback'])->toBe('CallbackClass');
+});
+
+it('lets listeners skip a webhook for an event', function(): void {
+    Queue::fake();
+    $kept = Outgoing::factory()->create(['url' => 'https://kept.test', 'events' => ['category'], 'is_active' => true]);
+    $skipped = Outgoing::factory()->create(['url' => 'https://skipped.test', 'events' => ['category'], 'is_active' => true]);
+    $seen = [];
+
+    Event::listen('igniterlabs.webhook.shouldDispatch', function(Outgoing $webhook, string $eventCode, string $actionCode, array $args) use ($skipped, &$seen): ?bool {
+        $seen[] = [$eventCode, $actionCode, $args];
+
+        return $webhook->is($skipped) ? false : null;
+    });
+
+    $this->manager->runWebhookEvent('category', 'created', ['category' => ['name' => 'Pizza']], ['original-arg']);
+
+    Queue::assertPushed(CallWebhookJob::class, 1);
+    Queue::assertPushed(CallWebhookJob::class, fn(CallWebhookJob $job): bool => $job->webhookUrl === $kept->url);
+    expect($seen[0])->toBe(['category', 'created', ['original-arg']]);
 });
