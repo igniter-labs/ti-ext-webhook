@@ -132,7 +132,9 @@ class Extension extends BaseExtension
                 'name' => 'Webhooks',
                 'description' => 'An API resource for webhooks',
                 'actions' => [
-                    'index:admin', 'show:admin', 'store:admin', 'update:admin', 'destroy:admin',
+                    'index:admin:admin', 'show:admin:admin',
+                    'store:admin:admin', 'update:admin:admin',
+                    'destroy:admin:admin',
                 ],
             ],
         ];
