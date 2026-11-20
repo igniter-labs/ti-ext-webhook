@@ -4,7 +4,6 @@ return [
     'text_title' => 'Webhooks',
     'text_tab_general' => 'General',
     'text_tab_setup' => 'Setup Instructions',
-    'text_outgoing' => 'Outgoing Webhooks',
     'text_success' => '<span class="text-success">Success</span>',
     'text_failed' => '<span class="text-danger">Failed</span>',
 
