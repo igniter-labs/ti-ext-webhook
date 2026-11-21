@@ -136,7 +136,7 @@ class Extension extends BaseExtension
                     'store:admin:admin', 'update:admin:admin',
                     'destroy:admin:admin',
                 ],
-                'permissions' => ['IgniterLabs.Webhook.Manage']
+                'permissions' => ['IgniterLabs.Webhook.Manage'],
             ],
         ];
     }
