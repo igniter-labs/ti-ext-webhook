@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace IgniterLabs\Webhook\Tests\ApiResources;
 
 use Igniter\User\Models\User;
+use Igniter\User\Models\UserRole;
 use IgniterLabs\Webhook\Models\Outgoing;
 use Laravel\Sanctum\Sanctum;
 
+function webhooksAdmin(): User
+{
+    return User::factory()
+        ->for(UserRole::factory()->create(['permissions' => ['IgniterLabs.Webhook.Manage' => 1]]), 'role')
+        ->create();
+}
+
 it('lists outgoing webhooks', function(): void {
-    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    Sanctum::actingAs(webhooksAdmin(), ['webhooks:*']);
     Outgoing::factory()->count(3)->create();
 
     $this
@@ -19,7 +27,7 @@ it('lists outgoing webhooks', function(): void {
 });
 
 it('shows a outgoing webhook', function(): void {
-    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    Sanctum::actingAs(webhooksAdmin(), ['webhooks:*']);
     $webhook = Outgoing::factory()->create();
 
     $this
@@ -30,7 +38,7 @@ it('shows a outgoing webhook', function(): void {
 });
 
 it('create outgoing webhook', function(): void {
-    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    Sanctum::actingAs(webhooksAdmin(), ['webhooks:*']);
 
     $this
         ->post(route('igniter.api.webhooks.store'), [
@@ -56,7 +64,7 @@ it('create outgoing webhook', function(): void {
 });
 
 it('updates outgoing webhook', function(): void {
-    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    Sanctum::actingAs(webhooksAdmin(), ['webhooks:*']);
     $webhook = Outgoing::factory()->create();
 
     $this
@@ -83,7 +91,7 @@ it('updates outgoing webhook', function(): void {
 });
 
 it('deletes outgoing webhook', function(): void {
-    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    Sanctum::actingAs(webhooksAdmin(), ['webhooks:*']);
     $webhook = Outgoing::factory()->create();
 
     $this
@@ -109,4 +117,19 @@ it('blocks unauthorized access', function(): void {
     $this
         ->delete(route('igniter.api.webhooks.destroy', [1]))
         ->assertUnauthorized();
+});
+
+it('forbids access without the manage webhooks permission', function(): void {
+    Sanctum::actingAs(User::factory()->create(), ['webhooks:*']);
+    $webhook = Outgoing::factory()->create();
+
+    $this
+        ->get(route('igniter.api.webhooks.index'))
+        ->assertForbidden();
+
+    $this
+        ->delete(route('igniter.api.webhooks.destroy', [$webhook->getKey()]))
+        ->assertForbidden();
+
+    expect(Outgoing::find($webhook->getKey()))->not->toBeNull();
 });
